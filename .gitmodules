@@ -1,3 +1,0 @@
-[submodule "cucumber-cpp"]
-	path = cucumber-cpp
-	url = https://github.com/cucumber/cucumber-cpp.git
