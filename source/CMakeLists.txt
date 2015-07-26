@@ -44,4 +44,7 @@ set_property(TARGET app PROPERTY CXX_STANDARD_REQUIRED ON)
 #  DEPENDS ws::acceptance-test-host
 #  )
 
+########################################################################
+
+add_subdirectory(app-test)
 

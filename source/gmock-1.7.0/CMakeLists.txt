@@ -15,6 +15,7 @@ add_library(gmock-main
 add_library(ws::gmock-main ALIAS gmock-main)
 
 target_link_libraries(gmock-main
-  PRIVATE ws::gmock
+  PUBLIC ws::gmock
+  PRIVATE pthread
   )
 
