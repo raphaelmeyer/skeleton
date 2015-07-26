@@ -47,4 +47,5 @@ set_property(TARGET app PROPERTY CXX_STANDARD_REQUIRED ON)
 ########################################################################
 
 add_subdirectory(app-test)
+add_subdirectory(acceptance-test-host)
 

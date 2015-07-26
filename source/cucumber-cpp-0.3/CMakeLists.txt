@@ -26,12 +26,9 @@ target_include_directories(cucumber-cpp
   )
 
 target_link_libraries(cucumber-cpp
-  PRIVATE ws::gmock
+  PUBLIC ws::gmock
+  PRIVATE pthread
+  PRIVATE boost_regex
+  PRIVATE boost_system
   )
-
-#set(CUKE_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-#include_directories(${CUKE_INCLUDE_DIR})
-
-#add_subdirectory(src)
-#add_subdirectory(tests)
 
