@@ -1,0 +1,5 @@
+/host-gcc/.done
+/host-gcc-data/.done
+
+*.swp
+
