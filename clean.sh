@@ -5,5 +5,5 @@ SRC_HOST=${PROJECT_ROOT}/source
 SRC_GUEST=/home/user/src
 
 docker run --rm -t --volumes-from host-workspace -v ${SRC_HOST}:${SRC_GUEST}:ro host-gcc cmake ${SRC_GUEST}
-docker run --rm -t --volumes-from host-workspace -v ${SRC_HOST}:${SRC_GUEST}:ro host-gcc cmake --build .
+docker run --rm -t --volumes-from host-workspace -v ${SRC_HOST}:${SRC_GUEST}:ro host-gcc cmake --build . --target clean
 

@@ -32,4 +32,16 @@ target_include_directories(app
 set_property(TARGET app PROPERTY CXX_STANDARD 14)
 set_property(TARGET app PROPERTY CXX_STANDARD_REQUIRED ON)
 
+########################################################################
+
+#add_custom_target(check
+#  COMMAND echo "Execute unit tests"
+#  DEPENDS ws::app-test
+#  )
+
+#add_custom_target(features
+#  COMMAND echo "cucumber .."
+#  DEPENDS ws::acceptance-test-host
+#  )
+
 
