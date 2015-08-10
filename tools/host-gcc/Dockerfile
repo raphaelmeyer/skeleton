@@ -1,6 +1,6 @@
 FROM ybpi-base
 
-MAINTAINER Raphael Meyer <raphael.akira.meyer@gmail.com>
+MAINTAINER Raphael Meyer <raphael.meyer@bbv.ch>
 
 RUN apt-get update && apt-get install -y \
   cmake \
