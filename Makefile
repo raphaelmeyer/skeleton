@@ -14,33 +14,47 @@ app-target:
 
 ########################################################################
 
-target-shell:
+target-shell: tools/.target-workspace
 	docker run --rm -it --volumes-from target-workspace ybpi-sdk /bin/bash
 
-host-shell:
+host-shell: tools/.host-workspace tools/host-gcc/.done
 	docker run --rm -it --volumes-from host-workspace host-gcc /bin/bash
 
 ########################################################################
 
-.target-workspace:
+tools/.target-workspace:
 	-docker rm -v target-workspace
 	docker create --name target-workspace ybpi-sdk-data
 	touch $@
 
-.host-workspace: host-gcc-data/.done
+tools/.host-workspace: tools/host-gcc-data/.done
 	-docker rm -v host-workspace
 	docker create --name host-workspace host-gcc-data
 	touch $@
 
-toolchain: host-gcc/.done host-gcc-data/.done
+########################################################################
 
-host-gcc/.done: host-gcc/Dockerfile
+toolchain: tools/host-gcc/.done tools/host-gcc-data/.done
+
+tools/host-gcc/.done: tools/host-gcc/Dockerfile
 	-docker rmi host-gcc
-	docker build -t host-gcc host-gcc
+	docker build -t host-gcc tools/host-gcc
 	touch $@
 
-host-gcc-data/.done: host-gcc-data/Dockerfile
+tools/host-gcc-data/.done: tools/host-gcc-data/Dockerfile
+	-docker rm -v host-workspace
+	rm tools/.host-workspace
 	-docker rmi host-gcc-data
-	docker build -t host-gcc-data host-gcc-data
+	docker build -t host-gcc-data tools/host-gcc-data
 	touch $@
+
+########################################################################
+
+clean-workspace:
+	-docker rm -v host-workspace
+	-docker rm -v target-workspace
+	rm tools/.host-workspace
+	rm tools/.target-workspace
+
+
 

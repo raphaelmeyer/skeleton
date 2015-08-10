@@ -1,3 +1,7 @@
 *.swp
 *.done
 
+/tools/.target-workspace
+/tools/.host-workspace
+
+
