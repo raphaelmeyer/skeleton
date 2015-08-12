@@ -1,4 +1,3 @@
-
 all: check app-target
 
 check: check-host
@@ -7,10 +6,20 @@ check-host: tests-host
 	echo "Run accpetance test on host"
 	echo "Run unit test on host"
 
-tests-host:
+tests-host: unit-tests-host acceptance-tests-host
+
+unit-tests-host:
+
+acceptance-tests-host:
+	./run-host cmake /home/user/src
+	./run-host cmake --build . --target acceptance-test-host
 
 app-target:
 	echo "build application for target"
+
+clean-host:
+	./run-host cmake /home/user/src
+	./run-host cmake --build . --target clean
 
 ########################################################################
 
