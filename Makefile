@@ -14,27 +14,32 @@ app-target:
 
 ########################################################################
 
-target-shell: tools/.target-workspace
-	docker run --rm -it --volumes-from target-workspace ybpi-sdk /bin/bash
+HOST = 0.1.0
+YBPI = 2.0.0
 
-host-shell: tools/.host-workspace tools/host-gcc/.done
-	docker run --rm -it --volumes-from host-workspace host-gcc /bin/bash
+########################################################################
+
+target-shell: tools/.target-workspace
+	docker run --rm -it --volumes-from target-workspace ybpi-sdk:$(YBPI) /bin/bash
+
+host-shell: tools/.host-workspace
+	docker run --rm -it --volumes-from host-workspace host-gcc:$(HOST) /bin/bash
 
 ########################################################################
 
 tools/.target-workspace:
 	-docker rm -v target-workspace
-	docker create --name target-workspace ybpi-sdk-data
+	docker create --name target-workspace ybpi-sdk-data:$(YBPI)
 	touch $@
 
-tools/.host-workspace: tools/host-gcc-data/.done
+tools/.host-workspace:
 	-docker rm -v host-workspace
-	docker create --name host-workspace host-gcc-data
+	docker create --name host-workspace host-gcc-data:$(HOST)
 	touch $@
 
 ########################################################################
 
-toolchain: tools/host-gcc/.done tools/host-gcc-data/.done
+host-toolchain: tools/host-gcc/.done tools/host-gcc-data/.done
 
 tools/host-gcc/.done: tools/host-gcc/Dockerfile
 	-docker rmi host-gcc
@@ -55,6 +60,4 @@ clean-workspace:
 	-docker rm -v target-workspace
 	rm tools/.host-workspace
 	rm tools/.target-workspace
-
-
 
