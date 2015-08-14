@@ -13,6 +13,7 @@ unit-tests-host:
 acceptance-tests-host:
 	./run-host cmake /home/user/src
 	./run-host cmake --build . --target acceptance-test-host
+	./cucumber.sh
 
 app-target:
 	echo "build application for target"
@@ -25,14 +26,6 @@ clean-host:
 
 HOST = 0.1.0
 YBPI = 2.0.0
-
-########################################################################
-
-target-shell: tools/.target-workspace
-	docker run --rm -it --volumes-from target-workspace ybpi-sdk:$(YBPI) /bin/bash
-
-host-shell: tools/.host-workspace
-	docker run --rm -it --volumes-from host-workspace host-gcc:$(HOST) /bin/bash
 
 ########################################################################
 
