@@ -2,25 +2,34 @@ all: check app-target
 
 check: check-host
 
-check-host: tests-host
-	echo "Run accpetance test on host"
-	echo "Run unit test on host"
+check-host: unit-test-host acceptance-test-host
 
-tests-host: unit-tests-host acceptance-tests-host
+unit-test-host: src-host
+	./cmake-host --build . --target check
 
-unit-tests-host:
+acceptance-test-host: src-host
+	./cmake-host --build . --target $@
+	./$(@).sh
 
-acceptance-tests-host:
-	./run-host cmake /home/user/src
-	./run-host cmake --build . --target acceptance-test-host
-	./cucumber.sh
+app-test-host: src-host
+	./cmake-host --build . --target app-test
 
-app-target:
-	echo "build application for target"
+app-target: src-target
+	./cmake-target --build . --target skeleton
 
-clean-host:
-	./run-host cmake /home/user/src
-	./run-host cmake --build . --target clean
+clean-host: src-host
+	./cmake-host --build . --target clean
+
+clean-target: src-target
+	./cmake-target --build . --target clean
+
+########################################################################
+
+src-host:
+	./cmake-host /home/user/src
+
+src-target:
+	./cmake-target /home/user/src
 
 ########################################################################
 
@@ -37,22 +46,6 @@ tools/.target-workspace:
 tools/.host-workspace:
 	-docker rm -v host-workspace
 	docker create --name host-workspace host-gcc-data:$(HOST)
-	touch $@
-
-########################################################################
-
-host-toolchain: tools/host-gcc/.done tools/host-gcc-data/.done
-
-tools/host-gcc/.done: tools/host-gcc/Dockerfile
-	-docker rmi host-gcc
-	docker build -t host-gcc tools/host-gcc
-	touch $@
-
-tools/host-gcc-data/.done: tools/host-gcc-data/Dockerfile
-	-docker rm -v host-workspace
-	rm tools/.host-workspace
-	-docker rmi host-gcc-data
-	docker build -t host-gcc-data tools/host-gcc-data
 	touch $@
 
 ########################################################################

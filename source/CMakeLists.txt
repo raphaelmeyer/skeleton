@@ -9,17 +9,6 @@ add_subdirectory(cucumber-cpp-0.3)
 
 ########################################################################
 
-add_executable(skeleton
-  main/main.cc
-  )
-add_executable(ws::skeleton ALIAS skeleton)
-
-target_link_libraries(skeleton
-  PRIVATE ws::app
-  )
-
-########################################################################
-
 add_library(app
   app/application.cc
   )
@@ -34,10 +23,10 @@ set_property(TARGET app PROPERTY CXX_STANDARD_REQUIRED ON)
 
 ########################################################################
 
-#add_custom_target(check
-#  COMMAND echo "Execute unit tests"
-#  DEPENDS ws::app-test
-#  )
+add_custom_target(check
+  COMMAND echo "Execute unit tests"
+  DEPENDS ws::app-test
+  )
 
 #add_custom_target(features
 #  COMMAND echo "cucumber .."
@@ -48,4 +37,15 @@ set_property(TARGET app PROPERTY CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(app-test)
 add_subdirectory(acceptance-test-host)
+
+########################################################################
+
+add_executable(skeleton
+  main/main.cc
+  )
+add_executable(ws::skeleton ALIAS skeleton)
+
+target_link_libraries(skeleton
+  PRIVATE ws::app
+  )
 
