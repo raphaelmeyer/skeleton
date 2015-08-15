@@ -17,6 +17,10 @@ app-test-host: src-host
 app-target: src-target
 	./cmake-target --build . --target skeleton
 
+########################################################################
+
+clean: clean-host clean-target
+
 clean-host: src-host
 	./cmake-host --build . --target clean
 
@@ -25,11 +29,11 @@ clean-target: src-target
 
 ########################################################################
 
-src-host:
+src-host: tools/.host-workspace
 	./cmake-host /home/user/src
 
-src-target:
-	./cmake-target /home/user/src
+src-target: tools/.target-workspace source/arm-poky-linux-gnueabi.cmake
+	./cmake-target -DCMAKE_TOOLCHAIN_FILE=/home/user/src/arm-poky-linux-gnueabi.cmake /home/user/src
 
 ########################################################################
 
