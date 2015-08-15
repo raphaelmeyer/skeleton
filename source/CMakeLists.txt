@@ -23,20 +23,13 @@ set_property(TARGET app PROPERTY CXX_STANDARD_REQUIRED ON)
 
 ########################################################################
 
-add_custom_target(check
-  COMMAND echo "Execute unit tests"
-  DEPENDS ws::app-test
-  )
-
-#add_custom_target(features
-#  COMMAND echo "cucumber .."
-#  DEPENDS ws::acceptance-test-host
-#  )
+add_subdirectory(app-test)
+add_subdirectory(acceptance-test-host)
 
 ########################################################################
 
-add_subdirectory(app-test)
-add_subdirectory(acceptance-test-host)
+enable_testing()
+add_test(NAME run-app-test COMMAND ws::app-test)
 
 ########################################################################
 

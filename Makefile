@@ -4,8 +4,8 @@ check: check-host
 
 check-host: unit-test-host acceptance-test-host
 
-unit-test-host: src-host
-	./cmake-host --build . --target check
+unit-test-host: src-host app-test-host
+	./cmake-host --build . --target test
 
 acceptance-test-host: src-host
 	./cmake-host --build . --target $@
