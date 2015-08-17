@@ -4,8 +4,7 @@ check: check-host
 
 check-host: unit-test-host acceptance-test-host
 
-unit-test-host: src-host app-test-host
-	./cmake-host --build . --target test
+unit-test-host: app-test-host
 
 acceptance-test-host: src-host
 	./cmake-host --build . --target $@
@@ -13,9 +12,15 @@ acceptance-test-host: src-host
 
 app-test-host: src-host
 	./cmake-host --build . --target app-test
+	./run-host app-test/app-test
 
 app-target: src-target
 	./cmake-target --build . --target skeleton
+
+# Run tests registered with cmake.
+# Does not (re)build anything.
+cmake-test-host: src-host
+	./cmake-host --build . --target test
 
 ########################################################################
 
