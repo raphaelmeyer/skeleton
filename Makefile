@@ -14,8 +14,9 @@ app-test-host: src-host
 	./cmake-host --build . --target app-test
 	./run-host app-test/app-test
 
-app-target: src-target
+app-target: src-target artifacts
 	./cmake-target --build . --target skeleton
+	docker cp target-workspace:/workspace/skeleton artifacts/
 
 # Run tests registered with cmake.
 # Does not (re)build anything.
@@ -56,6 +57,11 @@ tools/.host-workspace:
 	-docker rm -v host-workspace
 	docker create --name host-workspace host-gcc-data:$(HOST)
 	touch $@
+
+########################################################################
+
+artifacts:
+	mkdir -p artifacts
 
 ########################################################################
 
