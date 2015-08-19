@@ -6,6 +6,8 @@ namespace WS {
   class Application {
     public:
       Application();
+
+      void run();
   };
 
 }

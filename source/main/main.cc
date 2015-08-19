@@ -2,5 +2,7 @@
 
 int main() {
   WS::Application app;
+
+  app.run();
 }
 
