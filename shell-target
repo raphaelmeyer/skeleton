@@ -1,10 +1,8 @@
 #!/bin/bash
 
-YBPI=2.0.0
-
 PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-SRC_HOST=${PROJECT_ROOT}/source
-SRC_GUEST=/home/user/src
 
-docker run --rm -it --volumes-from target-workspace -v ${SRC_HOST}:${SRC_GUEST}:ro ybpi-sdk:${YBPI} /bin/bash
+source ${PROJECT_ROOT}/env-target.sh
+
+docker run --rm -it ${VOLUMES} ${CONTAINER} /bin/bash
 
