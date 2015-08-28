@@ -1,0 +1,1 @@
+- cmake property CXX_STANDARD does not work for libapp

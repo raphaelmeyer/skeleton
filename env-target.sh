@@ -1,6 +1,6 @@
 #!/bin/bash
 
-YBPI=2.0.0
+YBPI=latest
 
 PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 SRC_HOST=${PROJECT_ROOT}/source

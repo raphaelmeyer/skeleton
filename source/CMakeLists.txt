@@ -9,6 +9,10 @@ add_subdirectory(cucumber-cpp-0.3)
 
 ########################################################################
 
+add_definitions(
+  -std=c++14
+  )
+
 add_library(app
   app/application.cc
   )
