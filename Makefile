@@ -1,3 +1,9 @@
+########################################################################
+
+YBPI = 2.0.0
+
+########################################################################
+
 all: check app-target
 
 check: check-host
@@ -43,19 +49,14 @@ src-target: tools/.target-workspace source/arm-poky-linux-gnueabi.cmake
 
 ########################################################################
 
-HOST = 0.1.0
-YBPI = 2.0.0
-
-########################################################################
-
 tools/.target-workspace:
 	-docker rm -v target-workspace
-	docker create --name target-workspace ybpi-sdk-data:$(YBPI)
+	docker create --name target-workspace raphaelmeyer/ybpi-base:$(YBPI)
 	touch $@
 
 tools/.host-workspace:
 	-docker rm -v host-workspace
-	docker create --name host-workspace host-gcc-data:$(HOST)
+	docker create --name host-workspace raphaelmeyer/ybpi-base:$(YBPI)
 	touch $@
 
 ########################################################################

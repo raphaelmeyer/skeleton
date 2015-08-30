@@ -7,5 +7,5 @@ SRC_HOST=${PROJECT_ROOT}/source
 SRC_GUEST=/home/user/src
 
 VOLUMES="--volumes-from host-workspace -v ${SRC_HOST}:${SRC_GUEST}:ro"
-CONTAINER="host-gcc:${HOST}"
+CONTAINER="host-sdk:${HOST}"
 

@@ -1,17 +1,14 @@
 
-host-toolchain: host-gcc/.done host-gcc-data/.done
+HOST=0.1.0
 
 ########################################################################
 
-host-gcc/.done: host-gcc/Dockerfile
-	-docker rmi host-gcc
-	docker build -t host-gcc host-gcc
-	touch $@
+host-sdk: host-sdk/.done
 
-host-gcc-data/.done: host-gcc-data/Dockerfile
-	-docker rm -v host-workspace
-	rm .host-workspace
-	-docker rmi host-gcc-data
-	docker build -t host-gcc-data host-gcc-data
+########################################################################
+
+host-sdk/.done: host-sdk/Dockerfile
+	-docker rmi host-sdk:${HOST}
+	docker build -t host-sdk:${HOST} host-sdk
 	touch $@
 
