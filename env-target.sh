@@ -7,5 +7,5 @@ SRC_HOST=${PROJECT_ROOT}/source
 SRC_GUEST=/home/user/src
 
 VOLUMES="--volumes-from target-workspace -v ${SRC_HOST}:${SRC_GUEST}:ro"
-CONTAINER="ybpi-sdk:${YBPI}"
+CONTAINER="raphaelmeyer/ybpi-sdk:${YBPI}"
 
