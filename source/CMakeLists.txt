@@ -13,17 +13,7 @@ add_definitions(
   -std=c++14
   )
 
-add_library(app
-  app/application.cc
-  )
-add_library(ws::app ALIAS app)
-
-target_include_directories(app
-  PUBLIC app/inc
-  )
-
-set_property(TARGET app PROPERTY CXX_STANDARD 14)
-set_property(TARGET app PROPERTY CXX_STANDARD_REQUIRED ON)
+add_subdirectory(app)
 
 ########################################################################
 
