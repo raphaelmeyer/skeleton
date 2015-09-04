@@ -1,6 +1,5 @@
 
 add_executable(app-test
-  application.cc
   spi.cc
   )
 add_executable(ws::app-test ALIAS app-test)
