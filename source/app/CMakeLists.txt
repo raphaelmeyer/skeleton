@@ -1,6 +1,7 @@
 
 add_library(app
   application.cc
+  spi.cc
   )
 add_library(ws::app ALIAS app)
 
