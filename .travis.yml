@@ -3,5 +3,8 @@ services:
   - docker
 
 script:
-  - make app-target
+  - cd tools
+  - make
+  - cd ..
+  - make
 
