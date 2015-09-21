@@ -3,5 +3,5 @@ services:
   - docker
 
 script:
-  - make
+  - make app-target
 
