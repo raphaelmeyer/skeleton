@@ -4,21 +4,32 @@ YBPI = 2.0.0
 
 ########################################################################
 
-all: check app-target
+all: app-target acceptance test
 
-check: check-host
+ci: app-target acceptance-test-host unit-test-host
+	./run-host rm -rf results
+	./run-host app-test/app-test --gtest_output=xml:results/
+	./acceptance-test-host.sh -t ~@wip -f progress -f html -o /workspace/results/acceptance-test.html -f junit -o /workspace/results/acceptance-test
+	docker cp host-workspace:/workspace/results/ artifacts/
 
-check-host: unit-test-host acceptance-test-host
+acceptance: acceptance-test-host
+	./acceptance-test-host.sh -f pretty --tag ~@wip
+
+wip: acceptance-test-host
+	./acceptance-test-host.sh -f pretty --tag wip --@wip
+
+test: unit-test-host
+	./run-host app-test/app-test
+
+########################################################################
 
 unit-test-host: app-test-host
 
 acceptance-test-host: src-host
 	./cmake-host --build . --target $@
-	./$(@).sh
 
 app-test-host: src-host
 	./cmake-host --build . --target app-test
-	./run-host app-test/app-test
 
 app-target: src-target artifacts
 	./cmake-target --build . --target skeleton
@@ -26,12 +37,13 @@ app-target: src-target artifacts
 
 # Run tests registered with cmake.
 # Does not (re)build anything.
-cmake-test-host: src-host
+cmake-test-host: src-host/
 	./cmake-host --build . --target test
 
 ########################################################################
 
 clean: clean-host clean-target
+	rm -rf artifacts
 
 clean-host: src-host
 	./cmake-host --build . --target clean
