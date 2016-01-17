@@ -8,8 +8,9 @@ all: app-target acceptance test
 
 ci: app-target acceptance-test-host unit-test-host
 	./run-host rm -rf results
+	./run-host mkdir -p results/features
 	./run-host app-test/app-test --gtest_output=xml:results/unit-test/
-	./acceptance-test-host.sh -t ~@wip -f progress -f html -o /workspace/results/acceptance-test.html -f junit -o /workspace/results/acceptance-test
+	./acceptance-test-host.sh -t ~@wip -f progress -f html -o /workspace/results/features/acceptance-test.html -f junit -o /workspace/results/acceptance-test
 	rm -rf artifacts/results
 	docker cp host-workspace:/workspace/results/ artifacts/
 
