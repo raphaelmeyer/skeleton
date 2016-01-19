@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOST=1.0.0
+HOST=1.1.0
 
 PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 SRC_HOST=${PROJECT_ROOT}/source
