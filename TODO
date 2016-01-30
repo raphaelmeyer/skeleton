@@ -7,5 +7,5 @@
 - clean up avr build in cmake file
 - setup tests for avr target
 - setup lib and main for avr target
-
+- remove obsolete host-sdk makefile and docker from tools
 

@@ -3,6 +3,7 @@
 
 /tools/.target-workspace
 /tools/.host-workspace
+/tools/.avr-workspace
 
 /artifacts/
 
