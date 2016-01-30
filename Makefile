@@ -91,7 +91,7 @@ clean-workspace:
 # TODO
 ########################################################################
 
-app: src-avr artifacts
+fw: src-avr artifacts
 	./cmake-avr --build . --target $@
 	docker cp avr-workspace:/workspace/$@.elf artifacts/
 	docker cp avr-workspace:/workspace/$@.hex artifacts/
@@ -108,6 +108,6 @@ avr-clean:
 	-docker rm -v avr-workspace
 	rm -rf tools/.avr-workspace
 
-install: app
-	»·./avrdude -c arduino -p atmega328p -P /dev/ttyACM0 -b 115200 -U flash:w:app.hex
+install: fw
+	»·./avrdude -c arduino -p atmega328p -P /dev/ttyACM0 -b 115200 -U flash:w:fw.hex
 

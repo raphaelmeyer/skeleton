@@ -40,7 +40,7 @@ target_link_libraries(skeleton
 ########################################################################
 # TODO
 ########################################################################
-add_avr_executable(app
-  main.cc
-  )
+#add_avr_executable(fw
+#  main.cc
+#  )
 
