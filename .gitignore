@@ -1,9 +1,8 @@
 *.swp
 *.done
 
-/tools/.target-workspace
-/tools/.host-workspace
-/tools/.avr-workspace
-
 /artifacts/
+
+# clion projects
+.idea/
 
