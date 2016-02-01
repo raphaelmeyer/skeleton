@@ -1,6 +1,4 @@
 - cmake property CXX_STANDARD does not work for libapp
-- split up host, ybpi and avr sdk image creation
-- make common base image for host, ybpi and avr
 - use common base for workspaces
 - clean up avrdude usage, e.g. tty access
 - clean up avr build in makefile
@@ -8,4 +6,5 @@
 - setup tests for avr target
 - setup lib and main for avr target
 - remove obsolete host-sdk makefile and docker from tools
+- rename host workspace into amd64-workspace
 
