@@ -91,10 +91,12 @@ clean-workspace:
 # TODO
 ########################################################################
 
-fw: src-avr artifacts
+fw: fw-main
+
+fw-main: src-avr artifacts
 	./cmake-avr --build . --target $@
-	docker cp avr-workspace:/workspace/$@.elf artifacts/
-	docker cp avr-workspace:/workspace/$@.hex artifacts/
+	docker cp avr-workspace:/workspace/$@/$@.elf artifacts/
+	docker cp avr-workspace:/workspace/$@/$@.hex artifacts/
 
 src-avr: tools/.avr-workspace source/gcc-avr.cmake
 	./cmake-avr -DCMAKE_TOOLCHAIN_FILE=/home/user/src/gcc-avr.cmake /home/user/src
@@ -103,6 +105,9 @@ tools/.avr-workspace:
 	-docker rm -v avr-workspace
 	docker create --name avr-workspace raphaelmeyer/avr-sdk
 	touch $@
+
+clean-fw:
+	./cmake-avr --build . --target clean
 
 avr-clean:
 	-docker rm -v avr-workspace
