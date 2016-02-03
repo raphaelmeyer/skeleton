@@ -4,14 +4,21 @@ project (skeleton VERSION 0.0.1)
 
 ########################################################################
 
-add_subdirectory(gmock-1.7.0)
 add_subdirectory(cucumber-cpp-0.3)
+
+########################################################################
+
+add_subdirectory(fw)
+add_subdirectory(fw-test)
+add_subdirectory(fw-main)
 
 ########################################################################
 
 add_definitions(
   -std=c++14
   )
+
+add_subdirectory(gmock-1.7.0)
 
 add_subdirectory(app)
 
@@ -35,12 +42,3 @@ add_executable(ws::skeleton ALIAS skeleton)
 target_link_libraries(skeleton
   PRIVATE ws::app
   )
-
-
-########################################################################
-# TODO
-########################################################################
-#add_avr_executable(fw
-#  main.cc
-#  )
-
