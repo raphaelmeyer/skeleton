@@ -4,9 +4,9 @@ YBPI = 2.0.0
 
 ########################################################################
 
-all: app-target acceptance test
+all: app-target acceptance test fw
 
-ci: app-target acceptance-test-host unit-test-host
+ci: app-target acceptance-test-host unit-test-host fw-main
 	./run-host rm -rf results
 	./run-host mkdir -p results/features
 	./run-host app-test/app-test --gtest_output=xml:results/unit-test/
