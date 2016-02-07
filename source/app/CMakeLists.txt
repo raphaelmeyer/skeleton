@@ -1,9 +1,13 @@
+########################################################################
+# Workaround for cmake 3.0
+add_definitions(-std=c++14)
+########################################################################
 
 add_library(app
   application.cc
   spi.cc
   )
-add_library(ws::app ALIAS app)
+add_library(controller::app ALIAS app)
 
 target_include_directories(app
   PUBLIC inc
@@ -11,4 +15,3 @@ target_include_directories(app
 
 set_property(TARGET app PROPERTY CXX_STANDARD 14)
 set_property(TARGET app PROPERTY CXX_STANDARD_REQUIRED ON)
-

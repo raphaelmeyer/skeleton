@@ -2,11 +2,13 @@
 add_executable(app-test
   spi.cc
   )
-add_executable(ws::app-test ALIAS app-test)
+add_executable(test::app-test ALIAS app-test)
 
 target_link_libraries(app-test
-  PRIVATE ws::gmock-main
-  PRIVATE ws::app
+  PRIVATE test::gmock-main
+  PRIVATE controller::app
   )
 
+set_property(TARGET app-test PROPERTY CXX_STANDARD 14)
+set_property(TARGET app-test PROPERTY CXX_STANDARD_REQUIRED ON)
 

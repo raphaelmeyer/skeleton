@@ -24,7 +24,7 @@ wip: acceptance-test-host
 test: unit-test-host
 	./run-amd64 app-test/app-test
 
-clean: clean-amd64 clean-target clean-amd64 clean-artifacts
+clean: clean-amd64 clean-target clean-avr clean-artifacts
 
 ########################################################################
 

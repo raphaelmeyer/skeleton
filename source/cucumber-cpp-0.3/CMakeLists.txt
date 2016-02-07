@@ -1,6 +1,9 @@
-cmake_minimum_required(VERSION 3.0)
-
 project(Cucumber-Cpp VERSION 0.3)
+
+########################################################################
+# Workaround for cmake 3.0
+add_definitions(-std=c++14)
+########################################################################
 
 add_library(cucumber-cpp
   src/ContextManager.cpp
@@ -19,16 +22,18 @@ add_library(cucumber-cpp
   src/connectors/wire/WireProtocolCommands.cpp
   src/drivers/GTestDriver.cpp
   )
-add_library(ws::cucumber-cpp ALIAS cucumber-cpp)
+add_library(test::cucumber-cpp ALIAS cucumber-cpp)
 
 target_include_directories(cucumber-cpp
   PUBLIC include
   )
 
 target_link_libraries(cucumber-cpp
-  PUBLIC ws::gmock
+  PUBLIC test::gmock
   PRIVATE pthread
   PRIVATE boost_regex
   PRIVATE boost_system
   )
 
+set_property(TARGET cucumber-cpp PROPERTY CXX_STANDARD 14)
+set_property(TARGET cucumber-cpp PROPERTY CXX_STANDARD_REQUIRED ON)
