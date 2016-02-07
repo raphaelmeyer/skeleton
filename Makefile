@@ -38,7 +38,7 @@ app-test-host: src-amd64
 
 app-target: src-target artifacts
 	./cmake-target --build . --target skeleton
-	docker cp target-workspace:/workspace/skeleton artifacts/
+	docker cp target-workspace:/workspace/main/skeleton artifacts/
 
 # Run tests registered with cmake.
 # Does not (re)build anything.

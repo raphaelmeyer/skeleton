@@ -51,3 +51,6 @@ add_avr_executable(fw-main
 
 set_property(TARGET fw-main PROPERTY CXX_STANDARD 11)
 set_property(TARGET fw-main PROPERTY CXX_STANDARD_REQUIRED ON)
+
+set_property(TARGET fw-main PROPERTY C_STANDARD 11)
+set_property(TARGET fw-main PROPERTY C_STANDARD_REQUIRED ON)
