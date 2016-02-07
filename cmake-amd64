@@ -2,7 +2,7 @@
 
 PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-source ${PROJECT_ROOT}/env-host.sh
+source ${PROJECT_ROOT}/env-amd64.sh
 
 docker run --rm -t ${VOLUMES} ${CONTAINER} cmake $@
 
