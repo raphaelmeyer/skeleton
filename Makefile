@@ -11,18 +11,43 @@ all: controller device
 
 controller: controller-exe controller-test
 
-device:
+controller-exe:
+controller-test: controller-features application-test
+controller-features:
+controller-wip:
 
+device: device-fw device-test
+
+device-fw:
+device-test:
+
+########################################################################
 
 controller-exe: src-target artifacts
 	./cmake-target --build . --target $@
 	docker cp target-workspace:/workspace/controller/controller-exe/$@ artifacts/
 
-controller-test: application-test
 
 application-test: src-amd64
 	./cmake-amd64 --build . --target $@
 	./run-amd64 controller/application-test/$@
+
+
+controller-features: controller-cucumber
+	./controller-features.sh -f pretty --tag ~@wip
+
+controller-wip: controller-cucumber
+	./controller-features.sh -f pretty --tag wip --@wip
+
+controller-cucumber: src-amd64
+	./cmake-amd64 --build . --target controller-cucumber
+
+
+
+
+
+
+########################################################################
 
 #all: app-target acceptance test fw
 
