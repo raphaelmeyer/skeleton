@@ -5,7 +5,26 @@ BASE = 1.0.1
 
 ########################################################################
 
-all: app-target acceptance test fw
+all: controller device
+
+########################################################################
+
+controller: controller-exe controller-test
+
+device:
+
+
+controller-exe: src-target artifacts
+	./cmake-target --build . --target $@
+	docker cp target-workspace:/workspace/controller/controller-exe/$@ artifacts/
+
+controller-test: application-test
+
+application-test: src-amd64
+	./cmake-amd64 --build . --target $@
+	./run-amd64 controller/application-test/$@
+
+#all: app-target acceptance test fw
 
 ci: app-target acceptance-test-host unit-test-host fw-main
 	./run-amd64 rm -rf results

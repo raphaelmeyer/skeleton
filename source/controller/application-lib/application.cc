@@ -1,4 +1,4 @@
-#include "inc/app/application.h"
+#include "application/application.h"
 
 #include <iostream>
 #include <cstdio>

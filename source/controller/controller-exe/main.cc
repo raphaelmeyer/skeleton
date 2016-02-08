@@ -1,4 +1,4 @@
-#include <app/application.h>
+#include <application/application.h>
 
 int main() {
   WS::Application app;

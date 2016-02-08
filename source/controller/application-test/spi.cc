@@ -1,7 +1,7 @@
 #include <gmock/gmock.h>
 
-#include <app/spi.h>
-#include <app/device.h>
+#include <application/spi.h>
+#include <application/device.h>
 
 using namespace ::testing;
 

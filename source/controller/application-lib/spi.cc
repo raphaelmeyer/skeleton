@@ -1,5 +1,5 @@
-#include "inc/app/spi.h"
-#include "inc/app/device.h"
+#include "application/spi.h"
+#include "application/device.h"
 
 namespace WS {
 

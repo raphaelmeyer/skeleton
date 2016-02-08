@@ -1,9 +1,6 @@
 project(Cucumber-Cpp VERSION 0.3)
 
 ########################################################################
-# Workaround for cmake 3.0
-add_definitions(-std=c++14)
-########################################################################
 
 add_library(cucumber-cpp
   src/ContextManager.cpp
