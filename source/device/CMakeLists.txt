@@ -1,5 +1,8 @@
+########################################################################
+include(avr.cmake)
+########################################################################
 
-add_subdirectory(fw)
-add_subdirectory(fw-test)
-add_subdirectory(fw-main)
+add_subdirectory(device-lib)
+add_subdirectory(device-test)
 
+add_subdirectory(device-exe)

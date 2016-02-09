@@ -7,18 +7,17 @@ BASE = 1.0.1
 
 all: controller device
 
-########################################################################
-
 controller: controller-exe controller-test
+device: device-exe device-test
+
+########################################################################
 
 controller-exe:
 controller-test: controller-features application-test
 controller-features:
 controller-wip:
 
-device: device-fw device-test
-
-device-fw:
+device-exe:
 device-test:
 
 ########################################################################
@@ -43,7 +42,16 @@ controller-cucumber: src-amd64
 	./cmake-amd64 --build . --target controller-cucumber
 
 
+device-exe: src-avr
+	./cmake-avr --build . --target $@
+	docker cp avr-workspace:/workspace/device/device-exe/$@ artifacts
+	docker cp avr-workspace:/workspace/device/device-exe/$@.hex artifacts
 
+
+
+device-test: src-amd64
+	./cmake-amd64 --build . --target $@
+	./run-amd64 device/device-test/$@
 
 
 
