@@ -1,25 +1,32 @@
+include(CMakeParseArguments)
+
 ########################################################################
 
-function(set_avr_executable_properties EXECUTABLE_NAME)
+function(set_avr_target_properties TARGET_NAME)
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "avr")
 
-    set_target_properties(
-      ${EXECUTABLE_NAME}
-      PROPERTIES
-      COMPILE_FLAGS "-mmcu=${AVR_MCU} -DF_CPU=${AVR_F_CPU} -Os"
-      LINK_FLAGS "-mmcu=${AVR_MCU}"
-    )
+  cmake_parse_arguments(ARG "" "HEX" "" ${ARGN})
 
-    set(HEX_FILE ${EXECUTABLE_NAME}.hex)
+  if(NOT ARG_HEX)
+    set(ARG_HEX ${TARGET_NAME}.hex)
+  endif()
 
-    add_custom_command(
-      OUTPUT ${HEX_FILE}
-      COMMAND ${AVR_OBJCOPY} -O ihex -R .eeprom ${EXECUTABLE_NAME} ${HEX_FILE}
-      DEPENDS ${EXECUTABLE_NAME}
-    )
+  set_target_properties(
+    ${TARGET_NAME}
+    PROPERTIES
+    COMPILE_FLAGS "-mmcu=${AVR_MCU} -DF_CPU=${AVR_F_CPU} -Os"
+    LINK_FLAGS "-mmcu=${AVR_MCU}"
+  )
+
+  add_custom_command(
+    TARGET ${TARGET_NAME}
+    POST_BUILD
+    COMMENT "Creating hex file ${ARG_HEX}"
+    COMMAND ${AVR_OBJCOPY} -O ihex -R .eeprom ${TARGET_NAME} ${ARG_HEX}
+  )
 
   endif()
-endfunction(set_avr_executable_properties)
+endfunction(set_avr_target_properties)
 
 ########################################################################
 

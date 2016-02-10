@@ -44,8 +44,8 @@ controller-cucumber: src-amd64
 
 device-exe: src-avr
 	./cmake-avr --build . --target $@
-	docker cp avr-workspace:/workspace/device/device-exe/$@ artifacts
-	docker cp avr-workspace:/workspace/device/device-exe/$@.hex artifacts
+	docker cp avr-workspace:/workspace/device/device-exe/$@ artifacts/
+	docker cp avr-workspace:/workspace/device/device-exe/$@.hex artifacts/
 
 
 
