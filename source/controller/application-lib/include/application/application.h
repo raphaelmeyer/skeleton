@@ -2,6 +2,7 @@
 #define APP_APPLICATION_H
 
 #include <string>
+#include <cstdint>
 
 namespace WS {
 
@@ -13,6 +14,7 @@ namespace WS {
 
     private:
       void abort(std::string const & message);
+      void get_register(int const address, std::uint8_t reg);
 
       int _fd;
   };

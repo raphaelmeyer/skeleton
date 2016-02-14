@@ -1,12 +1,12 @@
 #include "application/application.h"
 
 #include <iostream>
-#include <cstdio>
-#include <cstdint>
+
 #include <fcntl.h>
 #include <sys/ioctl.h>
-#include <linux/types.h>
-#include <linux/spi/spidev.h>
+
+#include <linux/i2c.h>
+#include <linux/i2c-dev.h>
 
 namespace WS {
 
@@ -14,29 +14,54 @@ namespace WS {
   }
 
   void Application::run() {
-    std::cout << "Start ...\n";
 
-    _fd = open("/dev/spidev0.0", O_RDWR);
+    std::cout << "open device\n";
+
+    _fd = open("/dev/i2c-1", O_RDWR);
     if(_fd < 0) {
       abort("cannot open device");
     }
 
-    std::uint32_t mode = 0;
-    int ret = ioctl(_fd, SPI_IOC_WR_MODE32, &mode);
-    if(ret < 0) {
-      abort("cannot set spi mode");
+    std::cout << "set slave address\n";
+
+    int const address = 0x31;
+    if(ioctl(_fd, I2C_SLAVE, address) < 0) {
+      abort("failed to set slave address");
     }
 
-    std::uint32_t speed = 0;
-    ret = ioctl(_fd, SPI_IOC_RD_MAX_SPEED_HZ, &speed);
-    if(ret < 0) {
-      abort("cannot read spi speed");
-    }
-    std::cout << "  SPI speed = " << speed << "\n";
+    get_register(address, 0x01);
+    get_register(address, 0x2A);
 
-    std::cout << "Run ...\n";
-    std::cout << "Shutdown ...\n";
-    std::cout << "Done.\n";
+  }
+
+  void Application::get_register(int const address, uint8_t reg)
+  {
+    i2c_rdwr_ioctl_data command;
+    i2c_msg messages[2];
+
+    messages[0].addr = address;
+    messages[0].flags = 0;
+    messages[0].len = 1;
+    messages[0].buf = &reg;
+
+    uint8_t input[2];
+
+    messages[1].addr = address;
+    messages[1].flags = I2C_M_NOSTART | I2C_M_RD;
+    messages[1].len = 2;
+    messages[1].buf = input;
+
+    command.msgs = messages;
+    command.nmsgs = 2;
+    if(ioctl(this->_fd, I2C_RDWR, &command) < 0) {
+      abort("failed to read from slave");
+    }
+
+    std::cout << "read "
+    << static_cast<uint32_t>(input[0])
+    << " "
+    << static_cast<uint32_t>(input[1])
+    << "\n";
   }
 
   void Application::abort(std::string const & message) {
