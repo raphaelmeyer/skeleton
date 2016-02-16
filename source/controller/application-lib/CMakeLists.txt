@@ -13,5 +13,9 @@ target_include_directories(application
   PUBLIC include
   )
 
+target_link_libraries(application
+  PRIVATE pthread
+)
+
 set_property(TARGET application PROPERTY CXX_STANDARD 14)
 set_property(TARGET application PROPERTY CXX_STANDARD_REQUIRED ON)
