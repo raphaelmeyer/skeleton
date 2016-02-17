@@ -40,19 +40,14 @@ controller-wip: controller-cucumber
 controller-cucumber: src-amd64
 	./cmake-amd64 --build . --target controller-cucumber
 
-
 device-exe: src-avr
 	./cmake-avr --build . --target $@
 	docker cp avr-workspace:/workspace/device/device-exe/$@ artifacts/
 	docker cp avr-workspace:/workspace/device/device-exe/$@.hex artifacts/
 
-
-
 device-test: src-amd64
 	./cmake-amd64 --build . --target $@
 	./run-amd64 device/device-test/$@
-
-
 
 ########################################################################
 
@@ -151,17 +146,8 @@ tools/.avr-workspace:
 artifacts:
 	mkdir -p artifacts
 
-########################################################################
+
 # TODO
-########################################################################
-
-fw: fw-main
-
-fw-main: src-avr artifacts
-	./cmake-avr --build . --target $@
-	docker cp avr-workspace:/workspace/$@/$@.elf artifacts/
-	docker cp avr-workspace:/workspace/$@/$@.hex artifacts/
-
-install: fw
-	»·./avrdude -c arduino -p atmega328p -P /dev/ttyACM0 -b 115200 -U flash:w:fw.hex
+# device-install:
+# 	»·./avrdude -c arduino -p atmega328p -P /dev/ttyACM0 -b 115200 -U flash:w:fw.hex
 
