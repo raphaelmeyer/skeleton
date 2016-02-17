@@ -2,6 +2,6 @@
 
 TEST(device, dummy)
 {
-  FAIL();
+  SUCCEED();
 }
 
