@@ -7,7 +7,7 @@ BASE = 1.0.1
 all: controller device
 
 controller: controller-exe controller-test
-device: device-exe device-test
+device: device-exe device-test device-features
 
 ########################################################################
 
@@ -18,6 +18,7 @@ controller-wip:
 
 device-exe:
 device-test:
+device-features:
 
 ########################################################################
 
@@ -48,6 +49,11 @@ device-exe: src-avr
 device-test: src-amd64
 	./cmake-amd64 --build . --target $@
 	./run-amd64 device/device-test/$@
+
+device-features: device-cucumber
+
+device-cucumber: src-amd64
+	./cmake-amd64 --build . --target device-cucumber
 
 ########################################################################
 
