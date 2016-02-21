@@ -33,7 +33,7 @@ controller-features: controller-cucumber
 	./controller-features.sh -f pretty --tag ~@wip
 
 controller-wip: controller-cucumber
-	./controller-features.sh -f pretty --tag wip --@wip
+	./controller-features.sh -f pretty --tag @wip --wip
 
 controller-tests: application-test
 	./run-amd64 controller/application-test/application-test
@@ -51,6 +51,7 @@ device-exe: src-avr artifacts
 device-features: device-cucumber
 
 device-wip: device-cucumber
+	./device-features.sh -f pretty --tag @wip --wip
 
 device-tests: device-test
 	./run-amd64 device/device-test/device-test
