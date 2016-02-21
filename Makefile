@@ -25,9 +25,9 @@ device-wip:            #/ check device work in progress
 
 ########################################################################
 
-controller-exe: src-target artifacts
-	./cmake-target --build . --target $@
-	docker cp target-workspace:/workspace/controller/controller-exe/$@ artifacts/
+controller-exe: src-ybpi artifacts
+	./cmake-ybpi --build . --target $@
+	docker cp ybpi-workspace:/workspace/controller/controller-exe/$@ artifacts/
 
 controller-features: controller-cucumber
 	./controller-features.sh -f pretty --tag ~@wip
@@ -101,16 +101,16 @@ artifacts:
 
 ########################################################################
 
-clean: clean-amd64 clean-target clean-avr clean-artifacts
+clean: clean-amd64 clean-ybpi clean-avr clean-artifacts
 
 ci-clean: clean-workspace clean-artifacts
 
 clean-workspace:
 	-docker rm -v amd64-workspace
-	-docker rm -v target-workspace
+	-docker rm -v ybpi-workspace
 	-docker rm -v avr-workspace
 	rm -f tools/.amd64-workspace
-	rm -f tools/.target-workspace
+	rm -f tools/.ybpi-workspace
 	rm -f tools/.avr-workspace
 
 clean-artifacts:
@@ -120,8 +120,8 @@ clean-artifacts:
 clean-amd64: src-amd64
 	./cmake-amd64 --build . --target clean
 
-clean-target: src-target
-	./cmake-target --build . --target clean
+clean-ybpi: src-ybpi
+	./cmake-ybpi --build . --target clean
 
 clean-avr: src-avr
 	./cmake-avr --build . --target clean
@@ -131,17 +131,17 @@ clean-avr: src-avr
 src-amd64: tools/.amd64-workspace
 	./cmake-amd64 /home/user/src
 
-src-target: tools/.target-workspace source/arm-poky-linux-gnueabi.cmake
-	./cmake-target -DCMAKE_TOOLCHAIN_FILE=/home/user/src/arm-poky-linux-gnueabi.cmake /home/user/src
+src-ybpi: tools/.ybpi-workspace source/arm-poky-linux-gnueabi.cmake
+	./cmake-ybpi -DCMAKE_TOOLCHAIN_FILE=/home/user/src/arm-poky-linux-gnueabi.cmake /home/user/src
 
 src-avr: tools/.avr-workspace source/gcc-avr.cmake
 	./cmake-avr -DCMAKE_TOOLCHAIN_FILE=/home/user/src/gcc-avr.cmake /home/user/src
 
 ########################################################################
 
-tools/.target-workspace:
-	-docker rm -v target-workspace
-	docker create --name target-workspace raphaelmeyer/base:$(BASE)
+tools/.ybpi-workspace:
+	-docker rm -v ybpi-workspace
+	docker create --name ybpi-workspace raphaelmeyer/base:$(BASE)
 	touch $@
 
 tools/.amd64-workspace:
@@ -166,7 +166,7 @@ help:
 .SUFFIXES:
 
 .PHONY: clean
-.PHONY: clean-amd64 clean-target clean-avr
+.PHONY: clean-amd64 clean-ybpi clean-avr
 .PHONY: clean-artifacts clean-workspace
 .PHONY: ci-clean
 
