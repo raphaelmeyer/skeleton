@@ -160,6 +160,15 @@ help:
 
 ########################################################################
 
+.SUFFIXES:
+
+.PHONY: clean
+.PHONY: clean-amd64 clean-target clean-avr
+.PHONY: clean-artifacts clean-workspace
+.PHONY: ci-clean
+
+########################################################################
+
 # TODO
 # device-install:
 # 	»·./avrdude -c arduino -p atmega328p -P /dev/ttyACM0 -b 115200 -U flash:w:fw.hex
@@ -168,3 +177,5 @@ help:
 # Does not (re)build anything.
 #cmake-test-host: src-amd64/
 #	./cmake-amd64 --build . --target test
+
+
