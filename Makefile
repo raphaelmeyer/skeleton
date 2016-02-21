@@ -13,15 +13,15 @@ ci: ci-controller ci-device ci-reports
 
 ########################################################################
 
-controller-exe:
-controller-tests:
-controller-features:
-controller-wip:
+controller-exe:        #/ build controller executable
+controller-tests:      #/ run controller tests
+controller-features:   #/ check controller features
+controller-wip:        #/ check controller work in progress
 
-device-exe:
-device-tests:
-device-features:
-device-wip:
+device-exe:            #/ build device firmware
+device-tests:          #/ run device tests
+device-features:       #/ check device features
+device-wip:            #/ check device work in progress
 
 ########################################################################
 
@@ -150,6 +150,13 @@ tools/.avr-workspace:
 	-docker rm -v avr-workspace
 	docker create --name avr-workspace raphaelmeyer/base:${BASE}
 	touch $@
+
+########################################################################
+
+help:
+	@echo
+	@grep -E "^(\S+)\s*:\s*#/\s*(.*)$$" $(lastword $(MAKEFILE_LIST))
+	@echo
 
 ########################################################################
 
