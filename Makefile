@@ -82,7 +82,7 @@ ci-controller-tests: application-test
 	./run-amd64 mkdir -p reports/tests
 	./run-amd64 controller/application-test/application-test --gtest_output=xml:reports/tests/
 
-ci-device-features:
+ci-device-features: device-cucumber
 	./run-amd64 mkdir -p reports/features
 	./device-features.sh -t ~@wip -f progress -f html -o /workspace/reports/features/device.html -f json -o /workspace/reports/features/device.json
 
