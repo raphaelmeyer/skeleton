@@ -84,6 +84,7 @@ ci-controller-tests: application-test
 
 ci-device-features:
 	./run-amd64 mkdir -p reports/features
+	./device-features.sh -t ~@wip -f progress -f html -o /workspace/reports/features/device.html -f json -o /workspace/reports/features/device.json
 
 ci-device-tests: device-test
 	./run-amd64 mkdir -p reports/tests
