@@ -7,19 +7,11 @@ namespace {
   using cucumber::ScenarioScope;
   using namespace ::testing;
 
-  struct AppContext {
+  struct DeviceContext {
   };
 
-  GIVEN("^something$") {
-    ASSERT_THAT(1 + 2, Eq(3));
-  }
-
-  WHEN("^I do something$") {
-    FAIL();
-  }
-
-  THEN("^there will be something$") {
-    pending();
+  GIVEN("^succeed$") {
+    SUCCEED();
   }
 
 }

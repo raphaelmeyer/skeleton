@@ -49,6 +49,7 @@ device-exe: src-avr artifacts
 	docker cp avr-workspace:/workspace/device/device-exe/$@.hex artifacts/
 
 device-features: device-cucumber
+	./device-features.sh -f pretty --tag ~@wip
 
 device-wip: device-cucumber
 	./device-features.sh -f pretty --tag @wip --wip
