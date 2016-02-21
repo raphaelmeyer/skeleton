@@ -2,6 +2,7 @@
 *.done
 
 /artifacts/
+/reports/
 
 # clion projects
 .idea/
