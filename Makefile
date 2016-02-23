@@ -172,13 +172,15 @@ help:
 
 ########################################################################
 
+# Run tests registered with cmake.
+# Does not (re)build anything.
+cmake-run-tests: src-amd64
+	./cmake-amd64 --build . --target test
+
+########################################################################
+
 # TODO
 # device-install:
 # 	»·./avrdude -c arduino -p atmega328p -P /dev/ttyACM0 -b 115200 -U flash:w:fw.hex
-
-# Run tests registered with cmake.
-# Does not (re)build anything.
-#cmake-test-host: src-amd64/
-#	./cmake-amd64 --build . --target test
 
 

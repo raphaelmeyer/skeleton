@@ -17,4 +17,5 @@ add_subdirectory(device)
 ########################################################################
 
 enable_testing()
-add_test(NAME run-app-test COMMAND test::app-test)
+add_test(NAME run-application-test COMMAND test::application-test)
+add_test(NAME run-device-test COMMAND test::device-test)
