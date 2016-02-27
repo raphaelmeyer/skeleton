@@ -9,6 +9,7 @@ add_executable(device-cucumber
 add_executable(test::device-cucumber ALIAS device-cucumber)
 
 target_link_libraries(device-cucumber
+  PRIVATE device::device
   PRIVATE test::cucumber-cpp
   )
 

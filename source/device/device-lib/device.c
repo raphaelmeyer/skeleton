@@ -1,18 +1,13 @@
 #include "device/device.h"
 
-#include <avr/io.h>
-#include <util/delay.h>
-
-void Device_init()
+void Device_init(struct Device * self, struct Pwm * bell, struct Gpio * button)
 {
-  DDRB |= _BV(DDB5);
 }
 
-void Device_loop()
+void Device_start(struct Device * self)
 {
-  PORTB |= _BV(PORTB5);
-  _delay_ms(500);
+}
 
-  PORTB &= ~_BV(PORTB5);
-  _delay_ms(500);
+void Device_stop(struct Device * self)
+{
 }

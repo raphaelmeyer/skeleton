@@ -1,10 +1,9 @@
-set(SOURCE_FILES
-  device.c
-  include/device/device.h
-  )
 
 add_library(device
-  ${SOURCE_FILES}
+  device.c
+  include/device/device.h
+  include/device/gpio.h
+  include/device/pwm.h
   )
 add_library(device::device ALIAS device)
 
