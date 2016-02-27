@@ -1,7 +1,9 @@
 
 add_executable(device-cucumber
-  main.cc
-  device_context.h)
+  step_definitions/dummy.cc
+  step_definitions/steps.cc
+  step_definitions/device_context.h
+  )
 add_executable(test::device-cucumber ALIAS device-cucumber)
 
 target_link_libraries(device-cucumber

@@ -4,8 +4,8 @@
 
 #include "device_context.h"
 
-namespace {
-
+namespace
+{
   using cucumber::ScenarioScope;
   using namespace ::testing;
 
@@ -34,4 +34,3 @@ namespace {
   }
 
 }
-
