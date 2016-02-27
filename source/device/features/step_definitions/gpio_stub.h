@@ -14,6 +14,7 @@ public:
   Gpio & impl() { return _impl; }
 
 private:
+
   Gpio _impl;
 };
 

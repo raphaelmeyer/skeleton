@@ -5,8 +5,13 @@
 extern "C" {
 #endif
 
-struct Pwm
+struct IPwm
 {};
+
+struct Pwm
+{
+  struct IPwm interface;
+};
 
 #ifdef __cplusplus
 } // extern "C"

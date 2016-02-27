@@ -5,8 +5,15 @@
 extern "C" {
 #endif
 
+struct IGpio
+{
+  void (*foo)();
+};
+
 struct Gpio
-{};
+{
+  struct IGpio interface;
+};
 
 #ifdef __cplusplus
 } // extern "C"

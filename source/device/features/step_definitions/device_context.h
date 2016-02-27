@@ -22,7 +22,7 @@ public:
   void start()
   {
     _device_thread = std::thread([&]{
-      Device_init(&_device, &_bell.impl(), &_button.impl());
+      Device_init(&_device, (IPwm *)&_bell.impl(), (IGpio *)&_button.impl());
       Device_start(&_device);
     });
   }
@@ -30,6 +30,7 @@ public:
   void stop()
   {
     Device_stop(&_device);
+    _device_thread.join();
   }
 
   GpioStub & button() { return _button; }
