@@ -22,15 +22,14 @@ namespace
   }
 
   GIVEN("^I press the doorbell button$") {
-    // Set gpio stub to return high for a few cycles
-    // Next step: bounce/chatter
-    pending();
+    ScenarioScope<DeviceContext> context;
+    context->button().press();
   }
 
   THEN("^the doorbell rings$") {
-    // Check that pwm turned on once
-    // Next step: Check pwm param (frequency, duration)
-    pending();
+    ScenarioScope<DeviceContext> context;
+    PwmSpy & bell = context->bell();
+    ASSERT_THAT(bell.events(), SizeIs(1));
   }
 
 }

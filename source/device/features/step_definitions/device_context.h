@@ -1,15 +1,8 @@
 #ifndef SKELETON_DEVICE_CONTEXT_H
 #define SKELETON_DEVICE_CONTEXT_H
 
-class GpioStub
-{
-public:
-};
-
-class PwmSpy
-{
-public:
-};
+#include "gpio_stub.h"
+#include "pwm_spy.h"
 
 class DeviceContext
 {
@@ -30,10 +23,8 @@ public:
 
   }
 
-  GpioStub & button()
-  {
-    return _button;
-  }
+  GpioStub & button() { return _button; }
+  PwmSpy & bell() { return _bell; }
 
 private:
   GpioStub _button;

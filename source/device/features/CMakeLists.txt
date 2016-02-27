@@ -3,6 +3,8 @@ add_executable(device-cucumber
   step_definitions/dummy.cc
   step_definitions/steps.cc
   step_definitions/device_context.h
+  step_definitions/gpio_stub.h
+  step_definitions/pwm_spy.h
   )
 add_executable(test::device-cucumber ALIAS device-cucumber)
 
