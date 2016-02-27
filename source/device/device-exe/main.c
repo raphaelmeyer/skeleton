@@ -8,7 +8,7 @@ struct Gpio button;
 
 int main()
 {
-  Device_init(&device, &bell, &button);
+  Device_init(&device, (struct IPwm *)&bell, (struct IGpio *)&button);
   Device_start(&device);
 }
 
