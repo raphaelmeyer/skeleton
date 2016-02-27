@@ -5,9 +5,16 @@
 extern "C" {
 #endif
 
+enum Signal
+{
+  Signal_Undefined,
+  Signal_Low,
+  Signal_High
+};
+
 struct IGpio
 {
-  void (*foo)();
+  enum Signal (*get_signal)(struct IGpio *);
 };
 
 struct Gpio

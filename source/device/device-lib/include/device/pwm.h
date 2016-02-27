@@ -5,8 +5,13 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+
 struct IPwm
-{};
+{
+  void (* on)(struct IPwm * base, uint16_t frequency);
+  void (* off)(struct IPwm * base);
+};
 
 struct Pwm
 {
