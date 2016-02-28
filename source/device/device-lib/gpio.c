@@ -2,9 +2,9 @@
 
 #include <avr/io.h>
 
-void Gpio_init(struct Gpio * self, uint8_t volatile * port)
+void Gpio_init(struct Gpio * self, enum Port port, enum Pin pin)
 {
-  self->port = port;
+  self->port = &PINB;
 }
 
 void Gpio_set_direction(struct IGpio * base, enum Direction direction)

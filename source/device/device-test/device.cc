@@ -4,31 +4,36 @@
 
 using namespace ::testing;
 
-uint8_t PORTB = 0;
+uint8_t PINB = 0;
 
 namespace
 {
 
-TEST(A_gpio, configured_as_input_returns_its_pin_signal_state)
+TEST(An_input_gpio, returns_its_pin_signal_state)
 {
   Gpio gpio;
-  Gpio_init(&gpio, &PORTB);
+  Gpio_init(&gpio, Port_B, Pin_3);
   Gpio_set_direction((IGpio *)&gpio, Direction_Input);
 
-  PORTB = 0x00;
+  PINB = 0x00;
   ASSERT_THAT(Gpio_get_signal((IGpio *)&gpio), Eq(Signal_Low));
 
-  PORTB = 0x01;
+  PINB = 0x01;
   ASSERT_THAT(Gpio_get_signal((IGpio *)&gpio), Eq(Signal_High));
 }
 
 TEST(A_gpio, returns_undefined_if_not_configured_as_input)
 {
   Gpio gpio;
-  Gpio_init(&gpio, &PORTB);
+  Gpio_init(&gpio, Port_B, Pin_3);
 
-  PORTB = 0x00;
+  PINB = 0x00;
+  ASSERT_THAT(Gpio_get_signal((IGpio *)&gpio), Eq(Signal_Undefined));
+
+  Gpio_set_direction((IGpio *)&gpio, Direction_Output);
   ASSERT_THAT(Gpio_get_signal((IGpio *)&gpio), Eq(Signal_Undefined));
 }
+
+
 
 } // namespace

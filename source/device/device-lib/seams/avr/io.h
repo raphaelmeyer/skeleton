@@ -9,27 +9,36 @@
 
 extern uint8_t _BV(uint8_t bit);
 
+extern uint8_t PINB;
 extern uint8_t PORTB;
-
-extern uint8_t PORTB0;
-extern uint8_t PORTB1;
-extern uint8_t PORTB2;
-extern uint8_t PORTB3;
-extern uint8_t PORTB4;
-extern uint8_t PORTB5;
-extern uint8_t PORTB6;
-extern uint8_t PORTB7;
-
 extern uint8_t DDRB;
 
-extern uint8_t DDB0;
-extern uint8_t DDB1;
-extern uint8_t DDB2;
-extern uint8_t DDB3;
-extern uint8_t DDB4;
-extern uint8_t DDB5;
-extern uint8_t DDB6;
-extern uint8_t DDB7;
+uint8_t const PINB0 = 0;
+uint8_t const PINB1 = 1;
+uint8_t const PINB2 = 2;
+uint8_t const PINB3 = 3;
+uint8_t const PINB4 = 4;
+uint8_t const PINB5 = 5;
+uint8_t const PINB6 = 6;
+uint8_t const PINB7 = 7;
+
+uint8_t const PORTB0 = 0;
+uint8_t const PORTB1 = 1;
+uint8_t const PORTB2 = 2;
+uint8_t const PORTB3 = 3;
+uint8_t const PORTB4 = 4;
+uint8_t const PORTB5 = 5;
+uint8_t const PORTB6 = 6;
+uint8_t const PORTB7 = 7;
+
+uint8_t const DDB0 = 0;
+uint8_t const DDB1 = 1;
+uint8_t const DDB2 = 2;
+uint8_t const DDB3 = 3;
+uint8_t const DDB4 = 4;
+uint8_t const DDB5 = 5;
+uint8_t const DDB6 = 6;
+uint8_t const DDB7 = 7;
 
 
 #endif //SKELETON_IO_H
