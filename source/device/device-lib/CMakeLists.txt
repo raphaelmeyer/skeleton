@@ -1,6 +1,7 @@
 
 add_library(device
   device.c
+  gpio.c
   include/device/device.h
   include/device/gpio.h
   include/device/pwm.h

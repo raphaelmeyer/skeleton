@@ -5,9 +5,12 @@
 
 #include <vector>
 
+class PwmSpy;
+
 struct PwmStruct
 {
   IPwm interface;
+  PwmSpy & spy;
 };
 
 class PwmSpy
@@ -15,17 +18,20 @@ class PwmSpy
 public:
   PwmSpy()
     : _events()
+    , _impl()
   {
-    _impl.interface.on = PwmSpy::on;
-    _impl.interface.off = PwmSpy::off;
+    _impl.interface.on_for = PwmSpy::on_for;
   }
 
-  static void on(IPwm * base, uint16_t frequency)
+  static void on_for(IPwm * base, uint16_t frequency, uint16_t duration)
   {
+    PwmStruct * self = (PwmStruct *)base;
+    self->spy.on_for(frequency, duration);
   }
 
-  static void off(IPwm * base)
+  void on_for(uint16_t frequency, uint16_t duration)
   {
+    _events.push_back(Event());
   }
 
   struct Event{};
