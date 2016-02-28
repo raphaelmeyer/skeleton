@@ -6,6 +6,9 @@ using namespace ::testing;
 
 uint8_t PORTB = 0;
 
+namespace
+{
+
 TEST(A_gpio, configured_as_input_returns_its_pin_signal_state)
 {
   Gpio gpio;
@@ -19,3 +22,13 @@ TEST(A_gpio, configured_as_input_returns_its_pin_signal_state)
   ASSERT_THAT(Gpio_get_signal((IGpio *)&gpio), Eq(Signal_High));
 }
 
+TEST(A_gpio, returns_undefined_if_not_configured_as_input)
+{
+  Gpio gpio;
+  Gpio_init(&gpio);
+
+  PORTB = 0x00;
+  ASSERT_THAT(Gpio_get_signal((IGpio *)&gpio), Eq(Signal_Undefined));
+}
+
+} // namespace

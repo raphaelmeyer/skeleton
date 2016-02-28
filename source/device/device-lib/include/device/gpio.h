@@ -27,6 +27,7 @@ struct IGpio
 struct Gpio
 {
   struct IGpio interface;
+  enum Direction direction;
 };
 
 void Gpio_init(struct Gpio *);
