@@ -1,6 +1,8 @@
 #ifndef SKELETON_GPIO_H
 #define SKELETON_GPIO_H
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -28,9 +30,10 @@ struct Gpio
 {
   struct IGpio interface;
   enum Direction direction;
+  uint8_t volatile * port;
 };
 
-void Gpio_init(struct Gpio *);
+void Gpio_init(struct Gpio *, uint8_t volatile * port);
 void Gpio_set_direction(struct IGpio *, enum Direction);
 enum Signal Gpio_get_signal(struct IGpio *);
 

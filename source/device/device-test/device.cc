@@ -12,7 +12,7 @@ namespace
 TEST(A_gpio, configured_as_input_returns_its_pin_signal_state)
 {
   Gpio gpio;
-  Gpio_init(&gpio);
+  Gpio_init(&gpio, &PORTB);
   Gpio_set_direction((IGpio *)&gpio, Direction_Input);
 
   PORTB = 0x00;
@@ -25,7 +25,7 @@ TEST(A_gpio, configured_as_input_returns_its_pin_signal_state)
 TEST(A_gpio, returns_undefined_if_not_configured_as_input)
 {
   Gpio gpio;
-  Gpio_init(&gpio);
+  Gpio_init(&gpio, &PORTB);
 
   PORTB = 0x00;
   ASSERT_THAT(Gpio_get_signal((IGpio *)&gpio), Eq(Signal_Undefined));
