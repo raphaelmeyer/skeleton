@@ -1,13 +1,7 @@
-//
-// Created by raphael on 09/02/16.
-//
-
-#ifndef SKELETON_IO_H
-#define SKELETON_IO_H
+#ifndef SEAMS_AVR_IO_H
+#define SEAMS_AVR_IO_H
 
 #include <stdint.h>
-
-extern uint8_t _BV(uint8_t bit);
 
 extern uint8_t PINB;
 extern uint8_t PORTB;
@@ -40,5 +34,4 @@ uint8_t const DDB5 = 5;
 uint8_t const DDB6 = 6;
 uint8_t const DDB7 = 7;
 
-
-#endif //SKELETON_IO_H
+#endif //SEAMS_AVR_IO_H

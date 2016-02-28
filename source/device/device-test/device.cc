@@ -2,6 +2,8 @@
 
 #include <device/gpio.h>
 
+#include "pretty_print.h"
+
 using namespace ::testing;
 
 uint8_t PINB = 0;
@@ -28,6 +30,17 @@ TEST(An_input_gpio, returns_low_when_its_pin_is_not_set)
   PINB = 0;
   ASSERT_THAT(Gpio_get_signal((IGpio *)&gpio), Eq(Signal_Low));
 }
+
+TEST(An_input_gpio, is_bound_to_a_single_pin)
+{
+  Gpio gpio;
+  Gpio_init(&gpio, Port_B, Pin_3);
+  Gpio_set_direction((IGpio *)&gpio, Direction_Input);
+
+  PINB = ~(1 << 3);
+  ASSERT_THAT(Gpio_get_signal((IGpio *)&gpio), Eq(Signal_Low));
+}
+
 
 TEST(A_gpio, returns_undefined_if_not_configured_as_input)
 {

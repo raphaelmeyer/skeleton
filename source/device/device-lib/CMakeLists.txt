@@ -5,6 +5,7 @@ add_library(device
   include/device/device.h
   include/device/gpio.h
   include/device/pwm.h
+  include/device/io.h
   )
 add_library(device::device ALIAS device)
 
