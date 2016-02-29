@@ -5,41 +5,29 @@
 
 #include <thread>
 #include <chrono>
+#include <avr/io.h>
 
-struct GpioStruct
-{
-  IGpio interface;
-  Signal signal;
-};
-
-class GpioStub
+class ButtonStub
 {
 public:
-  GpioStub()
+  ButtonStub()
   {
-    _impl.interface.get_signal = GpioStub::get_signal;
-    _impl.signal = Signal_Undefined;
+    _port = &PINB;
+    _pin = 0;
   }
 
   void press()
   {
+    // TODO bounce/chatter
     using namespace std::chrono_literals;
-    _impl.signal = Signal_High;
+    *_port |= (1 << _pin);
     std::this_thread::sleep_for(1s);
-    _impl.signal = Signal_Low;
+    *_port &= ~(1 << _pin);
   }
-
-  static Signal get_signal(IGpio * base)
-  {
-    GpioStruct * self = (GpioStruct *)base;
-    return self->signal;
-  }
-
-  GpioStruct & impl() { return _impl; }
 
 private:
-  GpioStruct _impl;
-
+  uint8_t volatile * _port;
+  uint8_t _pin;
 };
 
 #endif //SKELETON_GPIO_STUB_H

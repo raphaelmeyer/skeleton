@@ -2,6 +2,7 @@
 #define SKELETON_DEVICE_CONTEXT_H
 
 #include <device/device.h>
+#include <device/gpio.h>
 
 #include "gpio_stub.h"
 #include "pwm_spy.h"
@@ -14,6 +15,7 @@ public:
   DeviceContext()
     : _button()
     , _bell()
+    , _gpio()
     , _device()
     , _device_thread()
   {
@@ -22,7 +24,8 @@ public:
   void start()
   {
     _device_thread = std::thread([&]{
-      Device_init(&_device, (IPwm *)&_bell.impl(), (IGpio *)&_button.impl());
+      // TODO duplication -> extract to method
+      Device_init(&_device, (IPwm *)&_bell.impl(), (IGpio *)&_gpio);
       Device_start(&_device);
     });
   }
@@ -33,13 +36,14 @@ public:
     _device_thread.join();
   }
 
-  GpioStub & button() { return _button; }
   PwmSpy & bell() { return _bell; }
+  ButtonStub & button() { return _button; }
 
 private:
-  GpioStub _button;
+  ButtonStub _button;
   PwmSpy _bell;
 
+  Gpio _gpio;
   Device _device;
 
   std::thread _device_thread;
