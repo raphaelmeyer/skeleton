@@ -3,9 +3,9 @@
 
 #include <stdint.h>
 
-extern uint8_t PINB;
-extern uint8_t PORTB;
-extern uint8_t DDRB;
+extern uint8_t volatile PINB;
+extern uint8_t volatile PORTB;
+extern uint8_t volatile DDRB;
 
 uint8_t const PINB0 = 0;
 uint8_t const PINB1 = 1;
@@ -34,9 +34,9 @@ uint8_t const DDB5 = 5;
 uint8_t const DDB6 = 6;
 uint8_t const DDB7 = 7;
 
-extern uint8_t PINC;
-extern uint8_t PORTC;
-extern uint8_t DDRC;
+extern uint8_t volatile PINC;
+extern uint8_t volatile PORTC;
+extern uint8_t volatile DDRC;
 
 uint8_t const PINC0 = 0;
 uint8_t const PINC1 = 1;
@@ -65,9 +65,9 @@ uint8_t const DDC5 = 5;
 uint8_t const DDC6 = 6;
 uint8_t const DDC7 = 7;
 
-extern uint8_t PIND;
-extern uint8_t PORTD;
-extern uint8_t DDRD;
+extern uint8_t volatile PIND;
+extern uint8_t volatile PORTD;
+extern uint8_t volatile DDRD;
 
 uint8_t const PIND0 = 0;
 uint8_t const PIND1 = 1;
