@@ -5,7 +5,14 @@
 
 void Gpio_init(struct Gpio * self, enum Port port, uint8_t pin)
 {
-  self->port = &PINB;
+  if (port == Port_B) {
+    self->port = &PINB;
+  } else if (port == Port_C) {
+    self->port = &PINC;
+  } else if (port == Port_D) {
+    self->port = &PIND;
+  }
+
   self->pin = pin;
 }
 

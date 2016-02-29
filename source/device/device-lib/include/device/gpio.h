@@ -23,11 +23,19 @@ enum Direction
 
 enum Port
 {
-  Port_B
+  Port_B,
+  Port_C,
+  Port_D
 };
 
 uint8_t const Pin_0 = 0;
+uint8_t const Pin_1 = 1;
+uint8_t const Pin_2 = 2;
 uint8_t const Pin_3 = 3;
+uint8_t const Pin_4 = 4;
+uint8_t const Pin_5 = 5;
+uint8_t const Pin_6 = 6;
+uint8_t const Pin_7 = 7;
 
 struct IGpio
 {
