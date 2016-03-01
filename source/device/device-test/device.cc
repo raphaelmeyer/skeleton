@@ -109,7 +109,6 @@ TEST(A_gpio, sets_the_direction_bit_when_the_direction_is_changed_from_input_to_
   ASSERT_TRUE(ddr_bit);
 }
 
-/*
 TEST(A_gpio, clears_the_direction_bit_when_the_direction_is_changed_from_output_to_input)
 {
   Gpio gpio;
@@ -121,7 +120,6 @@ TEST(A_gpio, clears_the_direction_bit_when_the_direction_is_changed_from_output_
 
   ASSERT_FALSE(ddr_bit);
 }
-*/
 
 TEST(A_gpio, returns_undefined_if_not_configured_as_input)
 {
