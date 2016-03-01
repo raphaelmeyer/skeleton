@@ -1,6 +1,6 @@
 
 add_executable(device-test
-  device.cc
+  gpio.cc
   pretty_print.h)
 add_executable(test::device-test ALIAS device-test)
 
