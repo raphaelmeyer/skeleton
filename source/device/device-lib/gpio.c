@@ -19,6 +19,9 @@ void Gpio_init(struct Gpio * self, enum Port port, uint8_t pin)
 void Gpio_set_direction(struct Gpio * self, enum Direction direction)
 {
   self->direction = direction;
+  if(Direction_Output == direction) {
+    DDRD |= (1 << self->pin);
+  }
 }
 
 enum Signal Gpio_get_signal(struct Gpio * self)

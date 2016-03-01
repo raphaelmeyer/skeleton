@@ -10,6 +10,8 @@ uint8_t PINB = 0;
 uint8_t PINC = 0;
 uint8_t PIND = 0;
 
+uint8_t volatile DDRD = 0;
+
 namespace
 {
 
@@ -69,6 +71,28 @@ TEST(An_input_gpio, is_bound_to_a_certain_port)
   ASSERT_THAT(Gpio_get_signal(&pin_c_5), Eq(Signal_Low));
   ASSERT_THAT(Gpio_get_signal(&pin_d_4), Eq(Signal_Low));
   ASSERT_THAT(Gpio_get_signal(&pin_d_5), Eq(Signal_High));
+}
+
+TEST(An_input_gpio, sets_the_direction_bit_to_zero)
+{
+  Gpio gpio;
+  Gpio_init(&gpio, Port_D, Pin_6);
+  Gpio_set_direction(&gpio, Direction_Input);
+
+  bool const ddr_bit = DDRD & (1 << 6);
+
+  ASSERT_FALSE(ddr_bit);
+}
+
+TEST(An_output_gpio, sets_the_direction_bit_to_one)
+{
+  Gpio gpio;
+  Gpio_init(&gpio, Port_D, Pin_6);
+  Gpio_set_direction(&gpio, Direction_Output);
+
+  bool const ddr_bit = DDRD & (1 << 6);
+
+  ASSERT_TRUE(ddr_bit);
 }
 
 TEST(A_gpio, returns_undefined_if_not_configured_as_input)
