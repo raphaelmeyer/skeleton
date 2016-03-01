@@ -23,7 +23,7 @@ void Gpio_set_direction(struct Gpio * self, enum Direction direction)
 {
   self->direction = direction;
   if(Direction_Output == direction) {
-    *self->ddr |= (1 << self->pin);
+    *self->ddr |= bit(self->pin);
   } else if(Direction_Input == direction) {
     *self->ddr &= ~(bit(self->pin));
   }
