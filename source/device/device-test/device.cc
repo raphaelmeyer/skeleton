@@ -135,6 +135,4 @@ TEST(A_gpio, returns_undefined_if_not_configured_as_input)
   ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Undefined));
 }
 
-
-
 } // namespace

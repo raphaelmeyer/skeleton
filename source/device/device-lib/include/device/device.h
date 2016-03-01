@@ -6,13 +6,13 @@ extern "C" {
 #endif
 
 struct IPwm;
-struct IGpio;
+struct Gpio;
 
 struct Device
 {
 };
 
-void Device_init(struct Device * self, struct IPwm * bell, struct IGpio * button);
+void Device_init(struct Device * self, struct IPwm * bell, struct Gpio * button);
 void Device_start(struct Device *);
 void Device_stop(struct Device *);
 
