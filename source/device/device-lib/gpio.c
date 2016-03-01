@@ -16,16 +16,14 @@ void Gpio_init(struct Gpio * self, enum Port port, uint8_t pin)
   self->pin = pin;
 }
 
-void Gpio_set_direction(struct IGpio * base, enum Direction direction)
+void Gpio_set_direction(struct Gpio * self, enum Direction direction)
 {
-  struct Gpio * self =(struct Gpio *)base;
   self->direction = direction;
 }
 
-enum Signal Gpio_get_signal(struct IGpio * base)
+enum Signal Gpio_get_signal(struct Gpio * self)
 {
   enum Signal signal = Signal_Undefined;
-  struct Gpio * self =(struct Gpio *)base;
   if(self->direction == Direction_Input) {
     if(*(self->port) & bit(self->pin)) {
       signal = Signal_High;

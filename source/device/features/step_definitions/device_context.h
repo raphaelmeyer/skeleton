@@ -24,7 +24,6 @@ public:
   void start()
   {
     _device_thread = std::thread([&]{
-      // TODO duplication -> extract to method
       Device_init(&_device, (IPwm *)&_bell.impl(), (IGpio *)&_gpio);
       Device_start(&_device);
     });

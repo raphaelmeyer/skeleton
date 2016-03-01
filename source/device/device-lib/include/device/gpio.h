@@ -37,22 +37,16 @@ uint8_t const Pin_5 = 5;
 uint8_t const Pin_6 = 6;
 uint8_t const Pin_7 = 7;
 
-struct IGpio
-{
-  enum Signal (*get_signal)(struct IGpio *);
-};
-
 struct Gpio
 {
-  struct IGpio interface;
   enum Direction direction;
   uint8_t volatile * port;
   uint8_t pin;
 };
 
 void Gpio_init(struct Gpio *, enum Port port, uint8_t pin);
-void Gpio_set_direction(struct IGpio *, enum Direction);
-enum Signal Gpio_get_signal(struct IGpio *);
+void Gpio_set_direction(struct Gpio *, enum Direction);
+enum Signal Gpio_get_signal(struct Gpio *);
 
 #ifdef __cplusplus
 } // extern "C"
