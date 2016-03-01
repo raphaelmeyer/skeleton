@@ -41,6 +41,7 @@ struct Gpio
 {
   enum Direction direction;
   uint8_t volatile * port;
+  uint8_t volatile * ddr;
   uint8_t pin;
 };
 
