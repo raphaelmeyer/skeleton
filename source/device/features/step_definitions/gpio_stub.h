@@ -10,23 +10,23 @@
 class ButtonStub
 {
 public:
-  ButtonStub()
+  ButtonStub(uint8_t volatile * pin_register, uint8_t pin)
   {
-    _port = &PINB;
-    _pin = 0;
+    _pin_register = pin_register;
+    _pin = pin;
   }
 
   void press()
   {
     // TODO bounce/chatter
     using namespace std::chrono_literals;
-    *_port |= (1 << _pin);
+    *_pin_register |= (1 << _pin);
     std::this_thread::sleep_for(1s);
-    *_port &= ~(1 << _pin);
+    *_pin_register &= ~(1 << _pin);
   }
 
 private:
-  uint8_t volatile * _port;
+  uint8_t volatile * _pin_register;
   uint8_t _pin;
 };
 

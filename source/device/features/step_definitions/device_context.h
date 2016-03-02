@@ -13,17 +13,23 @@ class DeviceContext
 {
 public:
   DeviceContext()
-    : _button()
+    : _gpio()
     , _bell()
-    , _gpio()
     , _device()
+    , _button(&PINB, 0)
     , _device_thread()
   {
   }
 
   void start()
   {
+
+    // _bell.init();
+
     _device_thread = std::thread([&]{
+
+      Gpio_init(&_gpio, Port_B, Pin_0);
+
       Device_init(&_device, (IPwm *)&_bell.impl(), &_gpio);
       Device_start(&_device);
     });
@@ -39,11 +45,10 @@ public:
   ButtonStub & button() { return _button; }
 
 private:
-  ButtonStub _button;
-  PwmSpy _bell;
-
   Gpio _gpio;
+  PwmSpy _bell;
   Device _device;
+  ButtonStub _button;
 
   std::thread _device_thread;
 };

@@ -4,10 +4,6 @@
 
 #include "device_context.h"
 
-uint8_t volatile PINB;
-uint8_t volatile PORTB;
-uint8_t volatile DDRB;
-
 namespace
 {
   using cucumber::ScenarioScope;
