@@ -11,8 +11,9 @@ struct Gpio button;
 int main()
 {
   Device_init(&device, (struct IPwm *)&bell, &button);
-  Device_start(&device);
+  while(true) {
+    Device_loop(&device);
+  }
 
-  while(true);
 }
 

@@ -17,26 +17,29 @@ public:
     , _bell()
     , _device()
     , _button(&PINB, 0)
+    , _running(false)
     , _device_thread()
   {
   }
 
   void start()
   {
-
-    // _bell.init();
-
+    _running = true;
     _device_thread = std::thread([&]{
+      // Most of the following is duplicate code from "main".
+      // Is there something we can do about it?
       Gpio_init(&_gpio, Port_B, Pin_0);
 
       Device_init(&_device, (IPwm *)&_bell.impl(), &_gpio);
-      Device_start(&_device);
+      while(_running) {
+        Device_loop(&_device);
+      }
     });
   }
 
   void stop()
   {
-    Device_stop(&_device);
+    _running = false;
     _device_thread.join();
   }
 
@@ -50,6 +53,7 @@ private:
 
   Fake::Button _button;
 
+  bool _running;
   std::thread _device_thread;
 };
 

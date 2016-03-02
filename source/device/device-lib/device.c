@@ -4,12 +4,7 @@ void Device_init(struct Device * self, struct IPwm * bell, struct Gpio * button)
 {
 }
 
-void Device_start(struct Device * self)
-{
-
-}
-
-void Device_stop(struct Device * self)
+void Device_loop(struct Device * self)
 {
 
 }

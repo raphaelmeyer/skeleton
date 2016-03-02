@@ -13,8 +13,7 @@ struct Device
 };
 
 void Device_init(struct Device * self, struct IPwm * bell, struct Gpio * button);
-void Device_start(struct Device *);
-void Device_stop(struct Device *);
+void Device_loop(struct Device *);
 
 #ifdef __cplusplus
 } // extern "C"
