@@ -1,7 +1,9 @@
 
 add_executable(device-test
+  device.cc
   gpio.cc
-  pretty_print.h)
+  pretty_print.h
+  )
 add_executable(test::device-test ALIAS device-test)
 
 target_link_libraries(device-test
