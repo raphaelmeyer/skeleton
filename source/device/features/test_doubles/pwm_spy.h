@@ -21,10 +21,8 @@ class Pwm
 public:
   Pwm()
     : _events()
-    , _impl{IPwm{}, *this}
+    , _impl{{Pwm::on, Pwm::off}, *this}
   {
-    _impl.interface.on = Pwm::on;
-    _impl.interface.off = Pwm::off;
   }
 
   static void on(IPwm * base, uint16_t frequency)
