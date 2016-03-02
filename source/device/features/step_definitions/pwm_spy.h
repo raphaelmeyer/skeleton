@@ -20,21 +20,36 @@ public:
     : _events()
     , _impl()
   {
-    _impl.interface.on_for = PwmSpy::on_for;
+    _impl.interface.on = PwmSpy::on;
+    _impl.interface.off = PwmSpy::off;
   }
 
-  static void on_for(IPwm * base, uint16_t frequency, uint16_t duration)
+  static void on(IPwm * base, uint16_t frequency)
   {
     PwmStruct * self = (PwmStruct *)base;
-    self->spy.on_for(frequency, duration);
+    self->spy.on(frequency);
   }
 
-  void on_for(uint16_t frequency, uint16_t duration)
+  void on(uint16_t frequency)
   {
-    _events.push_back(Event());
+    _events.push_back(Event{"on"});
   }
 
-  struct Event{};
+  static void off(IPwm * base)
+  {
+    PwmStruct * self = (PwmStruct *)base;
+    self->spy.off();
+  }
+
+  void off()
+  {
+    _events.push_back(Event{"off"});
+  }
+
+  struct Event{
+    std::string name;
+    // time
+  };
   std::vector<Event> const & events() { return _events; }
 
   Pwm & impl() { return _impl; }
