@@ -28,7 +28,7 @@ namespace
 
   THEN("^the doorbell rings for about (\\d+) ms$") {
     ScenarioScope<DeviceContext> context;
-    PwmSpy & bell = context->bell();
+    Spy::Pwm & bell = context->bell();
     ASSERT_THAT(bell.events(), SizeIs(2));
     ASSERT_THAT(bell.events().at(0).name, StrEq("on"));
     ASSERT_THAT(bell.events().at(1).name, StrEq("off"));

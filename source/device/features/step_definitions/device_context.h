@@ -4,7 +4,7 @@
 #include <device/device.h>
 #include <device/gpio.h>
 
-#include "gpio_stub.h"
+#include "button_fake.h"
 #include "pwm_spy.h"
 
 #include <thread>
@@ -27,7 +27,6 @@ public:
     // _bell.init();
 
     _device_thread = std::thread([&]{
-
       Gpio_init(&_gpio, Port_B, Pin_0);
 
       Device_init(&_device, (IPwm *)&_bell.impl(), &_gpio);
@@ -41,14 +40,15 @@ public:
     _device_thread.join();
   }
 
-  PwmSpy & bell() { return _bell; }
-  ButtonStub & button() { return _button; }
+  Spy::Pwm & bell() { return _bell; }
+  Fake::Button & button() { return _button; }
 
 private:
   Gpio _gpio;
-  PwmSpy _bell;
+  Spy::Pwm _bell;
   Device _device;
-  ButtonStub _button;
+
+  Fake::Button _button;
 
   std::thread _device_thread;
 };

@@ -5,28 +5,31 @@
 
 #include <vector>
 
-class PwmSpy;
+namespace Spy { class Pwm; }
 
-struct PwmStruct
+struct PwmSpy
 {
   IPwm interface;
-  PwmSpy & spy;
+  Spy::Pwm & spy;
 };
 
-class PwmSpy
+namespace Spy
+{
+
+class Pwm
 {
 public:
-  PwmSpy()
+  Pwm()
     : _events()
-    , _impl()
+    , _impl{IPwm{}, *this}
   {
-    _impl.interface.on = PwmSpy::on;
-    _impl.interface.off = PwmSpy::off;
+    _impl.interface.on = Pwm::on;
+    _impl.interface.off = Pwm::off;
   }
 
   static void on(IPwm * base, uint16_t frequency)
   {
-    PwmStruct * self = (PwmStruct *)base;
+    PwmSpy * self = (PwmSpy *)base;
     self->spy.on(frequency);
   }
 
@@ -37,7 +40,7 @@ public:
 
   static void off(IPwm * base)
   {
-    PwmStruct * self = (PwmStruct *)base;
+    PwmSpy * self = (PwmSpy *)base;
     self->spy.off();
   }
 
@@ -46,17 +49,20 @@ public:
     _events.push_back(Event{"off"});
   }
 
-  struct Event{
+  struct Event
+  {
     std::string name;
     // time
   };
   std::vector<Event> const & events() { return _events; }
 
-  Pwm & impl() { return _impl; }
+  PwmSpy & impl() { return _impl; }
 
 private:
   std::vector<Event> _events;
-  Pwm _impl;
+  PwmSpy _impl;
 };
+
+} // namespace
 
 #endif //SKELETON_PWM_SPY_H

@@ -2,11 +2,13 @@
 add_executable(device-cucumber
   step_definitions/dummy.cc
   step_definitions/steps.cc
-  step_definitions/device_context.h
-  step_definitions/gpio_stub.h
-  step_definitions/pwm_spy.h
-  step_definitions/seams.cc)
+  test_doubles/seams.cc
+  )
 add_executable(test::device-cucumber ALIAS device-cucumber)
+
+target_include_directories(device-cucumber
+  PRIVATE test_doubles
+  )
 
 target_link_libraries(device-cucumber
   PRIVATE device::device

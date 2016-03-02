@@ -7,10 +7,12 @@
 #include <chrono>
 #include <avr/io.h>
 
-class ButtonStub
+namespace Fake {
+
+class Button
 {
 public:
-  ButtonStub(uint8_t volatile * pin_register, uint8_t pin)
+  Button(uint8_t volatile * pin_register, uint8_t pin)
   {
     _pin_register = pin_register;
     _pin = pin;
@@ -29,5 +31,7 @@ private:
   uint8_t volatile * _pin_register;
   uint8_t _pin;
 };
+
+} // namespace
 
 #endif //SKELETON_GPIO_STUB_H
