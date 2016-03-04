@@ -2,9 +2,9 @@
 
 #include <device/gpio.h>
 
-#include "pretty_print.h"
-
 #include <avr/io.h>
+
+#include "pretty_print.h"
 
 using namespace ::testing;
 
