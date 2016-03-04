@@ -25,13 +25,13 @@ public:
   {
   }
 
-  static void on(IPwm * base, uint16_t frequency)
+  static void on(IPwm * base)
   {
     PwmSpy * self = (PwmSpy *)base;
-    self->spy.on(frequency);
+    self->spy.on();
   }
 
-  void on(uint16_t frequency)
+  void on()
   {
     _events.push_back(Event{"on"});
   }

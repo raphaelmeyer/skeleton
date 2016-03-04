@@ -28,14 +28,14 @@ enum Port
   Port_D
 };
 
-uint8_t const Pin_0 = 0;
-uint8_t const Pin_1 = 1;
-uint8_t const Pin_2 = 2;
-uint8_t const Pin_3 = 3;
-uint8_t const Pin_4 = 4;
-uint8_t const Pin_5 = 5;
-uint8_t const Pin_6 = 6;
-uint8_t const Pin_7 = 7;
+extern uint8_t const Pin_0;
+extern uint8_t const Pin_1;
+extern uint8_t const Pin_2;
+extern uint8_t const Pin_3;
+extern uint8_t const Pin_4;
+extern uint8_t const Pin_5;
+extern uint8_t const Pin_6;
+extern uint8_t const Pin_7;
 
 struct Gpio
 {

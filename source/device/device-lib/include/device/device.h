@@ -10,6 +10,8 @@ struct Gpio;
 
 struct Device
 {
+  struct IPwm * bell;
+  struct Gpio * button;
 };
 
 void Device_init(struct Device * self, struct IPwm * bell, struct Gpio * button);

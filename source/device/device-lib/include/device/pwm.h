@@ -9,7 +9,7 @@ extern "C" {
 
 struct IPwm
 {
-  void (* on)(struct IPwm * base, uint16_t frequency);
+  void (* on)(struct IPwm * base);
   void (* off)(struct IPwm * base);
 };
 
@@ -17,6 +17,8 @@ struct Pwm
 {
   struct IPwm interface;
 };
+
+void Pwm_on(struct IPwm *);
 
 #ifdef __cplusplus
 } // extern "C"
