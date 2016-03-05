@@ -2,5 +2,5 @@
 
 void Pwm_on(struct IPwm * base)
 {
-
+  base->on(base);
 }
