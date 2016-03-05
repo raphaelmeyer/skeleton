@@ -24,6 +24,20 @@ struct PwmStub
 };
 
 
+TEST(The_device, configures_the_button_pin_as_an_input)
+{
+  Gpio button;
+  Device testee;
+
+  Gpio_init(&button, Port_D, Pin_4);
+  DDRD = 0xFF;
+
+  Device_init(&testee, nullptr, &button);
+
+  bool const ddr_bit = DDRD & (1 << 4);
+  ASSERT_FALSE(ddr_bit);
+}
+
 TEST(The_device, DISABLED_turns_on_the_bell_pwm_when_the_button_signal_is_high)
 {
   Gpio button;
