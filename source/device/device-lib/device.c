@@ -13,4 +13,7 @@ void Device_init(struct Device * self, struct IPwm * bell, struct Gpio * button)
 
 void Device_loop(struct Device * self)
 {
+  if(Signal_High == Gpio_get_signal(self->button)) {
+    Pwm_on(self->bell);
+  }
 }

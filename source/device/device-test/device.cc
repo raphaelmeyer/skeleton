@@ -38,7 +38,7 @@ TEST(The_device, configures_the_button_pin_as_an_input)
   ASSERT_FALSE(ddr_bit);
 }
 
-TEST(The_device, DISABLED_turns_on_the_bell_pwm_when_the_button_signal_is_high)
+TEST(The_device, turns_on_the_bell_pwm_when_the_button_signal_is_high)
 {
   Gpio button;
   PwmStub bell{{PwmStub::on, nullptr}, false};
