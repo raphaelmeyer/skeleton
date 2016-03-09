@@ -7,6 +7,7 @@ extern "C" {
 
 struct IPwm;
 struct Gpio;
+struct ITimer;
 
 struct Device
 {
@@ -14,7 +15,8 @@ struct Device
   struct Gpio * button;
 };
 
-void Device_init(struct Device * self, struct IPwm * bell, struct Gpio * button);
+void Device_init(struct Device * self, struct IPwm * bell,
+                 struct Gpio * button, struct ITimer * timer);
 void Device_loop(struct Device *);
 
 #ifdef __cplusplus

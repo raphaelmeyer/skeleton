@@ -3,7 +3,7 @@
 #include "device/pwm.h"
 #include "device/gpio.h"
 
-void Device_init(struct Device * self, struct IPwm * bell, struct Gpio * button)
+void Device_init(struct Device * self, struct IPwm * bell, struct Gpio * button, struct ITimer * timer)
 {
   self->bell = bell;
   self->button = button;
