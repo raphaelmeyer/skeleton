@@ -13,6 +13,7 @@ struct Device
 {
   struct IPwm * bell;
   struct Gpio * button;
+  struct ITimer * timer;
 };
 
 void Device_init(struct Device * self, struct IPwm * bell,

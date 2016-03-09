@@ -24,6 +24,16 @@ struct PwmStub
   }
 };
 
+
+struct TimerStub
+{
+  ITimer interface;
+
+  static void start(ITimer *) {}
+  static void stop(ITimer *) {}
+  static bool expired(ITimer *) { return false; }
+};
+
 struct TimerSpy
 {
   enum State {
@@ -50,12 +60,13 @@ struct TimerSpy
 TEST(The_device, configures_the_button_pin_as_an_input)
 {
   Gpio button;
+  TimerStub timer{{TimerStub::start, TimerStub::stop, TimerStub::expired}};
   Device testee;
 
   Gpio_init(&button, Port_D, Pin_4);
   DDRD = 0xFF;
 
-  Device_init(&testee, nullptr, &button, NULL);
+  Device_init(&testee, nullptr, &button, (ITimer *)&timer);
 
   bool const ddr_bit = DDRD & (1 << 4);
   ASSERT_FALSE(ddr_bit);
@@ -65,10 +76,11 @@ TEST(The_device, turns_on_the_bell_pwm_when_the_button_signal_is_high)
 {
   Gpio button;
   PwmStub bell{{PwmStub::on, nullptr}, false};
+  TimerStub timer{{TimerStub::start, TimerStub::stop, TimerStub::expired}};
   Device testee;
 
   Gpio_init(&button, Port_C, Pin_2);
-  Device_init(&testee, (IPwm *)&bell, &button, NULL);
+  Device_init(&testee, (IPwm *)&bell, &button, (ITimer *)&timer);
 
   PINC = (1 << 2);
   Device_loop(&testee);
@@ -76,10 +88,10 @@ TEST(The_device, turns_on_the_bell_pwm_when_the_button_signal_is_high)
   ASSERT_TRUE(bell.turned_on);
 }
 
-TEST(The_device, DISABLED_sets_a_timer_to_rings_the_bell_for_a_certain_time)
+TEST(The_device, sets_a_timer_to_rings_the_bell_for_a_certain_time)
 {
   Gpio button;
-  TimerSpy timer{{}, TimerSpy::Idle};
+  TimerSpy timer{{TimerSpy::start, nullptr, nullptr}, TimerSpy::Idle};
   PwmStub bell{{PwmStub::on, nullptr}, false};
   Device testee;
 
