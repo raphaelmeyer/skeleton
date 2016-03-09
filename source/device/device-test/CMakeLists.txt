@@ -4,6 +4,7 @@ add_executable(device-test
   gpio.cc
   pretty_print.h
   pwm.cc
+  timer.cc
   seams.cc
   )
 add_executable(test::device-test ALIAS device-test)
