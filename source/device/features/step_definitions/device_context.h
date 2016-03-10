@@ -3,6 +3,7 @@
 
 #include <device/device.h>
 #include <device/gpio.h>
+#include <device/timer.h>
 
 #include "button_fake.h"
 #include "pwm_spy.h"
@@ -30,7 +31,7 @@ public:
       // Is there something we can do about it?
       Gpio_init(&_gpio, Port_B, Pin_0);
 
-      Device_init(&_device, (IPwm *)&_bell.impl(), &_gpio);
+      Device_init(&_device, (IPwm *)&_bell.impl(), &_gpio, (ITimer *)&_timer);
       while(_running) {
         Device_loop(&_device);
       }
@@ -50,6 +51,7 @@ private:
   Gpio _gpio;
   Spy::Pwm _bell;
   Device _device;
+  ITimer _timer;
 
   Fake::Button _button;
 

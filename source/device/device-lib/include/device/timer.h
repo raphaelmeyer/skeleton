@@ -15,6 +15,11 @@ struct ITimer
   bool (* expired)(struct ITimer *);
 };
 
+struct Timer
+{
+  struct ITimer interface;
+};
+
 void Timer_start(struct ITimer *);
 
 #ifdef __cplusplus
