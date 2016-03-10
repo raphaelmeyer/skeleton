@@ -9,11 +9,18 @@ struct IPwm;
 struct Gpio;
 struct ITimer;
 
+enum DeviceState {
+  Device_Idle,
+  Device_Ringing
+};
+
 struct Device
 {
   struct IPwm * bell;
   struct Gpio * button;
   struct ITimer * timer;
+
+  enum DeviceState state;
 };
 
 void Device_init(struct Device * self, struct IPwm * bell,

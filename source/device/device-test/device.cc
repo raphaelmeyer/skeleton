@@ -16,11 +16,13 @@ struct PwmStub
 {
   IPwm interface;
   bool turned_on;
+  uint32_t called_on;
 
   static void on(IPwm * base)
   {
     PwmStub * self = (PwmStub *)base;
     self->turned_on = true;
+    ++(self->called_on);
   }
 };
 
@@ -88,6 +90,23 @@ TEST(The_device, turns_on_the_bell_pwm_when_the_button_signal_is_high)
   ASSERT_TRUE(bell.turned_on);
 }
 
+TEST(The_device, does_not_ring_the_bell_when_the_button_signal_is_low)
+{
+  Gpio button;
+  PwmStub bell{{PwmStub::on, nullptr}, false};
+  TimerStub timer{{TimerStub::start, TimerStub::stop, TimerStub::expired}};
+  Device testee;
+
+  Gpio_init(&button, Port_C, Pin_2);
+  Device_init(&testee, (IPwm *)&bell, &button, (ITimer *)&timer);
+
+  PINC = 0;
+  Device_loop(&testee);
+
+  ASSERT_FALSE(bell.turned_on);
+}
+
+
 TEST(The_device, sets_a_timer_to_rings_the_bell_for_a_certain_time)
 {
   Gpio button;
@@ -102,6 +121,25 @@ TEST(The_device, sets_a_timer_to_rings_the_bell_for_a_certain_time)
   Device_loop(&testee);
 
   ASSERT_THAT(timer.state, Eq(TimerSpy::Running));
+}
+
+TEST(The_device, does_not_turn_on_pwm_again_when_the_bell_is_already_ringing)
+{
+  Gpio button;
+  PwmStub bell{{PwmStub::on, nullptr}, false};
+  TimerStub timer{{TimerStub::start, TimerStub::stop, TimerStub::expired}};
+  Device testee;
+
+  Gpio_init(&button, Port_C, Pin_2);
+  Device_init(&testee, (IPwm *)&bell, &button, (ITimer *)&timer);
+
+  PINC = (1 << 2);
+  Device_loop(&testee);
+  Device_loop(&testee);
+  Device_loop(&testee);
+
+  ASSERT_TRUE(bell.turned_on);
+  ASSERT_THAT(bell.called_on, Eq(1));
 }
 
 TEST(The_device, DISABLED_turns_the_bell_off_after_the_timer_expires)
