@@ -7,7 +7,7 @@ using namespace ::testing;
 namespace
 {
 
-struct TimerSpy
+struct TimerStub
 {
   ITimer interface;
   uint32_t called_start;
@@ -16,14 +16,14 @@ struct TimerSpy
 
   static void start(ITimer * base)
   {
-    TimerSpy * self = (TimerSpy *)base;
+    TimerStub * self = (TimerStub *)base;
     ++(self->called_start);
   }
 };
 
 TEST(Timer_base, forwards_start_to_the_concrete_implementation)
 {
-  TimerSpy timer{{TimerSpy::start}, 0, 0, 0};
+  TimerStub timer{{TimerStub::start}, 0, 0, 0};
 
   Timer_start((ITimer *)&timer);
 

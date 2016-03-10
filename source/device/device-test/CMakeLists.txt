@@ -2,10 +2,12 @@
 add_executable(device-test
   device.cc
   gpio.cc
-  pretty_print.h
   pwm.cc
   timer.cc
   seams.cc
+  pretty_print.h
+  pwm_spy.h
+  timer_stub.h
   )
 add_executable(test::device-test ALIAS device-test)
 
