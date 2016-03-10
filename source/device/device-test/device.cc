@@ -126,7 +126,7 @@ TEST(The_device, sets_a_timer_to_rings_the_bell_for_a_certain_time)
 TEST(The_device, does_not_turn_on_pwm_again_when_the_bell_is_already_ringing)
 {
   Gpio button;
-  PwmStub bell{{PwmStub::on, nullptr}, false};
+  PwmStub bell{{PwmStub::on, nullptr}, false, 0};
   TimerStub timer{{TimerStub::start, TimerStub::stop, TimerStub::expired}};
   Device testee;
 
