@@ -1,7 +1,7 @@
 #ifndef SKELETON_PWM_SPY_H_H
 #define SKELETON_PWM_SPY_H_H
 
-#include <device/pwm.h>
+#include <device/ipwm.h>
 
 namespace {
 

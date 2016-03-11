@@ -1,7 +1,7 @@
 #ifndef SKELETON_TIMER_STUB_H
 #define SKELETON_TIMER_STUB_H
 
-#include <device/timer.h>
+#include <device/itimer.h>
 
 struct TimerStub
 {
