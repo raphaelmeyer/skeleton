@@ -3,7 +3,7 @@
 
 #include <device/device.h>
 #include <device/gpio.h>
-#include <device/timer.h>
+#include <device/itimer.h>
 
 #include "button_fake.h"
 #include "pwm_spy.h"
