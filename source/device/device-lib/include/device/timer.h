@@ -5,22 +5,12 @@
 extern "C" {
 #endif
 
-#include <stdint.h>
-#include <stdbool.h>
-
-struct ITimer
-{
-  void (* start)(struct ITimer *);
-  void (* stop)(struct ITimer *);
-  bool (* expired)(struct ITimer *);
-};
+#include "device/itimer.h"
 
 struct Timer
 {
   struct ITimer interface;
 };
-
-void Timer_start(struct ITimer *);
 
 #ifdef __cplusplus
 } // extern "C"

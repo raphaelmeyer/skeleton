@@ -3,7 +3,8 @@ add_library(device
   device.c
   gpio.c
   pwm.c
-  timer.c
+  itimer.c
+  include/device/itimer.h
   include/device/device.h
   include/device/gpio.h
   include/device/pwm.h
