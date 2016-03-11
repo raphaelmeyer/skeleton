@@ -12,14 +12,18 @@ struct TimerStub
   ITimer interface;
   State state;
 
+  uint32_t called_start;
+
   TimerStub()
     : interface{start, stop, expired}
     , state(Idle)
+    , called_start(0)
   {
   }
 
   static void start(ITimer * base) {
     TimerStub * self = (TimerStub *)base;
+    ++self->called_start;
     self->state = Running;
   }
   static void stop(ITimer * base) {
