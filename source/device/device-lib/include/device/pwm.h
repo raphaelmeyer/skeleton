@@ -5,20 +5,12 @@
 extern "C" {
 #endif
 
-#include <stdint.h>
-
-struct IPwm
-{
-  void (* on)(struct IPwm * base);
-  void (* off)(struct IPwm * base);
-};
+#include "device/ipwm.h"
 
 struct Pwm
 {
   struct IPwm interface;
 };
-
-void Pwm_on(struct IPwm *);
 
 #ifdef __cplusplus
 } // extern "C"
