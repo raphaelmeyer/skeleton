@@ -23,5 +23,10 @@ void Device_loop(struct Device * self)
       Pwm_on(self->bell);
       self->state = Device_Ringing;
     }
+  } else if(Device_Ringing == self->state) {
+    if(Timer_expired(self->timer)) {
+      Pwm_off(self->bell);
+      self->state = Device_Idle;
+    }
   }
 }

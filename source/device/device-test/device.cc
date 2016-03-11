@@ -64,7 +64,7 @@ TEST_F(The_device, sets_a_timer_to_rings_the_bell_for_a_certain_time)
   PINC = (1 << 2);
   Device_loop(&testee);
 
-  ASSERT_THAT(timer.state, Eq(TimerStub::Running));
+  ASSERT_THAT(timer.state, Eq(TimerState::Running));
 }
 
 TEST_F(The_device, does_not_turn_on_pwm_again_when_the_bell_is_already_ringing)
@@ -81,13 +81,18 @@ TEST_F(The_device, does_not_turn_on_pwm_again_when_the_bell_is_already_ringing)
   ASSERT_THAT(bell.called_on, Eq(1));
 }
 
-TEST_F(The_device, DISABLED_turns_the_bell_off_after_the_timer_expires)
+TEST_F(The_device, turns_the_bell_off_after_the_timer_expires)
 {
-  //timer.state = TimerStub::Expired;
-  //Device_loop(&testee);
-  //ASSERT_FALSE(bell.turned_on);
+  Gpio_init(&button, Port_C, Pin_2);
+  Device_init(&testee, (IPwm *)&bell, &button, (ITimer *)&timer);
 
-  FAIL();
+  PINC = (1 << 2);
+  Device_loop(&testee);
+
+  timer.state = TimerState::Expired;
+  Device_loop(&testee);
+
+  ASSERT_FALSE(bell.turned_on);
 }
 
 } // namespace
