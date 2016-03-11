@@ -1,7 +1,7 @@
 #include "device/device.h"
 
-#include "device/pwm.h"
 #include "device/gpio.h"
+#include "device/ipwm.h"
 #include "device/itimer.h"
 
 void Device_init(struct Device * self, struct IPwm * bell, struct Gpio * button, struct ITimer * timer)

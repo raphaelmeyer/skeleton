@@ -1,7 +1,6 @@
 #include <gmock/gmock.h>
 
 #include <device/device.h>
-
 #include <device/gpio.h>
 
 #include <avr/io.h>

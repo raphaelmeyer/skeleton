@@ -2,8 +2,8 @@
 add_executable(device-test
   device.cc
   gpio.cc
-  pwm.cc
-  timer.cc
+  pwm_interface.cc
+  timer_interface.cc
   seams.cc
   pretty_print.h
   pwm_spy.h
