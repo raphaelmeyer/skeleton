@@ -9,11 +9,12 @@ extern "C" {
 
 struct IPwm
 {
-  void (* on)(struct IPwm * base);
-  void (* off)(struct IPwm * base);
+  void (* on)(struct IPwm *);
+  void (* off)(struct IPwm *);
 };
 
 void Pwm_on(struct IPwm *);
+void Pwm_off(struct IPwm *);
 
 #ifdef __cplusplus
 } // extern "C"

@@ -11,11 +11,13 @@ struct PwmSpy
 
   bool turned_on;
   uint32_t called_on;
+  uint32_t called_off;
 
   PwmSpy()
-    : interface{on, nullptr}
+    : interface{on, off}
     , turned_on(false)
-    , called_on{0}
+    , called_on(0)
+    , called_off(0)
   {
   }
 
@@ -24,6 +26,13 @@ struct PwmSpy
     PwmSpy * self = (PwmSpy *)base;
     self->turned_on = true;
     ++self->called_on;
+  }
+
+  static void off(IPwm * base)
+  {
+    PwmSpy * self = (PwmSpy *)base;
+    self->turned_on = false;
+    ++self->called_off;
   }
 };
 
