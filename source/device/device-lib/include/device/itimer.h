@@ -16,6 +16,7 @@ struct ITimer
 };
 
 void Timer_start(struct ITimer *);
+bool Timer_expired(struct ITimer *);
 
 #ifdef __cplusplus
 } // extern "C"
