@@ -3,10 +3,10 @@
 
 #include <device/device.h>
 #include <device/gpio.h>
-#include <device/itimer.h>
 
 #include "button_fake.h"
 #include "pwm_spy.h"
+#include "timer_stub.h"
 
 #include <thread>
 
@@ -51,7 +51,7 @@ private:
   Gpio _gpio;
   Spy::Pwm _bell;
   Device _device;
-  ITimer _timer;
+  Stub::Timer _timer;
 
   Fake::Button _button;
 

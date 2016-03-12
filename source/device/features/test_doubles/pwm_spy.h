@@ -25,25 +25,21 @@ public:
   {
   }
 
-  static void on(IPwm * base)
-  {
+  static void on(IPwm * base) {
     PwmSpy * self = (PwmSpy *)base;
     self->spy.on();
   }
 
-  void on()
-  {
-    _events.push_back(Event{"on"});
-  }
-
-  static void off(IPwm * base)
-  {
+  static void off(IPwm * base) {
     PwmSpy * self = (PwmSpy *)base;
     self->spy.off();
   }
 
-  void off()
-  {
+  void on() {
+    _events.push_back(Event{"on"});
+  }
+
+  void off() {
     _events.push_back(Event{"off"});
   }
 

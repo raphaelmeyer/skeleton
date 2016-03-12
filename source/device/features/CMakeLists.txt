@@ -6,6 +6,7 @@ add_executable(device-cucumber
   step_definitions/device_context.h
   test_doubles/button_fake.h
   test_doubles/pwm_spy.h
+  test_doubles/timer_stub.h
   )
 add_executable(test::device-cucumber ALIAS device-cucumber)
 

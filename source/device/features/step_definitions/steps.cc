@@ -32,8 +32,6 @@ namespace
     ASSERT_THAT(bell.events(), SizeIs(2));
     ASSERT_THAT(bell.events().at(0).name, StrEq("on"));
     ASSERT_THAT(bell.events().at(1).name, StrEq("off"));
-    //duration = bell.events().at(0).time - bell.events().at(1).time
-    //ASSERT_THAT(duration, InRange(ms * .9, ms * 1.1));
   }
 
 }
