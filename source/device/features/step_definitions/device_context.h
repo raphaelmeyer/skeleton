@@ -9,6 +9,7 @@
 #include "timer_stub.h"
 
 #include <thread>
+#include <chrono>
 
 class DeviceContext
 {
@@ -38,6 +39,10 @@ public:
     });
   }
 
+  void run_for(std::chrono::milliseconds const & ms) {
+    std::this_thread::sleep_for(ms);
+  }
+
   void stop()
   {
     _running = false;
@@ -46,6 +51,7 @@ public:
 
   Spy::Pwm & bell() { return _bell; }
   Fake::Button & button() { return _button; }
+  Stub::Timer & timer() { return _timer; }
 
 private:
   Gpio _gpio;

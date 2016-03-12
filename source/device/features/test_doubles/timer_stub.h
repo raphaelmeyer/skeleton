@@ -4,6 +4,7 @@
 #include <device/itimer.h>
 
 #include <vector>
+#include <string>
 
 namespace Stub { class Timer; }
 
@@ -21,6 +22,8 @@ class Timer
 public:
   Timer()
     : _impl{{start, stop, expired}, *this}
+    , _events()
+    , _state(State::Idle)
   {
   }
 
@@ -40,17 +43,34 @@ public:
   }
 
   void start() {
+    _events.push_back("start");
+    _state = State::Running;
   }
 
   void stop() {
+    _events.push_back("stop");
+    _state = State::Idle;
   }
 
   bool expired() {
-    return false;
+    return (State::Expired == _state);
   }
+
+  void expire() {
+    if(State::Running == _state) {
+      _state = State::Expired;
+    }
+  }
+
+  std::vector<std::string> const & events() { return _events; }
+  TimerStub & impl() { return _impl; }
+
+  enum class State { Idle, Running, Expired };
 
 private:
   TimerStub _impl;
+  std::vector<std::string> _events;
+  State _state;
 };
 
 } // namespace

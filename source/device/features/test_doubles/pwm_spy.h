@@ -46,7 +46,6 @@ public:
   struct Event
   {
     std::string name;
-    // time
   };
   std::vector<Event> const & events() { return _events; }
 
