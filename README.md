@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/raphaelmeyer/skeleton.svg?branch=master)](https://travis-ci.org/raphaelmeyer/skeleton/)
 
 
-    function    arduino       ada 757       rpi
+                arduino       ada 757       rpi
                 ---------     --------      -------
     bell    :   6   (PD6)
     button  :   7   (PD7)

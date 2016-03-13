@@ -22,6 +22,7 @@ device-exe:            #/ build device firmware
 device-tests:          #/ run device tests
 device-features:       #/ check device features
 device-wip:            #/ check device work in progress
+device-deploy:         #/ install firmware on device
 
 ########################################################################
 
@@ -59,6 +60,9 @@ device-tests: device-test
 
 device-test: src-amd64
 	./cmake-amd64 --build . --target $@
+
+device-deploy: device-exe
+	./avrdude -c arduino -p atmega328p -P /dev/ttyACM0 -b 115200 -U flash:w:device/device-exe/device-exe.hex
 
 ########################################################################
 
@@ -176,11 +180,5 @@ help:
 # Does not (re)build anything.
 cmake-run-tests: src-amd64
 	./cmake-amd64 --build . --target test
-
-########################################################################
-
-# TODO
-# device-install:
-# 	»·./avrdude -c arduino -p atmega328p -P /dev/ttyACM0 -b 115200 -U flash:w:fw.hex
 
 

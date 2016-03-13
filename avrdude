@@ -4,5 +4,19 @@ PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 source ${PROJECT_ROOT}/env-avr.sh
 
-docker run --rm -t -u root --device=/dev/ttyACM0 ${VOLUMES} ${CONTAINER} avrdude $@
+Options=$@
+while [[ $# > 0 ]] ; do
+  case "$1" in
+    -P)
+      Port="$2"
+      shift
+      ;;
+    *)
+      # skip
+      ;;
+  esac
+  shift
+done
+
+docker run --rm -t -u root --device=${Port} ${VOLUMES} ${CONTAINER} avrdude ${Options}
 
