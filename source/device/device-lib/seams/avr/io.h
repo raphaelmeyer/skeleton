@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+// GPIO
+
 extern uint8_t volatile PINB;
 extern uint8_t volatile PORTB;
 extern uint8_t volatile DDRB;
@@ -95,5 +97,11 @@ extern uint8_t const DDD4;
 extern uint8_t const DDD5;
 extern uint8_t const DDD6;
 extern uint8_t const DDD7;
+
+// Timer 0
+
+extern uint8_t volatile TCCR0A;
+extern uint8_t volatile TCCR0B;
+extern uint8_t volatile OCR0A;
 
 #endif //SEAMS_AVR_IO_H

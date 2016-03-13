@@ -1,5 +1,7 @@
 #include <cstdint>
 
+// GPIO
+
 uint8_t volatile PINB = 0;
 uint8_t volatile PORTB = 0;
 uint8_t volatile DDRB = 0;
@@ -92,4 +94,10 @@ uint8_t const DDD4 = 4;
 uint8_t const DDD5 = 5;
 uint8_t const DDD6 = 6;
 uint8_t const DDD7 = 7;
+
+// Timer 0
+
+uint8_t volatile TCCR0A = 0;
+uint8_t volatile TCCR0B = 0;
+uint8_t volatile OCR0A = 0;
 
