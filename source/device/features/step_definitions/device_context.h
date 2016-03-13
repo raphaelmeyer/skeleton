@@ -18,7 +18,7 @@ public:
     : _gpio()
     , _bell()
     , _device()
-    , _button(&PINB, 0)
+    , _button(&PIND, 6)
     , _running(false)
     , _device_thread()
   {
@@ -30,7 +30,7 @@ public:
     _device_thread = std::thread([&]{
       // Most of the following is duplicate code from "main".
       // Is there something we can do about it?
-      Gpio_init(&_gpio, Port_B, Pin_0);
+      Gpio_init(&_gpio, Port_D, Pin_6);
 
       Device_init(&_device, (IPwm *)&_bell.impl(), &_gpio, (ITimer *)&_timer);
       while(_running) {

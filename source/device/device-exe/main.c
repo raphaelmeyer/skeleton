@@ -10,6 +10,8 @@ struct Timer timer;
 
 int main()
 {
+  Gpio_init(&button, Port_D, Pin_6);
+
   Device_init(&device, (struct IPwm *)&bell, &button, (struct ITimer *)&timer);
   while(true) {
     Device_loop(&device);
