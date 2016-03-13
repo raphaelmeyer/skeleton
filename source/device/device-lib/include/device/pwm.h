@@ -12,6 +12,8 @@ struct Pwm
   struct IPwm interface;
 };
 
+void Pwm_init(struct Pwm * self);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
