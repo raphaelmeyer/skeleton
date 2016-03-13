@@ -9,7 +9,7 @@
 
     8   (PB0)   -->   signal
 
-   A4   (PC4)   -->   sda
-   A5   (PC5)   -->   scl
+    A4  (PC4)   -->   sda
+    A5  (PC5)   -->   scl
 
 
