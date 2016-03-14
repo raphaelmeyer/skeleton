@@ -36,11 +36,20 @@ TEST(The_pwm, sets_the_prescaler_to_256)
   ASSERT_THAT(actual_cs, Eq(expected_cs));
 }
 
-TEST(The_pwm, DISABLED_sets_compare_match_register_for_440Hz)
+TEST(The_pwm, sets_compare_match_register_for_440Hz)
 {
   // f = 16000000 / (2 * N * (1 + OCR0A))
-  // OCR0A = 8000000 / (f * N) - 1;
-  ASSERT_THAT(OCR0A, Eq(70));
+  // OCR0A = 8000000 / (f * N) - 1
+
+  Pwm testee;
+
+  OCR0A = 0;
+
+  Pwm_init(&testee);
+  Pwm_on((IPwm *)&testee);
+
+  uint8_t const ocr_440_hz = 70;
+  ASSERT_THAT(OCR0A, Eq(ocr_440_hz));
 }
 
 TEST(The_pwm, DISABLED_sets_mode_to_toggle_at_compare_match)

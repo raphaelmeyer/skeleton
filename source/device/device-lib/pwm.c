@@ -17,4 +17,5 @@ void Pwm_init(struct Pwm * self)
 void on(struct IPwm * base)
 {
   TCCR0B = Prescaler_256;
+  OCR0A = 70;
 }
