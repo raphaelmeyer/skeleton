@@ -5,6 +5,7 @@ add_executable(device-test
   pwm_interface.cc
   pwm.cc
   timer_interface.cc
+  timer.cc
   seams.cc
   pretty_print.h
   pwm_spy.h

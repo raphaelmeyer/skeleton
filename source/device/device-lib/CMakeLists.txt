@@ -5,6 +5,7 @@ add_library(device
   device.c
   gpio.c
   pwm.c
+  timer.c
   include/device/ipwm.h
   include/device/itimer.h
   include/device/device.h

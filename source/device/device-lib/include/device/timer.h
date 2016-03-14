@@ -12,6 +12,9 @@ struct Timer
   struct ITimer interface;
 };
 
+
+void Timer_init(struct Timer * self);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
