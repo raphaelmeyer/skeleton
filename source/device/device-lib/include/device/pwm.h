@@ -10,6 +10,8 @@ extern "C" {
 struct Pwm
 {
   struct IPwm interface;
+
+  uint8_t output_pin;
 };
 
 void Pwm_init(struct Pwm * self);

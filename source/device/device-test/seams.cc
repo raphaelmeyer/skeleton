@@ -1,6 +1,10 @@
 #include <cstdint>
 
+#include <avr/io.h>
+
+// -----------------------------------------------------------------------------
 // GPIO
+// -----------------------------------------------------------------------------
 
 uint8_t volatile PINB = 0;
 uint8_t volatile PORTB = 0;
@@ -95,9 +99,26 @@ uint8_t const DDD5 = 5;
 uint8_t const DDD6 = 6;
 uint8_t const DDD7 = 7;
 
+// -----------------------------------------------------------------------------
 // Timer 0
+// -----------------------------------------------------------------------------
 
 uint8_t volatile TCCR0A = 0;
-uint8_t volatile TCCR0B = 0;
-uint8_t volatile OCR0A = 0;
 
+uint8_t const WGM00 = 0;
+uint8_t const WGM01 = 1;
+uint8_t const COM0B0 = 4;
+uint8_t const COM0B1 = 5;
+uint8_t const COM0A0 = 6;
+uint8_t const COM0A1 = 7;
+
+uint8_t volatile TCCR0B = 0;
+
+uint8_t const CS00 = 0;
+uint8_t const CS01 = 1;
+uint8_t const CS02 = 2;
+uint8_t const WGM02 = 3;
+uint8_t const FOC0B = 6;
+uint8_t const FOC0A = 7;
+
+uint8_t volatile OCR0A = 0;

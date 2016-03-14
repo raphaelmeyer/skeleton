@@ -3,7 +3,13 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// -----------------------------------------------------------------------------
 // GPIO
+// -----------------------------------------------------------------------------
 
 extern uint8_t volatile PINB;
 extern uint8_t volatile PORTB;
@@ -98,10 +104,32 @@ extern uint8_t const DDD5;
 extern uint8_t const DDD6;
 extern uint8_t const DDD7;
 
+// -----------------------------------------------------------------------------
 // Timer 0
+// -----------------------------------------------------------------------------
 
 extern uint8_t volatile TCCR0A;
+
+extern uint8_t const WGM00;
+extern uint8_t const WGM01;
+extern uint8_t const COM0B0;
+extern uint8_t const COM0B1;
+extern uint8_t const COM0A0;
+extern uint8_t const COM0A1;
+
 extern uint8_t volatile TCCR0B;
+
+extern uint8_t const CS00;
+extern uint8_t const CS01;
+extern uint8_t const CS02;
+extern uint8_t const WGM02;
+extern uint8_t const FOC0B;
+extern uint8_t const FOC0A;
+
 extern uint8_t volatile OCR0A;
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif //SEAMS_AVR_IO_H

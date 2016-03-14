@@ -33,9 +33,9 @@ void Gpio_set_direction(struct Gpio * self, enum Direction direction)
 {
   self->direction = direction;
   if(Direction_Output == direction) {
-    *self->ddr |= bit(self->pin);
+    set_bit(self->ddr, self->pin);
   } else if(Direction_Input == direction) {
-    *self->ddr &= ~(bit(self->pin));
+    clear_bit(self->ddr, self->pin);
   }
 }
 
@@ -43,7 +43,7 @@ enum Signal Gpio_get_signal(struct Gpio * self)
 {
   enum Signal signal = Signal_Undefined;
   if(self->direction == Direction_Input) {
-    if(*(self->port) & bit(self->pin)) {
+    if(is_bit_set(self->port, self->pin)) {
       signal = Signal_High;
     } else {
       signal = Signal_Low;

@@ -96,11 +96,19 @@ TEST(The_pwm, restores_normal_port_operation_when_turned_off)
   ASSERT_THAT(actual_com, Eq(0));
 }
 
-TEST(The_pwm, DISABLED_sets_its_output_to_low_when_turned_off)
+TEST(The_pwm, sets_its_output_to_low_when_turned_off)
 {
-  // ASSERT_FALSE(PORTD & (1 << 6));
-  FAIL();
-}
+  Pwm testee;
 
+  PORTD = (1 << 6);
+
+  Pwm_init(&testee);
+  Pwm_on((IPwm *)&testee);
+  Pwm_off((IPwm *)&testee);
+
+  bool const ouput_high = (PORTD & (1 << 6)) != 0;
+
+  ASSERT_FALSE(ouput_high);
+}
 
 } // namespace
