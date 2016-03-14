@@ -4,8 +4,8 @@
 
 #include <avr/io.h>
 
-void on(struct IPwm * base);
-void off(struct IPwm * base);
+static void on(struct IPwm * base);
+static void off(struct IPwm * base);
 
 void Pwm_init(struct Pwm * self)
 {
@@ -17,7 +17,7 @@ void Pwm_init(struct Pwm * self)
   set_bit(&DDRD, self->output_pin);
 }
 
-void on(struct IPwm * base)
+static void on(struct IPwm * base)
 {
   uint8_t const Compare_440_Hz = 70;
   uint8_t const Prescaler_256 = 0x04;
@@ -27,7 +27,7 @@ void on(struct IPwm * base)
   OCR0A = Compare_440_Hz;
 }
 
-void off(struct IPwm * base)
+static void off(struct IPwm * base)
 {
   struct Pwm * self = (struct Pwm *)base;
   TCCR0A = 0;
