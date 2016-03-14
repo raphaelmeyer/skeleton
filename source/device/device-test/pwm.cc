@@ -79,10 +79,21 @@ TEST(The_pwm, sets_mode_to_toggle_at_compare_match)
   ASSERT_THAT(actual_tccr0b_wgm, Eq(tccr0b_wgm));
 }
 
-TEST(The_pwm, DISABLED_restores_normal_port_operation_when_turned_off)
+TEST(The_pwm, restores_normal_port_operation_when_turned_off)
 {
-  //ASSERT_THAT((TCCR0A & (COM0A1 | COM0A0)), Eq(0));
-  FAIL();
+  Pwm testee;
+
+  TCCR0A = 0;
+  TCCR0B = 0;
+
+  Pwm_init(&testee);
+  Pwm_on((IPwm *)&testee);
+  Pwm_off((IPwm *)&testee);
+
+  uint8_t const tccra_com_mask = 0xC0;
+  uint8_t const actual_com = TCCR0A & tccra_com_mask;
+
+  ASSERT_THAT(actual_com, Eq(0));
 }
 
 TEST(The_pwm, DISABLED_sets_its_output_to_low_when_turned_off)
