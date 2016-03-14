@@ -5,6 +5,9 @@
 #include <avr/io.h>
 
 static uint8_t const Prescaler_256 = 0x04;
+static uint8_t const Mode_Toggle = 0x40;
+static uint8_t const FastPwmToggle_RegA = 0x03;
+static uint8_t const FastPwmToggle_RegB = 0x08;
 
 void on(struct IPwm * base);
 
@@ -16,7 +19,8 @@ void Pwm_init(struct Pwm * self)
 
 void on(struct IPwm * base)
 {
-  TCCR0A = 0x43;
-  TCCR0B = 0x08 | Prescaler_256;
-  OCR0A = 70;
+  uint8_t const Compare_440_Hz = 70;
+  TCCR0A = Mode_Toggle | FastPwmToggle_RegA;
+  TCCR0B = FastPwmToggle_RegB | Prescaler_256;
+  OCR0A = Compare_440_Hz;
 }
