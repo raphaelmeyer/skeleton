@@ -16,8 +16,8 @@ TEST(The_pwm, configures_its_pin_PD6_as_output)
   DDRD = 0;
   Pwm_init(&testee);
 
-  bool const ddr_bit = (DDRD & (1 << 6)) != 0;
-  ASSERT_TRUE(ddr_bit);
+  uint8_t const ddr_bit = (1 << 6);
+  ASSERT_THAT(DDRD & ddr_bit, Eq(ddr_bit));
 }
 
 TEST(The_pwm, sets_the_prescaler_to_256)
@@ -106,9 +106,8 @@ TEST(The_pwm, sets_its_output_to_low_when_turned_off)
   Pwm_on((IPwm *)&testee);
   Pwm_off((IPwm *)&testee);
 
-  bool const ouput_high = (PORTD & (1 << 6)) != 0;
-
-  ASSERT_FALSE(ouput_high);
+  uint8_t const bit = (1 << 6);
+  ASSERT_THAT(PORTD & bit, Eq(0));
 }
 
 } // namespace
