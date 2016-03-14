@@ -4,6 +4,8 @@
 
 #include <avr/io.h>
 
+static uint8_t const Prescaler_256 = 0x04;
+
 void on(struct IPwm * base);
 
 void Pwm_init(struct Pwm * self)
@@ -14,5 +16,5 @@ void Pwm_init(struct Pwm * self)
 
 void on(struct IPwm * base)
 {
-
+  TCCR0B = Prescaler_256;
 }
