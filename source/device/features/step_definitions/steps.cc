@@ -37,7 +37,7 @@ namespace
     context->advance(milliseconds - 1);
     ASSERT_THAT(bell.events(), SizeIs(1));
 
-    context->advance(milliseconds - 1);
+    context->advance(1);
     ASSERT_THAT(bell.events(), SizeIs(2));
     ASSERT_THAT(bell.events().at(1).name, StrEq("off"));
   }
