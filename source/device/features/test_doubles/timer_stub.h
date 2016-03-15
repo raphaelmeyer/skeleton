@@ -27,9 +27,9 @@ public:
   {
   }
 
-  static void start(ITimer * base) {
+  static void start(ITimer * base, uint32_t milliseconds) {
     TimerStub * self = (TimerStub *)base;
-    self->stub.start();
+    self->stub.start(milliseconds);
   }
 
   static void stop(ITimer * base) {
@@ -42,7 +42,7 @@ public:
     return self->stub.expired();
   }
 
-  void start() {
+  void start(uint32_t milliseconds) {
     _events.push_back("start");
     _state = State::Running;
   }
