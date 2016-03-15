@@ -31,7 +31,7 @@ TEST(A_timer, with_a_value_of_zero_expires_immediately)
   ASSERT_TRUE(expired);
 }
 
-TEST(A_timer, DISABLED_is_not_expired_after_starting_when_the_set_time_has_not_yet_passed)
+TEST(A_timer, is_not_expired_after_starting_when_the_set_time_has_not_yet_passed)
 {
   Timer testee;
 
