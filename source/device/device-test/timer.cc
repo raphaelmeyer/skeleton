@@ -19,7 +19,7 @@ TEST(A_timer, is_not_expired_after_initialisation)
   ASSERT_FALSE(expired);
 }
 
-TEST(A_timer, DISABLED_of_zero_expires_immediately)
+TEST(A_timer, DISABLED_with_a_value_of_zero_expires_immediately)
 {
   Timer testee;
 
