@@ -3,10 +3,10 @@
 
 #include <device/device.h>
 #include <device/gpio.h>
+#include <device/timer.h>
 
 #include "button_fake.h"
 #include "pwm_spy.h"
-#include "timer_stub.h"
 
 #include <thread>
 #include <chrono>
@@ -17,6 +17,7 @@ public:
   DeviceContext()
     : _gpio()
     , _bell()
+    , _timer()
     , _device()
     , _button(&PIND, 6)
     , _running(false)
@@ -31,6 +32,7 @@ public:
       // Most of the following is duplicate code from "main".
       // Is there something we can do about it?
       Gpio_init(&_gpio, Port_D, Pin_6);
+      Timer_init(&_timer);
 
       Device_init(&_device, (IPwm *)&_bell.impl(), &_gpio, (ITimer *)&_timer);
       while(_running) {
@@ -51,13 +53,13 @@ public:
 
   Spy::Pwm & bell() { return _bell; }
   Fake::Button & button() { return _button; }
-  Stub::Timer & timer() { return _timer; }
+  Timer & timer() { return _timer; }
 
 private:
   Gpio _gpio;
   Spy::Pwm _bell;
+  Timer _timer;
   Device _device;
-  Stub::Timer _timer;
 
   Fake::Button _button;
 

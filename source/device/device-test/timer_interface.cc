@@ -36,5 +36,14 @@ TEST(Timer_base, forwards_expired_to_the_concrete_implementaion)
   ASSERT_THAT(timer.called_expired, Eq(1));
 }
 
+TEST(Timer_base, forwards_update_to_the_concrete_implementaion)
+{
+  TimerStub timer;
+
+  Timer_update((ITimer *)&timer);
+
+  ASSERT_THAT(timer.called_update, Eq(1));
+}
+
 } // namespace
 

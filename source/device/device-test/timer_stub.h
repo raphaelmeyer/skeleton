@@ -15,15 +15,17 @@ struct TimerStub
   uint32_t called_start;
   uint32_t called_stop;
   uint32_t called_expired;
+  uint32_t called_update;
 
   uint32_t timer_value;
 
   TimerStub()
-    : interface{start, stop, expired}
+    : interface{start, stop, expired, update}
     , state(TimerState::Idle)
     , called_start(0)
     , called_stop(0)
     , called_expired(0)
+    , called_update(0)
     , timer_value(0)
   {
   }
@@ -43,6 +45,11 @@ struct TimerStub
     TimerStub * self = (TimerStub *)base;
     ++self->called_expired;
     return (self->state == TimerState::Expired);
+  }
+
+  static void update(ITimer * base) {
+    TimerStub * self = (TimerStub *)base;
+    ++self->called_update;
   }
 };
 

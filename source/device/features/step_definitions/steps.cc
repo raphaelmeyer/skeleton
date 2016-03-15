@@ -31,17 +31,16 @@ namespace
   THEN("^the doorbell rings for about (\\d+) ms$") {
     ScenarioScope<DeviceContext> context;
     Spy::Pwm & bell = context->bell();
-    Stub::Timer & timer = context->timer();
+
+    uint32_t ms = 0;
 
     ASSERT_THAT(bell.events(), SizeIs(1));
     ASSERT_THAT(bell.events().at(0).name, StrEq("on"));
 
-    ASSERT_THAT(timer.events(), SizeIs(1));
-    ASSERT_THAT(timer.events().at(0), StrEq("start"));
+    for(uint32_t i = 0; i < ms; ++i) {
+      Timer_update((ITimer *)&context->timer());
+    }
 
-    // TODO: ASSERT_THAT(timer.set_for(), Eq(...ms));
-
-    timer.expire();
     context->run_for(10ms);
 
     ASSERT_THAT(bell.events(), SizeIs(2));
