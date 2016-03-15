@@ -34,15 +34,19 @@ public:
       Gpio_init(&_gpio, Port_D, Pin_6);
       Timer_init(&_timer);
 
-      Device_init(&_device, (IPwm *)&_bell.impl(), &_gpio, (ITimer *)&_timer);
+      Device_init(&_device, (IPwm *)&_bell.impl(), &_gpio, &_timer);
       while(_running) {
         Device_loop(&_device);
       }
     });
   }
 
-  void run_for(std::chrono::milliseconds const & ms) {
-    std::this_thread::sleep_for(ms);
+  void advance(uint32_t millisecond_ticks) {
+    for(uint32_t tick = 0; tick < millisecond_ticks; ++tick) {
+      using namespace std::chrono_literals;
+      Timer_update(&_timer);
+      std::this_thread::sleep_for(1ms);
+    }
   }
 
   void stop()

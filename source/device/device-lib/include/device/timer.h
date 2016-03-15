@@ -5,16 +5,20 @@
 extern "C" {
 #endif
 
-#include "device/itimer.h"
+#include <stdint.h>
+#include <stdbool.h>
 
 struct Timer
 {
-  struct ITimer interface;
-
   bool expired;
+  uint32_t remaining;
 };
 
 void Timer_init(struct Timer * self);
+
+void Timer_start(struct Timer * self, uint32_t milliseconds);
+bool Timer_expired(struct Timer * self);
+void Timer_update(struct Timer * self);
 
 #ifdef __cplusplus
 } // extern "C"

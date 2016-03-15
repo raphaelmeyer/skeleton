@@ -12,8 +12,9 @@ int main()
 {
   Gpio_init(&button, Port_D, Pin_7);
   Pwm_init(&bell);
+  Timer_init(&timer);
 
-  Device_init(&device, (struct IPwm *)&bell, &button, (struct ITimer *)&timer);
+  Device_init(&device, (struct IPwm *)&bell, &button, &timer);
   while(true) {
     Device_loop(&device);
   }

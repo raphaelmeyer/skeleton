@@ -1,29 +1,28 @@
 #include "device/timer.h"
 
-static void start(struct ITimer * base, uint32_t milliseconds);
-static bool expired(struct ITimer * base);
-static void update(struct ITimer * base);
-
 void Timer_init(struct Timer * self) {
-  self->interface.start = start;
-  self->interface.expired = expired;
-  self->interface.update = update;
-
   self->expired = false;
+  self->remaining = 0;
 }
 
-static void start(struct ITimer * base, uint32_t milliseconds) {
-  struct Timer * self = (struct Timer *)base;
+void Timer_start(struct Timer * self, uint32_t milliseconds) {
   if (milliseconds == 0) {
     self->expired = true;
+  } else {
+    self->remaining = milliseconds;
   }
 }
 
-static bool expired(struct ITimer * base) {
-  struct Timer * self = (struct Timer *)base;
+bool Timer_expired(struct Timer * self) {
   return self->expired;
 }
 
-static void update(struct ITimer * base)  {
+void Timer_update(struct Timer * self)  {
+  if(self->remaining > 0) {
+    --self->remaining;
+    if(self->remaining == 0) {
+      self->expired = true;
+    }
+  }
 }
 

@@ -2,11 +2,11 @@
 
 #include <device/device.h>
 #include <device/gpio.h>
+#include <device/timer.h>
 
 #include <avr/io.h>
 
 #include "pwm_spy.h"
-#include "timer_stub.h"
 
 using namespace ::testing;
 
@@ -18,16 +18,18 @@ class The_device : public Test
 protected:
   Gpio button;
   PwmSpy bell;
-  TimerStub timer;
+  Timer timer;
   Device testee;
 };
 
 TEST_F(The_device, configures_the_button_pin_as_an_input)
 {
   Gpio_init(&button, Port_D, Pin_4);
+  Timer_init(&timer);
+
   DDRD = 0xFF;
 
-  Device_init(&testee, (IPwm *)&bell, &button, (ITimer *)&timer);
+  Device_init(&testee, (IPwm *)&bell, &button, &timer);
 
   bool const ddr_bit = DDRD & (1 << 4);
   ASSERT_FALSE(ddr_bit);
@@ -36,7 +38,9 @@ TEST_F(The_device, configures_the_button_pin_as_an_input)
 TEST_F(The_device, turns_on_the_bell_pwm_when_the_button_signal_is_high)
 {
   Gpio_init(&button, Port_C, Pin_2);
-  Device_init(&testee, (IPwm *)&bell, &button, (ITimer *)&timer);
+  Timer_init(&timer);
+
+  Device_init(&testee, (IPwm *)&bell, &button, &timer);
 
   PINC = (1 << 2);
   Device_loop(&testee);
@@ -47,7 +51,9 @@ TEST_F(The_device, turns_on_the_bell_pwm_when_the_button_signal_is_high)
 TEST_F(The_device, does_not_ring_the_bell_when_the_button_signal_is_low)
 {
   Gpio_init(&button, Port_C, Pin_2);
-  Device_init(&testee, (IPwm *)&bell, &button, (ITimer *)&timer);
+  Timer_init(&timer);
+
+  Device_init(&testee, (IPwm *)&bell, &button, &timer);
 
   PINC = 0;
   Device_loop(&testee);
@@ -55,22 +61,12 @@ TEST_F(The_device, does_not_ring_the_bell_when_the_button_signal_is_low)
   ASSERT_FALSE(bell.turned_on);
 }
 
-
-TEST_F(The_device, sets_a_timer_to_rings_the_bell_for_a_certain_time)
-{
-  Gpio_init(&button, Port_C, Pin_2);
-  Device_init(&testee, (IPwm *)&bell, &button, (ITimer *)&timer);
-
-  PINC = (1 << 2);
-  Device_loop(&testee);
-
-  ASSERT_THAT(timer.state, Eq(TimerState::Running));
-}
-
 TEST_F(The_device, does_not_turn_on_pwm_again_when_the_bell_is_already_ringing)
 {
   Gpio_init(&button, Port_C, Pin_2);
-  Device_init(&testee, (IPwm *)&bell, &button, (ITimer *)&timer);
+  Timer_init(&timer);
+
+  Device_init(&testee, (IPwm *)&bell, &button, &timer);
 
   PINC = (1 << 2);
   Device_loop(&testee);
@@ -84,12 +80,17 @@ TEST_F(The_device, does_not_turn_on_pwm_again_when_the_bell_is_already_ringing)
 TEST_F(The_device, turns_the_bell_off_after_the_timer_expires)
 {
   Gpio_init(&button, Port_C, Pin_2);
-  Device_init(&testee, (IPwm *)&bell, &button, (ITimer *)&timer);
+  Timer_init(&timer);
+
+  Device_init(&testee, (IPwm *)&bell, &button, &timer);
 
   PINC = (1 << 2);
   Device_loop(&testee);
 
-  timer.state = TimerState::Expired;
+  Timer_update(&timer);
+  Timer_update(&timer);
+  Timer_update(&timer);
+
   Device_loop(&testee);
 
   ASSERT_FALSE(bell.turned_on);
