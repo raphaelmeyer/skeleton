@@ -15,15 +15,9 @@ namespace
     context->start();
   }
 
-  AFTER()
-  {
-    ScenarioScope<DeviceContext> context;
-    context->stop();
-  }
-
   GIVEN("^I press the doorbell button$") {
     ScenarioScope<DeviceContext> context;
-    context->button().press();
+    context->press_button();
   }
 
   THEN("^the doorbell rings for about (\\d+) ms$") {
