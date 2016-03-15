@@ -10,8 +10,9 @@ extern "C" {
 struct Timer
 {
   struct ITimer interface;
-};
 
+  bool expired;
+};
 
 void Timer_init(struct Timer * self);
 
