@@ -19,7 +19,7 @@ void Device_loop(struct Device * self)
 {
   if(Device_Idle == self->state) {
     if(Signal_High == Gpio_get_signal(self->button)) {
-      Timer_start(self->timer);
+      Timer_start(self->timer, 0);
       Pwm_on(self->bell);
       self->state = Device_Ringing;
     }

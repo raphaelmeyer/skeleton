@@ -11,9 +11,20 @@ TEST(Timer_base, forwards_start_to_the_concrete_implementation)
 {
   TimerStub timer;
 
-  Timer_start((ITimer *)&timer);
+  Timer_start((ITimer *)&timer, 0);
 
   ASSERT_THAT(timer.called_start, Eq(1));
+}
+
+TEST(Timer_base, forwards_the_timer_value_of_start)
+{
+  TimerStub timer;
+
+  uint32_t const timer_value = 23;
+
+  Timer_start((ITimer *)&timer, timer_value);
+
+  ASSERT_THAT(timer.timer_value, Eq(timer_value));
 }
 
 TEST(Timer_base, forwards_expired_to_the_concrete_implementaion)

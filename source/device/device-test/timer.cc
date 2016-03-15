@@ -19,7 +19,19 @@ TEST(A_timer, is_not_expired_after_initialisation)
   ASSERT_FALSE(expired);
 }
 
-TEST(A_timer, is_not_expired_after_start_until_xxx)
+TEST(A_timer, DISABLED_of_zero_expires_immediately)
+{
+  Timer testee;
+
+  Timer_init(&testee);
+
+  Timer_start((ITimer *)&testee, 0);
+
+  bool const expired = Timer_expired((ITimer *)&testee);
+  ASSERT_TRUE(expired);
+}
+
+TEST(A_timer, DISABLED_is_not_expired_after_start_until_xxx)
 {
   // Timer_init()
   // Timer_start(3);
@@ -45,6 +57,12 @@ TEST(A_timer, DISABLED_expires_after_the_given_number_of_milliseconds)
 
 TEST(A_timer, DISABLED_is_not_expired_if_it_was_stopped)
 {
+  // Timer_init()
+  // Timer_start(3);
+  // TickStub.notify()
+  // Timer_stop()
+  // ASSERT_FALSE(Timer_expired())
+
   FAIL();
 }
 

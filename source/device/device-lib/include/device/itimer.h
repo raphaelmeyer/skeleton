@@ -10,13 +10,13 @@ extern "C" {
 
 struct ITimer
 {
-  void (* start)(struct ITimer *);
-  void (* stop)(struct ITimer *);
-  bool (* expired)(struct ITimer *);
+  void (* start)(struct ITimer * base, uint32_t milliseconds);
+  void (* stop)(struct ITimer * base);
+  bool (* expired)(struct ITimer * base);
 };
 
-void Timer_start(struct ITimer *);
-bool Timer_expired(struct ITimer *);
+void Timer_start(struct ITimer * base, uint32_t milliseconds);
+bool Timer_expired(struct ITimer * base);
 
 #ifdef __cplusplus
 } // extern "C"
