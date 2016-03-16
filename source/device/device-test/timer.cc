@@ -72,19 +72,32 @@ TEST(A_timer, is_not_expired_even_when_the_time_passed_after_stopping)
 
   Timer_init(&testee);
 
-  Timer_start(&testee, 2);
+  Timer_start(&testee, 3);
   Timer_update(&testee);
 
   Timer_stop(&testee);
+
+  Timer_update(&testee);
   Timer_update(&testee);
 
   ASSERT_FALSE(Timer_expired(&testee));
 }
 
-TEST(A_timer, DISABLED_is_not_expired_anymore_if_it_is_stopped_after_expiration)
+TEST(A_timer, is_not_expired_anymore_if_it_is_stopped_after_expiration)
 {
-  FAIL();
-}
+  Timer testee;
 
+  Timer_init(&testee);
+
+  Timer_start(&testee, 2);
+
+  Timer_update(&testee);
+  Timer_update(&testee);
+  Timer_update(&testee);
+
+  Timer_stop(&testee);
+
+  ASSERT_FALSE(Timer_expired(&testee));
+}
 
 } // namespace
