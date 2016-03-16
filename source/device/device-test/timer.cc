@@ -100,14 +100,50 @@ TEST(A_timer, is_not_expired_anymore_if_it_is_stopped_after_expiration)
   ASSERT_FALSE(Timer_expired(&testee));
 }
 
-TEST(A_timer, DISABLED_can_be_started_again)
+TEST(A_timer, is_restarted_when_started_while_still_running)
 {
+  Timer testee;
 
+  Timer_init(&testee);
+  Timer_start(&testee, 2);
+  Timer_update(&testee);
+
+  Timer_start(&testee, 3);
+  Timer_update(&testee);
+  Timer_update(&testee);
+  ASSERT_FALSE(Timer_expired(&testee));
+
+  Timer_update(&testee);
+  ASSERT_TRUE(Timer_expired(&testee));
 }
 
-TEST(A_timer, DISABLED_is_reset_when_started_while_still_running)
+TEST(An_expired_timer, is_not_expired_anymore_when_started_again)
 {
+  Timer testee;
 
+  Timer_init(&testee);
+  Timer_start(&testee, 1);
+  Timer_update(&testee);
+  ASSERT_TRUE(Timer_expired(&testee));
+
+  Timer_start(&testee, 3);
+  ASSERT_FALSE(Timer_expired(&testee));
+}
+
+TEST(An_expired_timer, expires_after_the_given_time_when_started_again)
+{
+  Timer testee;
+
+  Timer_init(&testee);
+  Timer_start(&testee, 1);
+  Timer_update(&testee);
+
+  Timer_start(&testee, 3);
+  Timer_update(&testee);
+  Timer_update(&testee);
+  Timer_update(&testee);
+
+  ASSERT_TRUE(Timer_expired(&testee));
 }
 
 } // namespace

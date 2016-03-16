@@ -9,6 +9,7 @@ void Timer_start(struct Timer * self, uint32_t milliseconds) {
   if (milliseconds == 0) {
     self->expired = true;
   } else {
+    self->expired = false;
     self->remaining = milliseconds;
   }
 }
