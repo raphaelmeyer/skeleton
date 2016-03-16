@@ -100,4 +100,14 @@ TEST(A_timer, is_not_expired_anymore_if_it_is_stopped_after_expiration)
   ASSERT_FALSE(Timer_expired(&testee));
 }
 
+TEST(A_timer, DISABLED_can_be_started_again)
+{
+
+}
+
+TEST(A_timer, DISABLED_is_reset_when_started_while_still_running)
+{
+
+}
+
 } // namespace

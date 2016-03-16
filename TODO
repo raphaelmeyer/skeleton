@@ -1,6 +1,2 @@
-- cmake property CXX_STANDARD does not work for libapp
 - device initialization, how to share between exe and feature?
-- remove thread from feature, replace by idle function called once per tick
-- remove timer interface
-
 
