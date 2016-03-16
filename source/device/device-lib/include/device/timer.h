@@ -17,7 +17,9 @@ struct Timer
 void Timer_init(struct Timer * self);
 
 void Timer_start(struct Timer * self, uint32_t milliseconds);
+void Timer_stop(struct Timer * self);
 bool Timer_expired(struct Timer * self);
+
 void Timer_update(struct Timer * self);
 
 #ifdef __cplusplus

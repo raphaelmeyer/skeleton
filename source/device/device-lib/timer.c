@@ -13,6 +13,10 @@ void Timer_start(struct Timer * self, uint32_t milliseconds) {
   }
 }
 
+void Timer_stop(struct Timer * self) {
+  self->remaining = 0;
+}
+
 bool Timer_expired(struct Timer * self) {
   return self->expired;
 }

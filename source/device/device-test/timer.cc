@@ -2,8 +2,6 @@
 
 #include <device/timer.h>
 
-#include <avr/io.h>
-
 using namespace ::testing;
 
 namespace
@@ -55,15 +53,38 @@ TEST(A_timer, expires_after_the_given_number_of_milliseconds)
   ASSERT_TRUE(Timer_expired(&testee));
 }
 
-TEST(A_timer, DISABLED_is_not_expired_if_it_was_stopped)
+TEST(A_timer, is_not_expired_if_it_was_stopped)
 {
-  // Timer_init()
-  // Timer_start(3);
-  // TickStub.notify()
-  // Timer_stop()
-  // ASSERT_FALSE(Timer_expired())
+  Timer testee;
 
+  Timer_init(&testee);
+
+  Timer_start(&testee, 3);
+  Timer_update(&testee);
+
+  Timer_stop(&testee);
+  ASSERT_FALSE(Timer_expired(&testee));
+}
+
+TEST(A_timer, is_not_expired_even_when_the_time_passed_after_stopping)
+{
+  Timer testee;
+
+  Timer_init(&testee);
+
+  Timer_start(&testee, 2);
+  Timer_update(&testee);
+
+  Timer_stop(&testee);
+  Timer_update(&testee);
+
+  ASSERT_FALSE(Timer_expired(&testee));
+}
+
+TEST(A_timer, DISABLED_is_not_expired_anymore_if_it_is_stopped_after_expiration)
+{
   FAIL();
 }
+
 
 } // namespace
