@@ -2,6 +2,8 @@
 
 #include <device/system_tick.h>
 
+#include <avr/interrupt.h>
+
 using namespace ::testing;
 
 namespace
@@ -35,7 +37,7 @@ TEST(The_system_tick, DISABLED_notifies_a_registered_observer_with_each_tick)
   SystemTick_init();
   SystemTick_register(notify_spy, &spy);
 
-  // TIMER1_COMPA_vect();
+  TIMER1_COMPA_vect();
   ASSERT_THAT(spy.called, Eq(1));
 
   // TIMER1_COMPA_vect();

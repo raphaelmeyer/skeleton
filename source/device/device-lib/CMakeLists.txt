@@ -13,6 +13,8 @@ add_library(device
   include/device/pwm.h
   include/device/system_tick.h
   include/device/timer.h
+  seams/avr/interrupt.h
+  seams/avr/io.h
   )
 add_library(device::device ALIAS device)
 
