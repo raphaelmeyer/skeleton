@@ -122,3 +122,14 @@ uint8_t const FOC0B = 6;
 uint8_t const FOC0A = 7;
 
 uint8_t volatile OCR0A = 0;
+
+// -----------------------------------------------------------------------------
+// Timer 1
+// -----------------------------------------------------------------------------
+
+uint8_t volatile TCCR1A = 0;
+
+uint8_t volatile TCCR1B = 0;
+
+uint16_t volatile OCR1A = 0;
+

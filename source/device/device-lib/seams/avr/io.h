@@ -128,6 +128,19 @@ extern uint8_t const FOC0A;
 
 extern uint8_t volatile OCR0A;
 
+// -----------------------------------------------------------------------------
+// Timer 1
+// -----------------------------------------------------------------------------
+
+extern uint8_t volatile TCCR1A;
+
+extern uint8_t volatile TCCR1B;
+
+extern uint16_t volatile OCR1A;
+
+#define OCR1AL *((uint8_t *)(&OCR1A))
+#define OCR1AH *((uint8_t *)(&OCR1A) + 1)
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -3,6 +3,7 @@
 #include <device/system_tick.h>
 
 #include <avr/interrupt.h>
+#include <avr/io.h>
 
 using namespace ::testing;
 
@@ -20,14 +21,20 @@ void notify_spy(void * observer) {
   ++spy->called;
 }
 
-TEST(The_system_tick, DISABLED_uses_hw_timer_1)
+TEST(The_system_tick, DISABLED_uses_hw_timer_1_in_ctc_mode)
 {
-  FAIL();
+  SystemTick_init();
+
+  ASSERT_THAT(TCCR1A, Eq(0x00));
+  ASSERT_THAT(TCCR1B & 0xF8, Eq(0x08));
 }
 
 TEST(The_system_tick, DISABLED_is_configured_to_one_millisecond)
 {
-  FAIL();
+  SystemTick_init();
+
+  ASSERT_THAT(TCCR1B & 0x03, Eq(0x01));
+  ASSERT_THAT(OCR1A, Eq(7999));
 }
 
 TEST(The_system_tick, DISABLED_notifies_a_registered_observer_with_each_tick)
