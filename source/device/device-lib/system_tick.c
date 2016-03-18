@@ -29,7 +29,9 @@ void SystemTick_init() {
 }
 
 void SystemTick_register(void(* notify)(void *), void * observer) {
-  _observers[_observers_registered].notify = notify;
-  _observers[_observers_registered].observer = observer;
-  ++_observers_registered;
+  if (_observers_registered < 2) {
+    _observers[_observers_registered].notify = notify;
+    _observers[_observers_registered].observer = observer;
+    ++_observers_registered;
+  }
 }
