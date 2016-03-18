@@ -21,8 +21,11 @@ void notify_spy(void * observer) {
   ++spy->called;
 }
 
-TEST(The_system_tick, DISABLED_uses_hw_timer_1_in_ctc_mode)
+TEST(The_system_tick, uses_hw_timer_1_in_ctc_mode)
 {
+  TCCR1A = 0;
+  TCCR0B = 0;
+
   SystemTick_init();
 
   ASSERT_THAT(TCCR1A, Eq(0x00));
@@ -31,6 +34,9 @@ TEST(The_system_tick, DISABLED_uses_hw_timer_1_in_ctc_mode)
 
 TEST(The_system_tick, DISABLED_is_configured_to_one_millisecond)
 {
+  TCCR0B = 0;
+  OCR1A = 0;
+
   SystemTick_init();
 
   ASSERT_THAT(TCCR1B & 0x03, Eq(0x01));

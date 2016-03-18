@@ -129,7 +129,21 @@ uint8_t volatile OCR0A = 0;
 
 uint8_t volatile TCCR1A = 0;
 
+uint8_t const WGM10 = 0;
+uint8_t const WGM11 = 1;
+uint8_t const COM1B0 = 4;
+uint8_t const COM1B1 = 5;
+uint8_t const COM1A0 = 6;
+uint8_t const COM1A1 = 7;
+
 uint8_t volatile TCCR1B = 0;
 
-uint16_t volatile OCR1A = 0;
+uint8_t const CS10 = 0;
+uint8_t const CS11 = 1;
+uint8_t const CS12 = 2;
+uint8_t const WGM12 = 3;
+uint8_t const WGM13 = 4;
+uint8_t const ICES1 = 6;
+uint8_t const ICNC1 = 7;
 
+uint16_t volatile OCR1A = 0;

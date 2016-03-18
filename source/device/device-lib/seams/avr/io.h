@@ -134,7 +134,22 @@ extern uint8_t volatile OCR0A;
 
 extern uint8_t volatile TCCR1A;
 
+extern uint8_t const WGM10;
+extern uint8_t const WGM11;
+extern uint8_t const COM1B0;
+extern uint8_t const COM1B1;
+extern uint8_t const COM1A0;
+extern uint8_t const COM1A1;
+
 extern uint8_t volatile TCCR1B;
+
+extern uint8_t const CS10;
+extern uint8_t const CS11;
+extern uint8_t const CS12;
+extern uint8_t const WGM12;
+extern uint8_t const WGM13;
+extern uint8_t const ICES1;
+extern uint8_t const ICNC1;
 
 extern uint16_t volatile OCR1A;
 

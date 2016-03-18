@@ -100,4 +100,9 @@ TEST_F(The_device, turns_the_bell_off_after_1000_milliseconds)
   ASSERT_FALSE(bell.turned_on);
 }
 
+TEST(The_device_loop, DISABLED_is_executed_once_per_system_tick)
+{
+  FAIL();
+}
+
 } // namespace
