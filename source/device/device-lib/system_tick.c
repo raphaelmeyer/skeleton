@@ -9,6 +9,7 @@ ISR(TIMER1_COMPA_vect) {
 }
 
 void SystemTick_init() {
+  TCCR1A = 0;
   TCCR1B = bit_value(WGM12) | bit_value(CS10);
   OCR1A = 7999;
 }

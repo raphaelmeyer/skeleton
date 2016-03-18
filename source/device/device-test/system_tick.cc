@@ -23,8 +23,16 @@ void notify_spy(void * observer) {
 
 TEST(The_system_tick, uses_hw_timer_1_in_ctc_mode)
 {
-  TCCR1A = 0;
-  TCCR0B = 0;
+  TCCR1A = 0x00;
+  TCCR0B = 0x00;
+
+  SystemTick_init();
+
+  ASSERT_THAT(TCCR1A, Eq(0x00));
+  ASSERT_THAT(TCCR1B & 0xF8, Eq(0x08));
+
+  TCCR1A = 0xFF;
+  TCCR0B = 0xFF;
 
   SystemTick_init();
 
