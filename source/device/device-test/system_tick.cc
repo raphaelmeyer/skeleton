@@ -61,8 +61,8 @@ TEST(The_system_tick, notifies_a_registered_observer_with_each_tick)
   TIMER1_COMPA_vect();
   ASSERT_THAT(spy.called, Eq(1));
 
-  // TIMER1_COMPA_vect();
-  // ASSERT_THAT(spy.called, Eq(2));
+  TIMER1_COMPA_vect();
+  ASSERT_THAT(spy.called, Eq(2));
 }
 
 TEST(The_system_tick, DISABLED_notifies_all_registered_observers)
