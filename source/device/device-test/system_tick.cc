@@ -65,9 +65,18 @@ TEST(The_system_tick, notifies_a_registered_observer_with_each_tick)
   ASSERT_THAT(spy.called, Eq(2));
 }
 
-TEST(The_system_tick, DISABLED_notifies_all_registered_observers)
+TEST(The_system_tick, notifies_all_registered_observers)
 {
-  FAIL();
+  Spy spy;
+  Spy another_spy;
+
+  SystemTick_init();
+  SystemTick_register(notify_spy, &spy);
+  SystemTick_register(notify_spy, &another_spy);
+
+  TIMER1_COMPA_vect();
+  ASSERT_THAT(spy.called, Eq(1));
+  ASSERT_THAT(another_spy.called, Eq(1));
 }
 
 TEST(The_system_tick, DISABLED_supports_up_to_two_observers)
