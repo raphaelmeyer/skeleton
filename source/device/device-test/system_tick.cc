@@ -32,7 +32,7 @@ TEST(The_system_tick, uses_hw_timer_1_in_ctc_mode)
   ASSERT_THAT(TCCR1B & 0xF8, Eq(0x08));
 }
 
-TEST(The_system_tick, DISABLED_is_configured_to_one_millisecond)
+TEST(The_system_tick, is_configured_to_one_millisecond)
 {
   TCCR0B = 0;
   OCR1A = 0;
