@@ -51,7 +51,7 @@ TEST(The_system_tick, is_configured_to_one_millisecond)
   ASSERT_THAT(OCR1A, Eq(7999));
 }
 
-TEST(The_system_tick, DISABLED_notifies_a_registered_observer_with_each_tick)
+TEST(The_system_tick, notifies_a_registered_observer_with_each_tick)
 {
   Spy spy;
 
