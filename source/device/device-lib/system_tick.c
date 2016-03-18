@@ -10,13 +10,20 @@ struct Observer {
   void * observer;
 };
 
-static struct Observer _observers[2];
-static uint8_t _observers_registered = 0;
+static uint8_t const MaxObservers = 2;
+
+struct SystemTick {
+  struct Observer observers[2];
+  uint8_t observers_registered;
+};
+
+static struct SystemTick system_tick;
 
 ISR(TIMER1_COMPA_vect) {
   uint8_t i;
-  for(i = 0; i < _observers_registered; ++i) {
-    _observers[i].notify(_observers[i].observer);
+  for(i = 0; i < system_tick.observers_registered; ++i) {
+    void * observer = system_tick.observers[i].observer;
+    system_tick.observers[i].notify(observer);
   }
 }
 
@@ -25,13 +32,14 @@ void SystemTick_init() {
   TCCR1B = bit_value(WGM12) | bit_value(CS10);
   OCR1A = 7999;
 
-  _observers_registered = 0;
+  system_tick.observers_registered = 0;
 }
 
 void SystemTick_register(void(* notify)(void *), void * observer) {
-  if (_observers_registered < 2) {
-    _observers[_observers_registered].notify = notify;
-    _observers[_observers_registered].observer = observer;
-    ++_observers_registered;
+  uint8_t next = system_tick.observers_registered;
+  if(next < MaxObservers) {
+    system_tick.observers[next].notify = notify;
+    system_tick.observers[next].observer = observer;
+    ++system_tick.observers_registered;
   }
 }
