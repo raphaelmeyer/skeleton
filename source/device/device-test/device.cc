@@ -3,8 +3,10 @@
 #include <device/device.h>
 #include <device/gpio.h>
 #include <device/timer.h>
+#include <device/system_tick.h>
 
 #include <avr/io.h>
+#include <avr/interrupt.h>
 
 #include "pwm_spy.h"
 
@@ -79,6 +81,7 @@ TEST_F(The_device, does_not_turn_on_pwm_again_when_the_bell_is_already_ringing)
 
 TEST_F(The_device, turns_the_bell_off_after_1000_milliseconds)
 {
+  SystemTick_init();
   Gpio_init(&button, Port_C, Pin_2);
   Timer_init(&timer);
 
@@ -90,12 +93,12 @@ TEST_F(The_device, turns_the_bell_off_after_1000_milliseconds)
   uint32_t const ringing_time = 1000;
 
   for(uint32_t tick = 0; tick < ringing_time - 1; ++tick) {
-    Timer_update(&timer);
+    TIMER1_COMPA_vect();
     Device_loop(&testee);
   }
   ASSERT_TRUE(bell.turned_on);
 
-  Timer_update(&timer);
+  TIMER1_COMPA_vect();
   Device_loop(&testee);
   ASSERT_FALSE(bell.turned_on);
 }

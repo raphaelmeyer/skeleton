@@ -1,3 +1,4 @@
 - device initialization, how to share between exe and feature?
 - use systick to drive device in feature
+- refactor timer, hide Timer_update
 

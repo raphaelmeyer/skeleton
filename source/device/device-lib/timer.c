@@ -2,6 +2,8 @@
 
 #include "device/system_tick.h"
 
+void Timer_update(struct Timer * self);
+
 static void update(void * argument) {
   struct Timer * self = (struct Timer *)argument;
   Timer_update(self);

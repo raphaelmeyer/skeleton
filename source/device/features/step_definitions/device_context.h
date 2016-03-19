@@ -6,6 +6,7 @@
 #include <device/timer.h>
 
 #include <avr/io.h>
+#include <avr/interrupt.h>
 
 #include "pwm_spy.h"
 
@@ -34,7 +35,7 @@ public:
 
   void advance(uint32_t millisecond_ticks) {
     for(uint32_t tick = 0; tick < millisecond_ticks; ++tick) {
-      Timer_update(&_timer);
+      TIMER1_COMPA_vect();
       Device_loop(&_device);
     }
   }
