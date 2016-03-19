@@ -96,4 +96,9 @@ TEST(The_system_tick, ignores_new_observers_after_two_observers_have_registered)
   ASSERT_THAT(one_too_many.called, Eq(0));
 }
 
+TEST(The_system_tick, DISABLED_forgets_registered_observers_on_initialisation)
+{
+  FAIL();
+}
+
 } // namespace
