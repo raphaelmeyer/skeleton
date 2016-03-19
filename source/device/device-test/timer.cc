@@ -1,6 +1,9 @@
 #include <gmock/gmock.h>
 
 #include <device/timer.h>
+#include <device/system_tick.h>
+
+#include <avr/interrupt.h>
 
 using namespace ::testing;
 
@@ -31,10 +34,11 @@ TEST(A_timer, is_not_expired_after_starting_when_the_set_time_has_not_yet_passed
 {
   Timer testee;
 
+  SystemTick_init();
   Timer_init(&testee);
 
   Timer_start(&testee, 3);
-  Timer_update(&testee);
+  TIMER1_COMPA_vect();
 
   ASSERT_FALSE(Timer_expired(&testee));
 }

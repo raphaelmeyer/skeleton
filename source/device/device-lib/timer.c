@@ -1,8 +1,17 @@
 #include "device/timer.h"
 
+#include "device/system_tick.h"
+
+static void update(void * argument) {
+  struct Timer * self = (struct Timer *)argument;
+  Timer_update(self);
+}
+
 void Timer_init(struct Timer * self) {
   self->expired = false;
   self->remaining = 0;
+
+  SystemTick_register(update, self);
 }
 
 void Timer_start(struct Timer * self, uint32_t milliseconds) {
