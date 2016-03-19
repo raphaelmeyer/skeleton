@@ -10,6 +10,17 @@ using namespace ::testing;
 namespace
 {
 
+class An_initialised_timer : public Test
+{
+protected:
+  virtual void SetUp() {
+    SystemTick_init();
+    Timer_init(&testee);
+  }
+
+  Timer testee;
+};
+
 TEST(A_timer, is_not_expired_after_initialisation)
 {
   Timer testee;
@@ -30,13 +41,8 @@ TEST(A_timer, with_a_value_of_zero_expires_immediately)
   ASSERT_TRUE(Timer_expired(&testee));
 }
 
-TEST(A_timer, is_not_expired_after_starting_when_the_set_time_has_not_yet_passed)
+TEST_F(An_initialised_timer, is_not_expired_after_starting_when_the_set_time_has_not_yet_passed)
 {
-  Timer testee;
-
-  SystemTick_init();
-  Timer_init(&testee);
-
   Timer_start(&testee, 3);
   TIMER1_COMPA_vect();
 
