@@ -10,6 +10,16 @@ using namespace ::testing;
 namespace
 {
 
+TEST(A_timer, is_not_expired_just_after_initialisation)
+{
+  Timer testee;
+
+  SystemTick_init();
+  Timer_init(&testee);
+
+  ASSERT_FALSE(Timer_expired(&testee));
+}
+
 class An_initialised_timer : public Test
 {
 protected:
@@ -20,30 +30,6 @@ protected:
 
   Timer testee;
 };
-
-class An_expired_timer : public Test
-{
-protected:
-  virtual void SetUp() {
-    SystemTick_init();
-
-    Timer_init(&testee);
-    Timer_start(&testee, 1);
-    TIMER1_COMPA_vect();
-  }
-
-  Timer testee;
-};
-
-TEST(A_timer, is_not_expired_just_after_initialisation)
-{
-  Timer testee;
-
-  SystemTick_init();
-  Timer_init(&testee);
-
-  ASSERT_FALSE(Timer_expired(&testee));
-}
 
 TEST_F(An_initialised_timer, with_a_value_of_zero_expires_immediately)
 {
@@ -122,6 +108,20 @@ TEST_F(An_initialised_timer, is_restarted_when_started_while_still_running)
   TIMER1_COMPA_vect();
   ASSERT_TRUE(Timer_expired(&testee));
 }
+
+class An_expired_timer : public Test
+{
+protected:
+  virtual void SetUp() {
+    SystemTick_init();
+
+    Timer_init(&testee);
+    Timer_start(&testee, 1);
+    TIMER1_COMPA_vect();
+  }
+
+  Timer testee;
+};
 
 TEST_F(An_expired_timer, is_not_expired_anymore_when_started_again)
 {
