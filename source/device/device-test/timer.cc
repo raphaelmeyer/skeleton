@@ -21,6 +21,20 @@ protected:
   Timer testee;
 };
 
+class An_expired_timer : public Test
+{
+protected:
+  virtual void SetUp() {
+    SystemTick_init();
+
+    Timer_init(&testee);
+    Timer_start(&testee, 1);
+    TIMER1_COMPA_vect();
+  }
+
+  Timer testee;
+};
+
 TEST(A_timer, is_not_expired_just_after_initialisation)
 {
   Timer testee;
@@ -109,31 +123,14 @@ TEST_F(An_initialised_timer, is_restarted_when_started_while_still_running)
   ASSERT_TRUE(Timer_expired(&testee));
 }
 
-TEST(An_expired_timer, is_not_expired_anymore_when_started_again)
+TEST_F(An_expired_timer, is_not_expired_anymore_when_started_again)
 {
-  SystemTick_init();
-
-  Timer testee;
-
-  Timer_init(&testee);
-  Timer_start(&testee, 1);
-  TIMER1_COMPA_vect();
-  ASSERT_TRUE(Timer_expired(&testee));
-
   Timer_start(&testee, 3);
   ASSERT_FALSE(Timer_expired(&testee));
 }
 
-TEST(An_expired_timer, expires_after_the_given_time_when_started_again)
+TEST_F(An_expired_timer, expires_after_the_given_time_when_started_again)
 {
-  SystemTick_init();
-
-  Timer testee;
-
-  Timer_init(&testee);
-  Timer_start(&testee, 1);
-  TIMER1_COMPA_vect();
-
   Timer_start(&testee, 3);
   TIMER1_COMPA_vect();
   TIMER1_COMPA_vect();
