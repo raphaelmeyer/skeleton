@@ -16,11 +16,12 @@ class DeviceContext
 public:
   DeviceContext()
     : _button_register(&PIND)
-    , _button_pin(6)
+    , _button_pin(7)
     , _gpio()
     , _bell()
     , _timer()
     , _device()
+    , _now(0)
   {
   }
 
@@ -41,6 +42,17 @@ public:
       TIMER1_COMPA_vect();
       Device_loop(&_device);
     }
+    _now += millisecond_ticks;
+  }
+
+  void advance_until(uint32_t millisecond_tick) {
+    if(millisecond_tick > _now) {
+      advance(millisecond_tick - _now);
+    }
+  }
+
+  uint32_t now() {
+    return _now;
   }
 
   void press_button() {
@@ -61,6 +73,8 @@ private:
   Spy::Pwm _bell;
   Timer _timer;
   Device _device;
+
+  uint32_t _now;
 };
 
 #endif //SKELETON_DEVICE_CONTEXT_H

@@ -21,26 +21,18 @@ class Pwm
 public:
   Pwm()
     : _events()
-    , _impl{{Pwm::on, Pwm::off}, *this}
+    , _impl{{spy_on_on, spy_on_off}, *this}
   {
   }
 
-  static void on(IPwm * base) {
+  static void spy_on_on(IPwm * base) {
     PwmSpy * self = (PwmSpy *)base;
-    self->spy.on();
+    self->spy._events.push_back(Event{"on"});
   }
 
-  static void off(IPwm * base) {
+  static void spy_on_off(IPwm * base) {
     PwmSpy * self = (PwmSpy *)base;
-    self->spy.off();
-  }
-
-  void on() {
-    _events.push_back(Event{"on"});
-  }
-
-  void off() {
-    _events.push_back(Event{"off"});
+    self->spy._events.push_back(Event{"off"});
   }
 
   struct Event
