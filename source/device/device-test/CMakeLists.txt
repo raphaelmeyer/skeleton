@@ -5,10 +5,12 @@ add_executable(device-test
   pwm.cc
   pwm_interface.cc
   seams.cc
+  seams_interrupt.cc
   system_tick.cc
   timer.cc
   pretty_print.h
   pwm_spy.h
+  seams_interrupt.h
   )
 add_executable(test::device-test ALIAS device-test)
 

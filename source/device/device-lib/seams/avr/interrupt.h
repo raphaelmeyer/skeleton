@@ -9,6 +9,9 @@ extern "C" {
 
 extern void TIMER1_COMPA_vect();
 
+extern void sei();
+extern void cli();
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
