@@ -2,6 +2,7 @@
 #define SKELETON_DEVICE_CONTEXT_H
 
 #include <device/device.h>
+#include <device/system_tick.h>
 #include <device/gpio.h>
 #include <device/timer.h>
 
@@ -27,7 +28,9 @@ public:
   {
     // Most of the following is duplicate code from "main".
     // Is there something we can do about it?
-    Gpio_init(&_gpio, Port_D, Pin_6);
+
+    SystemTick_init();
+    Gpio_init(&_gpio, Port_D, Pin_7);
     Timer_init(&_timer);
 
     Device_init(&_device, (IPwm *)&_bell.impl(), &_gpio, &_timer);
