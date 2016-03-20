@@ -1,6 +1,5 @@
 
 add_executable(device-cucumber
-  step_definitions/dummy.cc
   step_definitions/steps.cc
   test_doubles/seams.cc
   test_doubles/seams_interrupt.cc
