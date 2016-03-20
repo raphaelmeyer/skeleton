@@ -4,6 +4,8 @@
 #include "device/ipwm.h"
 #include "device/timer.h"
 
+#include <avr/interrupt.h>
+
 void Device_init(struct Device * self, struct IPwm * bell, struct Gpio * button, struct Timer * timer)
 {
   self->bell = bell;
@@ -13,6 +15,8 @@ void Device_init(struct Device * self, struct IPwm * bell, struct Gpio * button,
   self->state = Device_Idle;
 
   Gpio_set_direction(button, Direction_Input);
+
+  sei();
 }
 
 void Device_loop(struct Device * self)

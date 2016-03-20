@@ -3,6 +3,7 @@ add_executable(device-cucumber
   step_definitions/dummy.cc
   step_definitions/steps.cc
   test_doubles/seams.cc
+  test_doubles/seams_interrupt.cc
   step_definitions/device_context.h
   test_doubles/pwm_spy.h
   )

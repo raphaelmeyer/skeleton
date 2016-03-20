@@ -6,9 +6,9 @@
 #include <device/system_tick.h>
 
 #include <avr/io.h>
-#include <avr/interrupt.h>
 
 #include "pwm_spy.h"
+#include "seams_interrupt.h"
 
 using namespace ::testing;
 
@@ -26,15 +26,27 @@ protected:
 
 TEST_F(The_device, configures_the_button_pin_as_an_input)
 {
-  Gpio_init(&button, Port_D, Pin_4);
+  Gpio_init(&button, Port_C, Pin_2);
   Timer_init(&timer);
 
   DDRD = 0xFF;
 
   Device_init(&testee, (IPwm *)&bell, &button, &timer);
 
-  bool const ddr_bit = DDRD & (1 << 4);
+  bool const ddr_bit = DDRC & (1 << 2);
   ASSERT_FALSE(ddr_bit);
+}
+
+TEST_F(The_device, enables_the_interrupts)
+{
+  interrupt_spy.enabled = false;
+
+  Gpio_init(&button, Port_C, Pin_2);
+  Timer_init(&timer);
+
+  Device_init(&testee, (IPwm *)&bell, &button, &timer);
+
+  ASSERT_TRUE(interrupt_spy.enabled);
 }
 
 TEST_F(The_device, turns_on_the_bell_pwm_when_the_button_signal_is_high)
