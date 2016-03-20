@@ -156,6 +156,13 @@ extern uint16_t volatile OCR1A;
 #define OCR1AL *((uint8_t *)(&OCR1A))
 #define OCR1AH *((uint8_t *)(&OCR1A) + 1)
 
+extern uint8_t volatile TIMSK1;
+
+extern uint8_t const TOIE1;
+extern uint8_t const OCIE1A;
+extern uint8_t const OCIE1B;
+extern uint8_t const ICIE1;
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

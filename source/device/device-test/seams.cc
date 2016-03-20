@@ -1,5 +1,3 @@
-#include <cstdint>
-
 #include <avr/io.h>
 
 // -----------------------------------------------------------------------------
@@ -147,3 +145,10 @@ uint8_t const ICES1 = 6;
 uint8_t const ICNC1 = 7;
 
 uint16_t volatile OCR1A = 0;
+
+uint8_t volatile TIMSK1 = 0;
+
+uint8_t const TOIE1 = 0;
+uint8_t const OCIE1A = 1;
+uint8_t const OCIE1B = 2;
+uint8_t const ICIE1 = 5;
