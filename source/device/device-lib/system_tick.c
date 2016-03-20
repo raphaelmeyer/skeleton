@@ -28,11 +28,12 @@ ISR(TIMER1_COMPA_vect) {
 }
 
 void SystemTick_init() {
+  system_tick.observers_registered = 0;
+
   TCCR1A = 0;
   TCCR1B = bit_value(WGM12) | bit_value(CS10);
   OCR1A = 7999;
-
-  system_tick.observers_registered = 0;
+  TIMSK1 = bit_value(OCIE1A);
 }
 
 void SystemTick_register(void(* notify)(void *), void * observer) {

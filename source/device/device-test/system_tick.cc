@@ -51,6 +51,15 @@ TEST(The_system_tick, is_configured_to_one_millisecond)
   ASSERT_THAT(OCR1A, Eq(7999));
 }
 
+TEST(The_system_tick, configures_an_interrupt_to_be_notified_each_tick)
+{
+  TIMSK1 = 0;
+
+  SystemTick_init();
+
+  ASSERT_THAT(TIMSK1, Eq(0x02));
+}
+
 TEST(The_system_tick, notifies_a_registered_observer_with_each_tick)
 {
   Spy spy;
@@ -94,11 +103,6 @@ TEST(The_system_tick, ignores_new_observers_after_two_observers_have_registered)
   ASSERT_THAT(spy.called, Eq(1));
   ASSERT_THAT(another_spy.called, Eq(1));
   ASSERT_THAT(one_too_many.called, Eq(0));
-}
-
-TEST(The_system_tick, DISABLED_forgets_registered_observers_on_initialisation)
-{
-  FAIL();
 }
 
 } // namespace
