@@ -4,7 +4,7 @@ add_executable(device-cucumber
   test_doubles/seams.cc
   test_doubles/seams_interrupt.cc
   step_definitions/device_context.h
-  test_doubles/button_stub.h
+  test_doubles/gpio_stub.h
   test_doubles/pwm_spy.h
   )
 add_executable(test::device-cucumber ALIAS device-cucumber)

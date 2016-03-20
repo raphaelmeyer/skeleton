@@ -9,7 +9,7 @@
 #include <avr/interrupt.h>
 
 #include "pwm_spy.h"
-#include "button_stub.h"
+#include "gpio_stub.h"
 
 class DeviceContext
 {
