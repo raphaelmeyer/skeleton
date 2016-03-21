@@ -26,6 +26,9 @@ protected:
     , button_ddr(DDRC)
     , button_port(PINC)
     , button_pin(2)
+    , notify_ddr(DDRD)
+    , notify_port(PORTD)
+    , notify_pin(5)
   {
   }
 
@@ -33,6 +36,8 @@ protected:
     SystemTick_init();
 
     Gpio_init(&button, Port_C, Pin_2);
+    Gpio_init(&notify, Port_D, Pin_5);
+
     Timer_init(&timer);
   }
 
@@ -44,7 +49,12 @@ protected:
     button_port = 0;
   }
 
+  bool notify_is_set() {
+    return (notify_port & (1 << notify_pin)) != 0;
+  }
+
   Gpio button;
+  Gpio notify;
   PwmSpy bell;
   Timer timer;
   Device testee;
@@ -52,6 +62,10 @@ protected:
   uint8_t volatile & button_ddr;
   uint8_t volatile & button_port;
   uint8_t const button_pin;
+
+  uint8_t volatile & notify_ddr;
+  uint8_t volatile & notify_port;
+  uint8_t const notify_pin;
 };
 
 TEST_F(The_device, configures_the_button_pin_as_an_input)
@@ -124,6 +138,28 @@ TEST_F(The_device, turns_the_bell_off_after_1000_milliseconds)
   TIMER1_COMPA_vect();
   Device_loop(&testee);
   ASSERT_FALSE(bell.turned_on);
+}
+
+TEST_F(The_device, DISABLED_configures_the_notify_pin_as_output)
+{
+  notify_ddr = 0;
+
+  Device_init(&testee, (IPwm *)&bell, &button, &timer);
+
+  bool const ddr_bit = notify_ddr & (1 << notify_pin);
+  ASSERT_TRUE(ddr_bit);
+}
+
+TEST_F(The_device, DISABLED_pulls_the_notification_pin_high_for_20_ms_whem_the_bell_rings)
+{
+  Device_init(&testee, (IPwm *)&bell, &button, &timer);
+
+  button_set();
+  Device_loop(&testee);
+
+  // ...
+
+  ASSERT_TRUE(notify_is_set());
 }
 
 TEST(The_device_loop, DISABLED_is_executed_once_per_system_tick)
