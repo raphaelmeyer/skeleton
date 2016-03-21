@@ -24,6 +24,10 @@ public:
     *_port &= ~(1 << _pin);
   }
 
+  bool is_high() {
+    return false; // TODO
+  }
+
   ::Gpio & impl() { return _gpio; }
 
 private:

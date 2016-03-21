@@ -16,9 +16,11 @@ class DeviceContext
 public:
   DeviceContext()
     : _button_stub(&PIND, 7)
+    , _notify_stub(&PINB, 0)
     , _bell_spy()
     , _now(0)
     , _button(_button_stub.impl())
+    , _notify(_notify_stub.impl())
     , _bell((IPwm &)_bell_spy.impl())
     , _timer()
     , _device()
@@ -66,13 +68,17 @@ public:
 
   Spy::Pwm & bell() { return _bell_spy; }
 
+  Stub::Gpio & notify_pin() { return _notify_stub; }
+
 private:
   Stub::Gpio _button_stub;
+  Stub::Gpio _notify_stub;
   Spy::Pwm _bell_spy;
 
   uint32_t _now;
 
   Gpio & _button;
+  Gpio & _notify;
   IPwm & _bell;
   Timer _timer;
   Device _device;

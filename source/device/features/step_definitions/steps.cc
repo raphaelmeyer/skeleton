@@ -42,4 +42,15 @@ THEN("^the doorbell rings for about (\\d+) ms$") {
   ASSERT_THAT(bell.events().at(1).name, StrEq("off"));
 }
 
+THEN("^the doorbell notifies the internet module$")
+{
+  ScenarioScope<DeviceContext> context;
+
+  context->advance(10);
+  ASSERT_TRUE(context->notify_pin().is_high());
+
+  context->advance(20);
+  ASSERT_FALSE(context->notify_pin().is_high());
+}
+
 }
