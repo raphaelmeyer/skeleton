@@ -16,7 +16,7 @@ class DeviceContext
 public:
   DeviceContext()
     : _button_stub(&PIND, 7)
-    , _notify_stub(&PINB, 0)
+    , _notify_stub(&PORTB, 0)
     , _bell_spy()
     , _now(0)
     , _button(_button_stub.impl())

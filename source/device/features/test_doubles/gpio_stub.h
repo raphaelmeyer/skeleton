@@ -25,7 +25,7 @@ public:
   }
 
   bool is_high() {
-    return false; // TODO
+    return (*_port & (1 << _pin)) != 0;
   }
 
   ::Gpio & impl() { return _gpio; }
