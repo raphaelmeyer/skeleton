@@ -193,10 +193,6 @@ TEST_F(A_gpio, returns_undefined_if_not_configured_as_input)
 TEST_F(A_gpio, has_no_direction_set_after_initialisation)
 {
   ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Undefined));
-
-  Gpio_set_direction(&gpio, Direction_Input);
-  Gpio_init(&gpio, Port_C, Pin_5);
-  ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Undefined));
 }
 
 TEST_F(A_gpio, DISABLED_does_not_set_pin_when_not_configured_as_output)
