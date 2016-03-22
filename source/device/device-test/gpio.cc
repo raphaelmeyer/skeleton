@@ -81,17 +81,7 @@ TEST(An_input_gpio, clears_the_direction_bit)
   ASSERT_FALSE(ddr_bit);
 }
 
-TEST(An_output_gpio, sets_the_direction_bit_to_one)
-{
-  Gpio gpio;
-  Gpio_init(&gpio, Port_D, Pin_6);
-  DDRD = 0;
 
-  Gpio_set_direction(&gpio, Direction_Output);
-
-  bool const ddr_bit = (DDRD & (1 << 6)) != 0;
-  ASSERT_TRUE(ddr_bit);
-}
 
 TEST(A_gpio, sets_the_direction_bit_when_the_direction_is_changed_from_input_to_output)
 {
@@ -129,29 +119,44 @@ TEST(A_gpio, returns_undefined_if_not_configured_as_input)
   ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Undefined));
 }
 
-TEST(An_output_gpio, is_low_after_configuration)
+class An_output_gpio : public Test
 {
-  PORTD = 0xFF;
+protected:
+  virtual void SetUp() override final {
+    PORTD = 0xFF;
+    PIND = 0;
+    DDRD = 0;
+
+    Gpio_init(&gpio, Port_D, Pin_1);
+    Gpio_set_direction(&gpio, Direction_Output);
+  }
 
   Gpio gpio;
-  Gpio_init(&gpio, Port_D, Pin_1);
+};
 
-  Gpio_set_direction(&gpio, Direction_Output);
+TEST_F(An_output_gpio, sets_the_direction_bit_to_one)
+{
+  bool const ddr_bit = (DDRD & (1 << 1)) != 0;
+  ASSERT_TRUE(ddr_bit);
+}
 
+TEST_F(An_output_gpio, is_low_after_configuration)
+{
   ASSERT_THAT(PORTD & (1 << 1), Eq(0));
 }
 
-TEST(An_output_gpio, DISABLED_can_set_its_pin_to_high)
+TEST_F(An_output_gpio, sets_its_pin_when_set_to_high)
 {
-  Gpio gpio;
-  Gpio_init(&gpio, Port_D, Pin_1);
-
-  Gpio_set_direction(&gpio, Direction_Output);
-
   Gpio_set_signal(&gpio, Signal_High);
 
-  ASSERT_THAT(PORTD & (1 << 1), Eq(0));
+  ASSERT_THAT(PORTD & (1 << 1), Not(Eq(0)));
+}
 
+TEST_F(An_output_gpio, clears_its_pin_when_set_to_low)
+{
+  Gpio_set_signal(&gpio, Signal_Low);
+
+  ASSERT_THAT(PORTD & (1 << 1), Eq(0));
 }
 
 } // namespace

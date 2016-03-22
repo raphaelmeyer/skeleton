@@ -58,4 +58,7 @@ enum Signal Gpio_get_signal(struct Gpio * self)
 
 void Gpio_set_signal(struct Gpio * self, enum Signal signal)
 {
+  if(signal == Signal_High) {
+    *self->output = 0xFF;
+  }
 }
