@@ -74,41 +74,67 @@ TEST_F(An_input_gpio, is_bound_to_a_single_pin)
 class An_output_gpio : public Test
 {
 protected:
+  An_output_gpio()
+    : gpio()
+    , port(PORTD)
+    , ddr(DDRD)
+    , pin(1)
+  {
+  }
+
   virtual void SetUp() override final {
-    PORTD = 0xFF;
-    PIND = 0;
-    DDRD = 0;
+    port = 0xFF;
+    ddr = 0;
 
     Gpio_init(&gpio, Port_D, Pin_1);
     Gpio_set_direction(&gpio, Direction_Output);
   }
 
   Gpio gpio;
+
+  uint8_t volatile & port;
+  uint8_t volatile & ddr;
+  uint8_t const pin;
 };
 
 TEST_F(An_output_gpio, sets_the_direction_bit)
 {
-  bool const ddr_bit = (DDRD & (1 << 1)) != 0;
+  bool const ddr_bit = (ddr & (1 << pin)) != 0;
   ASSERT_TRUE(ddr_bit);
 }
 
 TEST_F(An_output_gpio, is_low_after_configuration)
 {
-  ASSERT_THAT(PORTD & (1 << 1), Eq(0));
+  ASSERT_THAT(port & (1 << pin), Eq(0));
 }
 
 TEST_F(An_output_gpio, sets_its_pin_when_set_to_high)
 {
+  port = 0x00;
   Gpio_set_signal(&gpio, Signal_High);
-
-  ASSERT_THAT(PORTD & (1 << 1), Not(Eq(0)));
+  ASSERT_THAT(port & (1 << pin), Not(Eq(0)));
 }
 
 TEST_F(An_output_gpio, clears_its_pin_when_set_to_low)
 {
+  port = 0xFF;
   Gpio_set_signal(&gpio, Signal_Low);
+  ASSERT_THAT(port & (1 << pin), Eq(0));
+}
 
-  ASSERT_THAT(PORTD & (1 << 1), Eq(0));
+TEST_F(An_output_gpio, is_bound_to_a_single_pin)
+{
+  port = 0x00;
+  Gpio_set_signal(&gpio, Signal_High);
+  ASSERT_THAT(port, Eq(1 << pin));
+  Gpio_set_signal(&gpio, Signal_Low);
+  ASSERT_THAT(port, Eq(0));
+
+  port = 0xFF;
+  Gpio_set_signal(&gpio, Signal_High);
+  ASSERT_THAT(port, Eq(0xFF));
+  Gpio_set_signal(&gpio, Signal_Low);
+  ASSERT_THAT(port, Eq(0xFF & ~(1 << pin)));
 }
 
 
