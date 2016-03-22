@@ -129,9 +129,29 @@ TEST(A_gpio, returns_undefined_if_not_configured_as_input)
   ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Undefined));
 }
 
-TEST(An_output_gpio, DISABLED_todo)
+TEST(An_output_gpio, is_low_after_configuration)
 {
-  FAIL();
+  PORTD = 0xFF;
+
+  Gpio gpio;
+  Gpio_init(&gpio, Port_D, Pin_1);
+
+  Gpio_set_direction(&gpio, Direction_Output);
+
+  ASSERT_THAT(PORTD & (1 << 1), Eq(0));
+}
+
+TEST(An_output_gpio, DISABLED_can_set_its_pin_to_high)
+{
+  Gpio gpio;
+  Gpio_init(&gpio, Port_D, Pin_1);
+
+  Gpio_set_direction(&gpio, Direction_Output);
+
+  Gpio_set_signal(&gpio, Signal_High);
+
+  ASSERT_THAT(PORTD & (1 << 1), Eq(0));
+
 }
 
 } // namespace

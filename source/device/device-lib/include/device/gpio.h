@@ -42,12 +42,14 @@ struct Gpio
   enum Direction direction;
   uint8_t volatile * port;
   uint8_t volatile * ddr;
+  uint8_t volatile * output;
   uint8_t pin;
 };
 
 void Gpio_init(struct Gpio *, enum Port port, uint8_t pin);
 void Gpio_set_direction(struct Gpio *, enum Direction);
 enum Signal Gpio_get_signal(struct Gpio *);
+void Gpio_set_signal(struct Gpio * self, enum Signal signal);
 
 #ifdef __cplusplus
 } // extern "C"

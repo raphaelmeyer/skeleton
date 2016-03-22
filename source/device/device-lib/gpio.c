@@ -18,12 +18,15 @@ void Gpio_init(struct Gpio * self, enum Port port, uint8_t pin)
   if (port == Port_B) {
     self->port = &PINB;
     self->ddr = &DDRB;
+    self->output = &PORTB;
   } else if (port == Port_C) {
     self->port = &PINC;
     self->ddr = &DDRC;
+    self->output = &PORTC;
   } else if (port == Port_D) {
     self->port = &PIND;
     self->ddr = &DDRD;
+    self->output = &PORTD;
   }
 
   self->pin = pin;
@@ -34,6 +37,7 @@ void Gpio_set_direction(struct Gpio * self, enum Direction direction)
   self->direction = direction;
   if(Direction_Output == direction) {
     set_bit(self->ddr, self->pin);
+    clear_bit(self->output, self->pin);
   } else if(Direction_Input == direction) {
     clear_bit(self->ddr, self->pin);
   }
@@ -50,4 +54,8 @@ enum Signal Gpio_get_signal(struct Gpio * self)
     }
   }
   return signal;
+}
+
+void Gpio_set_signal(struct Gpio * self, enum Signal signal)
+{
 }
