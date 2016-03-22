@@ -77,7 +77,7 @@ TEST(An_input_gpio, clears_the_direction_bit)
 
   Gpio_set_direction(&gpio, Direction_Input);
 
-  bool const ddr_bit = DDRD & (1 << 6);
+  bool const ddr_bit = (DDRD & (1 << 6)) != 0;
   ASSERT_FALSE(ddr_bit);
 }
 
@@ -89,7 +89,7 @@ TEST(An_output_gpio, sets_the_direction_bit_to_one)
 
   Gpio_set_direction(&gpio, Direction_Output);
 
-  bool const ddr_bit = DDRD & (1 << 6);
+  bool const ddr_bit = (DDRD & (1 << 6)) != 0;
   ASSERT_TRUE(ddr_bit);
 }
 
@@ -101,7 +101,7 @@ TEST(A_gpio, sets_the_direction_bit_when_the_direction_is_changed_from_input_to_
   Gpio_set_direction(&gpio, Direction_Input);
   Gpio_set_direction(&gpio, Direction_Output);
 
-  bool const ddr_bit = DDRB & (1 << 2);
+  bool const ddr_bit = (DDRB & (1 << 2)) != 0;
   ASSERT_TRUE(ddr_bit);
 }
 
@@ -113,7 +113,7 @@ TEST(A_gpio, clears_the_direction_bit_when_the_direction_is_changed_from_output_
   Gpio_set_direction(&gpio, Direction_Output);
   Gpio_set_direction(&gpio, Direction_Input);
 
-  bool const ddr_bit = DDRB & (1 << 7);
+  bool const ddr_bit = (DDRB & (1 << 7)) != 0;
   ASSERT_FALSE(ddr_bit);
 }
 
