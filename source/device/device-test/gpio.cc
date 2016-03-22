@@ -137,8 +137,74 @@ TEST_F(An_output_gpio, is_bound_to_a_single_pin)
   ASSERT_THAT(port, Eq(0xFF & ~(1 << pin)));
 }
 
+class A_gpio : public Test
+{
+protected:
+  A_gpio()
+    : gpio()
+    , input(PINC)
+    , output(PORTC)
+    , ddr(DDRC)
+    , pin(5)
+  {
+  }
 
-TEST(Input_gpios, is_bound_to_a_certain_port)
+  virtual void SetUp() override final {
+    Gpio_init(&gpio, Port_C, Pin_5);
+  }
+
+  Gpio gpio;
+
+  uint8_t volatile & input;
+  uint8_t volatile & output;
+  uint8_t volatile & ddr;
+  uint8_t const pin;
+};
+
+TEST_F(A_gpio, sets_the_direction_bit_when_the_direction_is_changed_from_input_to_output)
+{
+  Gpio_set_direction(&gpio, Direction_Input);
+  Gpio_set_direction(&gpio, Direction_Output);
+
+  bool const ddr_bit = (ddr & (1 << pin)) != 0;
+  ASSERT_TRUE(ddr_bit);
+}
+
+TEST_F(A_gpio, clears_the_direction_bit_when_the_direction_is_changed_from_output_to_input)
+{
+  Gpio_set_direction(&gpio, Direction_Output);
+  Gpio_set_direction(&gpio, Direction_Input);
+
+  bool const ddr_bit = (ddr & (1 << pin)) != 0;
+  ASSERT_FALSE(ddr_bit);
+}
+
+TEST_F(A_gpio, returns_undefined_if_not_configured_as_input)
+{
+  input = 0x00;
+
+  Gpio_set_direction(&gpio, Direction_Undefined);
+  ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Undefined));
+
+  Gpio_set_direction(&gpio, Direction_Output);
+  ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Undefined));
+}
+
+TEST_F(A_gpio, has_no_direction_set_after_initialisation)
+{
+  ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Undefined));
+
+  Gpio_set_direction(&gpio, Direction_Input);
+  Gpio_init(&gpio, Port_C, Pin_5);
+  ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Undefined));
+}
+
+TEST_F(A_gpio, DISABLED_does_not_set_pin_when_not_configured_as_output)
+{
+  FAIL();
+}
+
+TEST(Input_gpios, are_bound_to_a_certain_port)
 {
   Gpio pin_c_4;
   Gpio_init(&pin_c_4, Port_C, Pin_4);
@@ -166,40 +232,6 @@ TEST(Input_gpios, is_bound_to_a_certain_port)
   ASSERT_THAT(Gpio_get_signal(&pin_d_5), Eq(Signal_High));
 }
 
-TEST(A_gpio, sets_the_direction_bit_when_the_direction_is_changed_from_input_to_output)
-{
-  Gpio gpio;
-  Gpio_init(&gpio, Port_B, Pin_2);
 
-  Gpio_set_direction(&gpio, Direction_Input);
-  Gpio_set_direction(&gpio, Direction_Output);
-
-  bool const ddr_bit = (DDRB & (1 << 2)) != 0;
-  ASSERT_TRUE(ddr_bit);
-}
-
-TEST(A_gpio, clears_the_direction_bit_when_the_direction_is_changed_from_output_to_input)
-{
-  Gpio gpio;
-  Gpio_init(&gpio, Port_B, Pin_7);
-
-  Gpio_set_direction(&gpio, Direction_Output);
-  Gpio_set_direction(&gpio, Direction_Input);
-
-  bool const ddr_bit = (DDRB & (1 << 7)) != 0;
-  ASSERT_FALSE(ddr_bit);
-}
-
-TEST(A_gpio, returns_undefined_if_not_configured_as_input)
-{
-  Gpio gpio;
-  Gpio_init(&gpio, Port_B, Pin_3);
-
-  PINB = 0x00;
-  ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Undefined));
-
-  Gpio_set_direction(&gpio, Direction_Output);
-  ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Undefined));
-}
 
 } // namespace

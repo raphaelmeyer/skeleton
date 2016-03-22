@@ -29,6 +29,7 @@ void Gpio_init(struct Gpio * self, enum Port port, uint8_t pin)
     self->output = &PORTD;
   }
 
+  self->direction = Direction_Undefined;
   self->pin = pin;
 }
 
