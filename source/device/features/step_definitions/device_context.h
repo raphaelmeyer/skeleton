@@ -37,6 +37,8 @@ public:
     Gpio_init(&_button, Port_D, Pin_7);
     Timer_init(&_timer);
 
+    Gpio_init(&_notify, Port_B, Pin_0);
+
     Device_init(&_device, &_bell, &_button, &_timer, &_notify);
   }
 

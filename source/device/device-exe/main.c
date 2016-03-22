@@ -14,9 +14,12 @@ int main()
 {
   SystemTick_init();
 
-  Gpio_init(&button, Port_D, Pin_7);
   Pwm_init(&bell);
+
+  Gpio_init(&button, Port_D, Pin_7);
   Timer_init(&timer);
+
+  Gpio_init(&notify, Port_B, Pin_0);
 
   Device_init(&device, (struct IPwm *)&bell, &button, &timer, &notify);
   while(true) {
