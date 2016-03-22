@@ -11,37 +11,44 @@ using namespace ::testing;
 namespace
 {
 
-TEST(An_input_gpio, returns_high_when_its_pin_is_set)
+class An_input_gpio : public Test
 {
-  Gpio gpio;
-  Gpio_init(&gpio, Port_B, Pin_3);
-  Gpio_set_direction(&gpio, Direction_Input);
+protected:
+  virtual void SetUp() override final {
+    DDRD = 0xFF;
 
+    Gpio_init(&gpio, Port_B, Pin_3);
+    Gpio_set_direction(&gpio, Direction_Input);
+  }
+
+  Gpio gpio;
+};
+
+TEST_F(An_input_gpio, returns_high_when_its_pin_is_set)
+{
   PINB = (1 << 3);
   ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_High));
 }
 
-TEST(An_input_gpio, returns_low_when_its_pin_is_not_set)
+TEST_F(An_input_gpio, returns_low_when_its_pin_is_not_set)
 {
-  Gpio gpio;
-  Gpio_init(&gpio, Port_B, Pin_3);
-  Gpio_set_direction(&gpio, Direction_Input);
-
   PINB = 0;
   ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Low));
 }
 
-TEST(An_input_gpio, is_bound_to_a_single_pin)
+TEST_F(An_input_gpio, is_bound_to_a_single_pin)
 {
-  Gpio gpio;
-  Gpio_init(&gpio, Port_B, Pin_3);
-  Gpio_set_direction(&gpio, Direction_Input);
-
   PINB = ~(1 << 3);
   ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Low));
 }
 
-TEST(An_input_gpio, is_bound_to_a_certain_port)
+TEST_F(An_input_gpio, clears_the_direction_bit)
+{
+  bool const ddr_bit = (DDRB & (1 << 3)) != 0;
+  ASSERT_FALSE(ddr_bit);
+}
+
+TEST(Input_gpios, is_bound_to_a_certain_port)
 {
   Gpio pin_c_4;
   Gpio_init(&pin_c_4, Port_C, Pin_4);
@@ -68,20 +75,6 @@ TEST(An_input_gpio, is_bound_to_a_certain_port)
   ASSERT_THAT(Gpio_get_signal(&pin_d_4), Eq(Signal_Low));
   ASSERT_THAT(Gpio_get_signal(&pin_d_5), Eq(Signal_High));
 }
-
-TEST(An_input_gpio, clears_the_direction_bit)
-{
-  Gpio gpio;
-  Gpio_init(&gpio, Port_D, Pin_6);
-  DDRD = 0xFF;
-
-  Gpio_set_direction(&gpio, Direction_Input);
-
-  bool const ddr_bit = (DDRD & (1 << 6)) != 0;
-  ASSERT_FALSE(ddr_bit);
-}
-
-
 
 TEST(A_gpio, sets_the_direction_bit_when_the_direction_is_changed_from_input_to_output)
 {
