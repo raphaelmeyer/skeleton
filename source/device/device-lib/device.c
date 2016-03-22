@@ -17,6 +17,7 @@ void Device_init(
   self->state = Device_Idle;
 
   Gpio_set_direction(button, Direction_Input);
+  Gpio_set_direction(notify, Direction_Output);
 
   sei();
 }
