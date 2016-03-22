@@ -6,7 +6,9 @@
 
 #include <avr/interrupt.h>
 
-void Device_init(struct Device * self, struct IPwm * bell, struct Gpio * button, struct Timer * timer)
+void Device_init(
+  struct Device * self, struct IPwm * bell, struct Gpio * button, struct Timer * timer,
+  struct Gpio * notify)
 {
   self->bell = bell;
   self->button = button;

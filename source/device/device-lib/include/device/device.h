@@ -23,8 +23,10 @@ struct Device
   enum DeviceState state;
 };
 
-void Device_init(struct Device * self, struct IPwm * bell,
-                 struct Gpio * button, struct Timer * timer);
+void Device_init(
+  struct Device * self, struct IPwm * bell, struct Gpio * button, struct Timer * timer,
+  struct Gpio * notify);
+
 void Device_loop(struct Device *);
 
 #ifdef __cplusplus
