@@ -195,9 +195,15 @@ TEST_F(A_gpio, has_no_direction_set_after_initialisation)
   ASSERT_THAT(Gpio_get_signal(&gpio), Eq(Signal_Undefined));
 }
 
-TEST_F(A_gpio, DISABLED_does_not_set_pin_when_not_configured_as_output)
+TEST_F(A_gpio, does_not_set_pin_when_not_configured_as_output)
 {
-  FAIL();
+  output = 0x00;
+  Gpio_set_signal(&gpio, Signal_High);
+  ASSERT_THAT(output, Eq(0));
+
+  output = 0xFF;
+  Gpio_set_signal(&gpio, Signal_Low);
+  ASSERT_THAT(output, Eq(0xFF));
 }
 
 TEST(Input_gpios, are_bound_to_a_certain_port)
