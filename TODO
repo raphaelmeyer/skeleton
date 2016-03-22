@@ -2,4 +2,6 @@
 - use systick to drive device in feature
 - refactor timer, hide Timer_update
 - share device seams between tests and features
+- refactor gpio tests, fixtures, but still test port and pin association
+
 
