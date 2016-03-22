@@ -59,7 +59,7 @@ enum Signal Gpio_get_signal(struct Gpio * self)
 
 void Gpio_set_signal(struct Gpio * self, enum Signal signal)
 {
-  if(Direction_Undefined != self->direction) {
+  if(Direction_Output == self->direction) {
     if(signal == Signal_High) {
       set_bit(self->output, self->pin);
     } else if(signal == Signal_Low) {

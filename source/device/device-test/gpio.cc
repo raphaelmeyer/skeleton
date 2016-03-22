@@ -201,7 +201,15 @@ TEST_F(A_gpio, does_not_set_pin_when_not_configured_as_output)
   Gpio_set_signal(&gpio, Signal_High);
   ASSERT_THAT(output, Eq(0));
 
+  Gpio_set_direction(&gpio, Direction_Input);
+  Gpio_set_signal(&gpio, Signal_High);
+  ASSERT_THAT(output, Eq(0));
+
   output = 0xFF;
+  Gpio_set_signal(&gpio, Signal_Low);
+  ASSERT_THAT(output, Eq(0xFF));
+
+  Gpio_set_direction(&gpio, Direction_Input);
   Gpio_set_signal(&gpio, Signal_Low);
   ASSERT_THAT(output, Eq(0xFF));
 }
