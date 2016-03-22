@@ -74,7 +74,7 @@ TEST_F(The_device, configures_the_button_pin_as_an_input)
 
   Device_init(&testee, (IPwm *)&bell, &button, &timer, &notify);
 
-  bool const ddr_bit = button_ddr & (1 << button_pin);
+  bool const ddr_bit = (button_ddr & (1 << button_pin)) != 0;
   ASSERT_FALSE(ddr_bit);
 }
 
@@ -146,7 +146,7 @@ TEST_F(The_device, configures_the_notify_pin_as_output)
 
   Device_init(&testee, (IPwm *)&bell, &button, &timer, &notify);
 
-  bool const ddr_bit = notify_ddr & (1 << notify_pin);
+  bool const ddr_bit = (notify_ddr & (1 << notify_pin)) != 0;
   ASSERT_TRUE(ddr_bit);
 }
 
