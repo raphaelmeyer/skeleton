@@ -150,16 +150,21 @@ TEST_F(The_device, configures_the_notify_pin_as_output)
   ASSERT_TRUE(ddr_bit);
 }
 
-TEST_F(The_device, DISABLED_pulls_the_notification_pin_high_for_20_ms_whem_the_bell_rings)
+TEST_F(The_device, DISABLED_sets_the_notification_pin_to_high_when_the_bell_rings)
 {
+  notify_port = 0;
+
   Device_init(&testee, (IPwm *)&bell, &button, &timer, &notify);
 
   button_set();
   Device_loop(&testee);
 
-  // ...
-
   ASSERT_TRUE(notify_is_set());
+}
+
+TEST_F(The_device, DISABLED_resets_the_notification_pin_to_low_after_20_ms)
+{
+
 }
 
 TEST(The_device_loop, DISABLED_is_executed_once_per_system_tick)

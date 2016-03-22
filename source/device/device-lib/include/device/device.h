@@ -19,6 +19,7 @@ struct Device
   struct IPwm * bell;
   struct Gpio * button;
   struct Timer * timer;
+  struct Gpio * notify;
 
   enum DeviceState state;
 };
