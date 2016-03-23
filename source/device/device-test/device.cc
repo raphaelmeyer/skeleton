@@ -162,9 +162,23 @@ TEST_F(The_device, sets_the_notification_pin_to_high_when_the_bell_rings)
   ASSERT_TRUE(notify_is_set());
 }
 
-TEST_F(The_device, DISABLED_resets_the_notification_pin_to_low_after_20_ms)
+TEST_F(The_device, resets_the_notification_pin_to_low_after_20_ms)
 {
+  Device_init(&testee, (IPwm *)&bell, &button, &timer, &notify);
 
+  button_set();
+  Device_loop(&testee);
+
+  uint32_t const pulse_time = 20;
+  for(uint32_t i = 0; i < pulse_time - 1; ++i) {
+    TIMER1_COMPA_vect();
+    Device_loop(&testee);
+  }
+  ASSERT_TRUE(notify_is_set());
+
+  TIMER1_COMPA_vect();
+  Device_loop(&testee);
+  ASSERT_FALSE(notify_is_set());
 }
 
 TEST(The_device_loop, DISABLED_is_executed_once_per_system_tick)

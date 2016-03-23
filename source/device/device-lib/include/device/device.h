@@ -5,9 +5,10 @@
 extern "C" {
 #endif
 
+#include "device/timer.h"
+
 struct IPwm;
 struct Gpio;
-struct Timer;
 
 enum DeviceState {
   Device_Idle,
@@ -20,6 +21,7 @@ struct Device
   struct Gpio * button;
   struct Timer * timer;
   struct Gpio * notify;
+  struct Timer notify_timer;
 
   enum DeviceState state;
 };
