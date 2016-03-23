@@ -7,7 +7,6 @@
 struct Device device;
 struct Pwm bell;
 struct Gpio button;
-struct Timer timer;
 struct Gpio notify;
 
 int main()
@@ -17,11 +16,9 @@ int main()
   Pwm_init(&bell);
 
   Gpio_init(&button, Port_D, Pin_7);
-  Timer_init(&timer);
-
   Gpio_init(&notify, Port_B, Pin_0);
 
-  Device_init(&device, (struct IPwm *)&bell, &button, &timer, &notify);
+  Device_init(&device, (struct IPwm *)&bell, &button, NULL, &notify);
   while(true) {
     Device_loop(&device);
   }

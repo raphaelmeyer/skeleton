@@ -12,11 +12,12 @@ void Device_init(
 {
   self->bell = bell;
   self->button = button;
-  self->timer = timer;
+  self->timer = 0;
   self->notify = notify;
 
   self->state = Device_Idle;
 
+  Timer_init(&self->bell_timer);
   Timer_init(&self->notify_timer);
 
   Gpio_set_direction(button, Direction_Input);
@@ -29,14 +30,14 @@ void Device_loop(struct Device * self)
 {
   if(Device_Idle == self->state) {
     if(Signal_High == Gpio_get_signal(self->button)) {
-      Timer_start(self->timer, 1000);
+      Timer_start(&self->bell_timer, 1000);
       Timer_start(&self->notify_timer, 20);
       Pwm_on(self->bell);
       Gpio_set_signal(self->notify, Signal_High);
       self->state = Device_Ringing;
     }
   } else if(Device_Ringing == self->state) {
-    if(Timer_expired(self->timer)) {
+    if(Timer_expired(&self->bell_timer)) {
       Pwm_off(self->bell);
       self->state = Device_Idle;
     }

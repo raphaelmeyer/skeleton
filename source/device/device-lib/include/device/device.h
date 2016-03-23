@@ -18,6 +18,7 @@ enum DeviceState {
 struct Device
 {
   struct IPwm * bell;
+  struct Timer bell_timer;
   struct Gpio * button;
   struct Timer * timer;
   struct Gpio * notify;
