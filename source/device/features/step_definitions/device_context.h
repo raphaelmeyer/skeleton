@@ -22,7 +22,6 @@ public:
     , _button(_button_stub.impl())
     , _notify(_notify_stub.impl())
     , _bell((IPwm &)_bell_spy.impl())
-    , _timer()
     , _device()
   {
   }
@@ -35,11 +34,9 @@ public:
     SystemTick_init();
 
     Gpio_init(&_button, Port_D, Pin_7);
-    Timer_init(&_timer);
-
     Gpio_init(&_notify, Port_B, Pin_0);
 
-    Device_init(&_device, &_bell, &_button, &_timer, &_notify);
+    Device_init(&_device, &_bell, &_button, nullptr, &_notify);
   }
 
   void advance(uint32_t millisecond_ticks) {
@@ -82,7 +79,6 @@ private:
   Gpio & _button;
   Gpio & _notify;
   IPwm & _bell;
-  Timer _timer;
   Device _device;
 };
 
