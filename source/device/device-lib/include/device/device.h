@@ -27,8 +27,7 @@ struct Device
 };
 
 void Device_init(
-  struct Device * self, struct IPwm * bell, struct Gpio * button, struct Timer * timer,
-  struct Gpio * notify);
+  struct Device * self, struct IPwm * bell, struct Gpio * button, struct Gpio * notify);
 
 void Device_loop(struct Device *);
 

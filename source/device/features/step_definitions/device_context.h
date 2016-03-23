@@ -36,7 +36,7 @@ public:
     Gpio_init(&_button, Port_D, Pin_7);
     Gpio_init(&_notify, Port_B, Pin_0);
 
-    Device_init(&_device, &_bell, &_button, nullptr, &_notify);
+    Device_init(&_device, &_bell, &_button, &_notify);
   }
 
   void advance(uint32_t millisecond_ticks) {

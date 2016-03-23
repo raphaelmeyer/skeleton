@@ -68,7 +68,7 @@ TEST_F(The_device, configures_the_button_pin_as_an_input)
 {
   button_ddr = 0xFF;
 
-  Device_init(&testee, (IPwm *)&bell, &button, NULL, &notify);
+  Device_init(&testee, (IPwm *)&bell, &button, &notify);
 
   bool const ddr_bit = (button_ddr & (1 << button_pin)) != 0;
   ASSERT_FALSE(ddr_bit);
@@ -78,14 +78,14 @@ TEST_F(The_device, enables_the_interrupts)
 {
   interrupt_spy.enabled = false;
 
-  Device_init(&testee, (IPwm *)&bell, &button, NULL, &notify);
+  Device_init(&testee, (IPwm *)&bell, &button, &notify);
 
   ASSERT_TRUE(interrupt_spy.enabled);
 }
 
 TEST_F(The_device, turns_on_the_bell_pwm_when_the_button_signal_is_high)
 {
-  Device_init(&testee, (IPwm *)&bell, &button, NULL, &notify);
+  Device_init(&testee, (IPwm *)&bell, &button, &notify);
 
   button_set();
   Device_loop(&testee);
@@ -95,7 +95,7 @@ TEST_F(The_device, turns_on_the_bell_pwm_when_the_button_signal_is_high)
 
 TEST_F(The_device, does_not_ring_the_bell_when_the_button_signal_is_low)
 {
-  Device_init(&testee, (IPwm *)&bell, &button, NULL, &notify);
+  Device_init(&testee, (IPwm *)&bell, &button, &notify);
 
   button_clear();
   Device_loop(&testee);
@@ -105,7 +105,7 @@ TEST_F(The_device, does_not_ring_the_bell_when_the_button_signal_is_low)
 
 TEST_F(The_device, does_not_turn_on_pwm_again_when_the_bell_is_already_ringing)
 {
-  Device_init(&testee, (IPwm *)&bell, &button, NULL, &notify);
+  Device_init(&testee, (IPwm *)&bell, &button, &notify);
 
   button_set();
   Device_loop(&testee);
@@ -118,7 +118,7 @@ TEST_F(The_device, does_not_turn_on_pwm_again_when_the_bell_is_already_ringing)
 
 TEST_F(The_device, turns_the_bell_off_after_1000_milliseconds)
 {
-  Device_init(&testee, (IPwm *)&bell, &button, NULL, &notify);
+  Device_init(&testee, (IPwm *)&bell, &button, &notify);
 
   button_set();
   Device_loop(&testee);
@@ -140,7 +140,7 @@ TEST_F(The_device, configures_the_notify_pin_as_output)
 {
   notify_ddr = 0;
 
-  Device_init(&testee, (IPwm *)&bell, &button, NULL, &notify);
+  Device_init(&testee, (IPwm *)&bell, &button, &notify);
 
   bool const ddr_bit = (notify_ddr & (1 << notify_pin)) != 0;
   ASSERT_TRUE(ddr_bit);
@@ -150,7 +150,7 @@ TEST_F(The_device, sets_the_notification_pin_to_high_when_the_bell_rings)
 {
   notify_port = 0;
 
-  Device_init(&testee, (IPwm *)&bell, &button, NULL, &notify);
+  Device_init(&testee, (IPwm *)&bell, &button, &notify);
 
   button_set();
   Device_loop(&testee);
@@ -160,7 +160,7 @@ TEST_F(The_device, sets_the_notification_pin_to_high_when_the_bell_rings)
 
 TEST_F(The_device, resets_the_notification_pin_to_low_after_20_ms)
 {
-  Device_init(&testee, (IPwm *)&bell, &button, NULL, &notify);
+  Device_init(&testee, (IPwm *)&bell, &button, &notify);
 
   button_set();
   Device_loop(&testee);
