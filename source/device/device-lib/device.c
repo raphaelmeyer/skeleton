@@ -29,6 +29,7 @@ void Device_loop(struct Device * self)
     if(Signal_High == Gpio_get_signal(self->button)) {
       Timer_start(self->timer, 1000);
       Pwm_on(self->bell);
+      Gpio_set_signal(self->notify, Signal_High);
       self->state = Device_Ringing;
     }
   } else if(Device_Ringing == self->state) {

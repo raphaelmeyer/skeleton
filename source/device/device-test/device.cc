@@ -150,7 +150,7 @@ TEST_F(The_device, configures_the_notify_pin_as_output)
   ASSERT_TRUE(ddr_bit);
 }
 
-TEST_F(The_device, DISABLED_sets_the_notification_pin_to_high_when_the_bell_rings)
+TEST_F(The_device, sets_the_notification_pin_to_high_when_the_bell_rings)
 {
   notify_port = 0;
 
