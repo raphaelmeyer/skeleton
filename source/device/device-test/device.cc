@@ -177,9 +177,4 @@ TEST_F(The_device, resets_the_notification_pin_to_low_after_20_ms)
   ASSERT_FALSE(notify_is_set());
 }
 
-TEST(The_device_loop, DISABLED_is_executed_once_per_system_tick)
-{
-  FAIL();
-}
-
 } // namespace
