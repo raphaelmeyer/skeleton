@@ -12,7 +12,6 @@ void Device_init(
 {
   self->bell = bell;
   self->button = button;
-  self->timer = 0;
   self->notify = notify;
 
   self->state = Device_Idle;
