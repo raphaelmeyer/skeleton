@@ -3,5 +3,6 @@
 - share device seams between tests and features
 - refactor gpio tests, fixtures, but still test port and pin association
 - gpio tests get direction
+- button: push, press ...
 
 
