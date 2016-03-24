@@ -1,10 +1,20 @@
-set(SOURCE_FILES
-  device.c
-  include/device/device.h
-  )
 
 add_library(device
-  ${SOURCE_FILES}
+  device.c
+  gpio.c
+  ipwm.c
+  pwm.c
+  system_tick.c
+  timer.c
+  include/device/device.h
+  include/device/gpio.h
+  include/device/io.h
+  include/device/ipwm.h
+  include/device/pwm.h
+  include/device/system_tick.h
+  include/device/timer.h
+  seams/avr/interrupt.h
+  seams/avr/io.h
   )
 add_library(device::device ALIAS device)
 

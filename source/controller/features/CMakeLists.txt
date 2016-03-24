@@ -1,10 +1,12 @@
 
 add_executable(controller-cucumber
-  main.cc
+  step_definitions/steps.cc
+  step_definitions/dummy.cc
   )
 add_executable(test::controller-cucumber ALIAS controller-cucumber)
 
 target_link_libraries(controller-cucumber
+  PRIVATE controller::application
   PRIVATE test::cucumber-cpp
   )
 

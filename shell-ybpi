@@ -2,7 +2,7 @@
 
 PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-source ${PROJECT_ROOT}/env-target.sh
+source ${PROJECT_ROOT}/env-ybpi.sh
 
 docker run --rm -it ${VOLUMES} ${CONTAINER} /bin/bash
 
