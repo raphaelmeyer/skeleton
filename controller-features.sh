@@ -2,7 +2,7 @@
 
 PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-WIRE_SERVER=controller/controller-cucumber/controller-cucumber
+WIRE_SERVER=controller/features/controller-cucumber
 NAME=wire-server
 
 source ${PROJECT_ROOT}/env-amd64.sh
