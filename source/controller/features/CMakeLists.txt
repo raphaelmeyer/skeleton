@@ -2,6 +2,7 @@
 add_executable(controller-cucumber
   step_definitions/steps.cc
   step_definitions/dummy.cc
+  step_definitions/controller_context.h
   )
 add_executable(test::controller-cucumber ALIAS controller-cucumber)
 
