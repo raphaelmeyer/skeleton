@@ -1,6 +1,6 @@
 
 add_executable(application-test
-  spi.cc
+  application.cc
   )
 add_executable(test::application-test ALIAS application-test)
 

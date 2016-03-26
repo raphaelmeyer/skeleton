@@ -1,7 +1,7 @@
 #include <application/application.h>
 
 int main() {
-  WS::Application app;
+  Controller::Application app;
 
   app.run();
 }

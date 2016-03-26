@@ -9,6 +9,18 @@ namespace {
 using cucumber::ScenarioScope;
 using namespace testing;
 
+BEFORE()
+{
+  ScenarioScope<ControllerContext> context;
+  context->run_application();
+}
+
+AFTER()
+{
+  ScenarioScope<ControllerContext> context;
+  context->shutdown_application();
+}
+
 GIVEN("^the internet module is connected to a doorbell$") {
 }
 

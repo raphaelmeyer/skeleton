@@ -1,7 +1,8 @@
 
 add_library(application
   application.cc
-  spi.cc
+  include/application/application.h
+  include/application/icommand.h
   )
 add_library(controller::application ALIAS application)
 

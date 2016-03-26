@@ -1,23 +1,16 @@
-#ifndef APP_APPLICATION_H
-#define APP_APPLICATION_H
+#ifndef SKELETON_APPLICATION_H
+#define SKELETON_APPLICATION_H
 
-#include <string>
+namespace Controller {
 
-namespace WS {
+class Application {
+public:
+  Application();
 
-  class Application {
-    public:
-      Application();
-
-      void run();
-
-    private:
-      void abort(std::string const & message);
-
-      int _fd;
-  };
+  void run();
+  void shutdown();
+};
 
 }
 
-#endif
-
+#endif //SKELETON_APPLICATION_H
