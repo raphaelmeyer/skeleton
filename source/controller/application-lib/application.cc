@@ -83,7 +83,7 @@ namespace WS {
     activate.close();
 
     std::ofstream direction("/sys/class/gpio/gpio17/direction");
-    direction << "out";
+    direction << "in";
     direction.close();
 
     std::ofstream edge("/sys/class/gpio/gpio17/edge");
