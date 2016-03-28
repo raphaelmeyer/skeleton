@@ -39,7 +39,7 @@ public:
     _commands.push_back(command);
   }
 
-  std::vector<std::string> const & list() { return _commands; }
+  auto const & commands() { return _commands; }
 
 private:
   std::vector<std::string> _commands;
@@ -61,7 +61,7 @@ public:
   void shutdown_application() { _application.shutdown(); }
 
   Stub::Interrupt & bell_interrupt() { return _bell_interrupt; }
-  Stub::Command & commands() { return _shell_commands; }
+  auto const & commands() { return _shell_commands.commands(); }
 
 private:
   Stub::Interrupt _bell_interrupt;
