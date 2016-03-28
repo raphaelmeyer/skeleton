@@ -6,7 +6,6 @@
 #include <application/iinterrupt.h>
 
 #include <thread>
-#include <condition_variable>
 
 using namespace ::testing;
 
@@ -34,44 +33,31 @@ public:
 
 namespace {
 
-TEST(The_application, DISABLED_shall_shutdown_within_10_milliseconds)
+TEST(The_application, shall_shutdown_within_10_milliseconds)
 {
   using namespace std::chrono_literals;
 
   Controller::Application application;
 
-  std::condition_variable stopped;
+  std::mutex mutex;
+  std::condition_variable condition;
+  bool stopped = false;
+
   std::thread application_thread([&]{
     application.run();
-    stopped.notify_all();
+    {
+      std::lock_guard<std::mutex> lock(mutex);
+      stopped = true;
+    }
+    condition.notify_all();
   });
 
   application.shutdown();
 
-  std::mutex mutex;
   std::unique_lock<std::mutex> lock(mutex);
-  ASSERT_THAT(stopped.wait_for(lock, 10ms), Eq(std::cv_status::no_timeout));
-}
+  ASSERT_TRUE(condition.wait_for(lock, 10ms, [&]{ return stopped; }));
 
-TEST(The_application, DISABLED_does_not_shutdown_until_asked_for)
-{
-  using namespace std::chrono_literals;
-
-  Controller::Application application;
-
-  std::condition_variable stopped;
-
-  std::thread application_thread([&]{
-    application.run();
-    stopped.notify_all();
-  });
-
-  std::mutex mutex;
-  std::unique_lock<std::mutex> lock(mutex);
-  ASSERT_THAT(stopped.wait_for(lock, 100ms), Eq(std::cv_status::timeout));
-
-  application.shutdown();
-  stopped.wait(lock);
+  application_thread.join();
 }
 
 TEST(The_application, DISABLED_takes_a_picture_when_the_doorbell_rings)
