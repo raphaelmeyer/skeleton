@@ -6,7 +6,7 @@ BASE = 1.0.1
 
 all: module device
 
-module: module-exe controller-features module-tests
+module: module-exe module-features module-tests
 device: device-exe device-features device-tests
 
 ci: ci-module ci-device ci-reports
@@ -15,7 +15,7 @@ ci: ci-module ci-device ci-reports
 
 module-exe:            #/ build internet module executable
 module-tests:          #/ run module tests
-controller-features:   #/ check module features
+module-features:       #/ check module features
 module-wip:            #/ check module work in progress
 
 device-exe:            #/ build doorbell device firmware
@@ -28,16 +28,16 @@ device-deploy:         #/ install doorbell firmware on device
 
 module-exe: src-ybpi artifacts
 	./cmake-ybpi --build . --target $@
-	docker cp ybpi-workspace:/workspace/controller/module-exe/$@ artifacts/
+	docker cp ybpi-workspace:/workspace/module/module-exe/$@ artifacts/
 
-controller-features: module-cucumber
-	./controller-features.sh -f pretty --tag ~@wip
+module-features: module-cucumber
+	./module-features.sh -f pretty --tag ~@wip
 
 module-wip: module-cucumber
-	./controller-features.sh -f pretty --tag @wip --wip
+	./module-features.sh -f pretty --tag @wip --wip
 
 module-tests: application-test
-	./run-amd64 controller/application-test/application-test
+	./run-amd64 module/application-test/application-test
 
 application-test: src-amd64
 	./cmake-amd64 --build . --target $@
@@ -74,17 +74,17 @@ device-cucumber: src-amd64
 
 ########################################################################
 
-ci-module: module-exe ci-controller-features ci-module-tests
+ci-module: module-exe ci-module-features ci-module-tests
 
 ci-device: device-exe ci-device-features ci-device-tests
 
 ci-module-features: module-cucumber
 	./run-amd64 mkdir -p reports/features
-	./controller-features.sh -t ~@wip -f progress -f html -o /workspace/reports/features/controller.html -f json -o /workspace/reports/features/controller.json
+	./module-features.sh -t ~@wip -f progress -f html -o /workspace/reports/features/module.html -f json -o /workspace/reports/features/module.json
 
 ci-module-tests: application-test
 	./run-amd64 mkdir -p reports/tests
-	./run-amd64 controller/application-test/application-test --gtest_output=xml:reports/tests/
+	./run-amd64 module/application-test/application-test --gtest_output=xml:reports/tests/
 
 ci-device-features: device-cucumber
 	./run-amd64 mkdir -p reports/features

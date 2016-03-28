@@ -11,7 +11,7 @@ add_subdirectory(gmock-1.7.0)
 
 ########################################################################
 
-add_subdirectory(controller)
+add_subdirectory(module)
 add_subdirectory(device)
 
 ########################################################################
