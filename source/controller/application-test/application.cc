@@ -77,7 +77,7 @@ TEST(The_application, shall_shutdown_within_10_milliseconds)
   application_thread.join();
 }
 
-TEST(The_application, DISABLED_takes_a_picture_when_the_doorbell_rings)
+TEST(The_application, takes_a_picture_when_the_doorbell_rings)
 {
   Stub::Interrupt doorbell;
   Mock::Command shell;

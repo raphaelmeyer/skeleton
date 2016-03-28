@@ -1,6 +1,8 @@
 #ifndef SKELETON_APPLICATION_H
 #define SKELETON_APPLICATION_H
 
+#include "application/iinterrupt.h"
+
 #include <mutex>
 #include <condition_variable>
 
@@ -9,12 +11,14 @@ namespace Controller {
 class IInterrupt;
 class ICommand;
 
-class Application {
+class Application : public ISubscriber {
 public:
   Application(IInterrupt & doorbell, ICommand & shell);
 
   void run();
   void shutdown();
+
+  virtual void notify() override final;
 
 private:
   std::mutex _mutex;
