@@ -3,6 +3,7 @@ add_library(application
   application.cc
   include/application/application.h
   include/application/icommand.h
+  include/application/iinterrupt.h
   )
 add_library(controller::application ALIAS application)
 

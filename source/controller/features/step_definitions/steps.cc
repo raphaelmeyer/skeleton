@@ -21,9 +21,6 @@ AFTER()
   context->shutdown_application();
 }
 
-GIVEN("^the internet module is connected to a doorbell$") {
-}
-
 WHEN("^the doorbell rings$") {
   ScenarioScope<ControllerContext> context;
   context->bell_interrupt().pulse();

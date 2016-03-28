@@ -3,26 +3,19 @@
 
 #include <application/application.h>
 #include <application/icommand.h>
-
-class ISubscriber
-{
-public:
-  virtual void notify() = 0;
-};
+#include <application/iinterrupt.h>
 
 namespace Stub
 {
-class Interrupt
+class Interrupt : public Controller::IInterrupt
 {
 public:
-  virtual void subscribe(ISubscriber const & subscriber)
+  virtual void subscribe(Controller::ISubscriber & subscriber)
   {
-
   }
 
   void pulse()
   {
-
   }
 };
 
