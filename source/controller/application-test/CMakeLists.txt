@@ -6,7 +6,7 @@ add_executable(test::application-test ALIAS application-test)
 
 target_link_libraries(application-test
   PRIVATE test::gmock-main
-  PRIVATE controller::application
+  PRIVATE module::application
   )
 
 set_property(TARGET application-test PROPERTY CXX_STANDARD 14)

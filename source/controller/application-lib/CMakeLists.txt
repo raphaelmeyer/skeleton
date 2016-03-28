@@ -11,7 +11,7 @@ add_library(application
   include/application/iinterrupt.h
   include/application/controller.h
   )
-add_library(controller::application ALIAS application)
+add_library(module::application ALIAS application)
 
 target_include_directories(application
   PUBLIC include

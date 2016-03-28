@@ -1,5 +1,5 @@
 
-add_subdirectory(controller-exe)
+add_subdirectory(module-exe)
 
 add_subdirectory(features)
 

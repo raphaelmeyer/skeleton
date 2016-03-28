@@ -4,16 +4,16 @@ BASE = 1.0.1
 
 ########################################################################
 
-all: controller device
+all: module device
 
-controller: controller-exe controller-features controller-tests
+module: module-exe controller-features controller-tests
 device: device-exe device-features device-tests
 
 ci: ci-controller ci-device ci-reports
 
 ########################################################################
 
-controller-exe:        #/ build controller executable
+module-exe:            #/ build controller executable
 controller-tests:      #/ run controller tests
 controller-features:   #/ check controller features
 controller-wip:        #/ check controller work in progress
@@ -26,9 +26,9 @@ device-deploy:         #/ install firmware on device
 
 ########################################################################
 
-controller-exe: src-ybpi artifacts
+module-exe: src-ybpi artifacts
 	./cmake-ybpi --build . --target $@
-	docker cp ybpi-workspace:/workspace/controller/controller-exe/$@ artifacts/
+	docker cp ybpi-workspace:/workspace/controller/module-exe/$@ artifacts/
 
 controller-features: controller-cucumber
 	./controller-features.sh -f pretty --tag ~@wip
@@ -74,7 +74,7 @@ device-cucumber: src-amd64
 
 ########################################################################
 
-ci-controller: controller-exe ci-controller-features ci-controller-tests
+ci-controller: module-exe ci-controller-features ci-controller-tests
 
 ci-device: device-exe ci-device-features ci-device-tests
 

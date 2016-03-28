@@ -7,7 +7,7 @@ add_executable(controller-cucumber
 add_executable(test::controller-cucumber ALIAS controller-cucumber)
 
 target_link_libraries(controller-cucumber
-  PRIVATE controller::application
+  PRIVATE module::application
   PRIVATE test::cucumber-cpp
   )
 
