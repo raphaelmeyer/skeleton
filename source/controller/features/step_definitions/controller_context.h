@@ -42,10 +42,10 @@ private:
 
 }
 
-class ControllerContext
+class ModuleContext
 {
 public:
-  ControllerContext()
+  ModuleContext()
     : _application_thread()
     , _doorbell()
     , _shell()
@@ -66,7 +66,7 @@ public:
     _application_thread.join();
   }
 
-  Stub::Interrupt & bell_interrupt() { return _doorbell; }
+  Stub::Interrupt & doorbell() { return _doorbell; }
   auto const & commands() { return _shell.commands(); }
 
 private:

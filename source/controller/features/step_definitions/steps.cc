@@ -11,23 +11,23 @@ using namespace testing;
 
 BEFORE()
 {
-  ScenarioScope<ControllerContext> context;
+  ScenarioScope<ModuleContext> context;
   context->run_application();
 }
 
 AFTER()
 {
-  ScenarioScope<ControllerContext> context;
+  ScenarioScope<ModuleContext> context;
   context->shutdown_application();
 }
 
 WHEN("^the doorbell rings$") {
-  ScenarioScope<ControllerContext> context;
-  context->bell_interrupt().pulse();
+  ScenarioScope<ModuleContext> context;
+  context->doorbell().pulse();
 }
 
 THEN("^the internet module takes a picture$") {
-  ScenarioScope<ControllerContext> context;
+  ScenarioScope<ModuleContext> context;
   ASSERT_THAT(context->commands(), SizeIs(1));
   ASSERT_THAT(context->commands().at(0), StartsWith("raspistill"));
 }
@@ -36,7 +36,7 @@ THEN("^the picture is (\\d+) pixels wide and (\\d+) pixels high$") {
   REGEX_PARAM(std::string, width);
   REGEX_PARAM(std::string, height);
 
-  ScenarioScope<ControllerContext> context;
+  ScenarioScope<ModuleContext> context;
   ASSERT_THAT(context->commands().back(), HasSubstr("-w " + width));
   ASSERT_THAT(context->commands().back(), HasSubstr("-h " + height));
 }
