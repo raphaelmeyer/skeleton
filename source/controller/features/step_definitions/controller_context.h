@@ -47,9 +47,9 @@ class ControllerContext
 public:
   ControllerContext()
     : _application_thread()
-    , _bell_interrupt()
-    , _shell_commands()
-    , _application()
+    , _doorbell()
+    , _shell()
+    , _application(_doorbell, _shell)
   {
   }
 
@@ -66,14 +66,14 @@ public:
     _application_thread.join();
   }
 
-  Stub::Interrupt & bell_interrupt() { return _bell_interrupt; }
-  auto const & commands() { return _shell_commands.commands(); }
+  Stub::Interrupt & bell_interrupt() { return _doorbell; }
+  auto const & commands() { return _shell.commands(); }
 
 private:
   std::thread _application_thread;
 
-  Stub::Interrupt _bell_interrupt;
-  Stub::Command _shell_commands;
+  Stub::Interrupt _doorbell;
+  Stub::Command _shell;
 
   Controller::Application _application;
 };

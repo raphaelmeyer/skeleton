@@ -1,11 +1,16 @@
 #include "application/application.h"
 
+#include "application/iinterrupt.h"
+#include "application/icommand.h"
+
 namespace Controller {
 
-Application::Application()
+Application::Application(IInterrupt & doorbell, ICommand & shell)
   : _mutex()
   , _condition()
   , _shutdown(false)
+  , _doorbell(doorbell)
+  , _shell(shell)
 {
 }
 

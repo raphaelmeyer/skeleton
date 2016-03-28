@@ -6,9 +6,12 @@
 
 namespace Controller {
 
+class IInterrupt;
+class ICommand;
+
 class Application {
 public:
-  Application();
+  Application(IInterrupt & doorbell, ICommand & shell);
 
   void run();
   void shutdown();
@@ -17,6 +20,9 @@ private:
   std::mutex _mutex;
   std::condition_variable _condition;
   bool _shutdown;
+
+  IInterrupt & _doorbell;
+  ICommand & _shell;
 };
 
 }

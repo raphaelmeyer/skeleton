@@ -1,6 +1,8 @@
 #ifndef SKELETON_ICOMMAND_H
 #define SKELETON_ICOMMAND_H
 
+#include <string>
+
 namespace Controller {
 
 class ICommand {

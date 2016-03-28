@@ -14,9 +14,23 @@ namespace Stub {
 class Interrupt : public Controller::IInterrupt
 {
 public:
-  virtual void subscribe(Controller::ISubscriber & subscriber) {}
+  Interrupt()
+    : _subscriber(nullptr)
+  {
+  }
 
-  void pulse() {}
+  virtual void subscribe(Controller::ISubscriber & subscriber) {
+    _subscriber = &subscriber;
+  }
+
+  void pulse() {
+    if(_subscriber) {
+      _subscriber->notify();
+    }
+  }
+
+private:
+  Controller::ISubscriber * _subscriber;
 };
 
 } // namespace Stub
@@ -35,9 +49,10 @@ namespace {
 
 TEST(The_application, shall_shutdown_within_10_milliseconds)
 {
-  using namespace std::chrono_literals;
+  Stub::Interrupt doorbell;
+  Mock::Command shell;
 
-  Controller::Application application;
+  Controller::Application application(doorbell, shell);
 
   std::mutex mutex;
   std::condition_variable condition;
@@ -54,6 +69,8 @@ TEST(The_application, shall_shutdown_within_10_milliseconds)
 
   application.shutdown();
 
+  using namespace std::chrono_literals;
+
   std::unique_lock<std::mutex> lock(mutex);
   ASSERT_TRUE(condition.wait_for(lock, 10ms, [&]{ return stopped; }));
 
@@ -62,18 +79,21 @@ TEST(The_application, shall_shutdown_within_10_milliseconds)
 
 TEST(The_application, DISABLED_takes_a_picture_when_the_doorbell_rings)
 {
-  Stub::Interrupt doorbell_signal;
-  Mock::Command shell_command;
+  Stub::Interrupt doorbell;
+  Mock::Command shell;
 
-  Controller::Application application;
+  Controller::Application application(doorbell, shell);
 
-  EXPECT_CALL(shell_command, execute(StartsWith("raspistill")));
+  std::thread application_thread([&]{
+    application.run();
+  });
 
-  // run application -> fixture?
+  EXPECT_CALL(shell, execute(StartsWith("raspistill")));
 
-  doorbell_signal.pulse();
+  doorbell.pulse();
 
-  // shutdown application -> fixture?
+  application.shutdown();
+  application_thread.join();
 }
 
 }
