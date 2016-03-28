@@ -5,6 +5,8 @@
 #include <application/icommand.h>
 #include <application/iinterrupt.h>
 
+#include <thread>
+
 namespace Stub
 {
 class Interrupt : public Controller::IInterrupt
@@ -44,19 +46,32 @@ class ControllerContext
 {
 public:
   ControllerContext()
-    : _bell_interrupt()
+    : _application_thread()
+    , _bell_interrupt()
     , _shell_commands()
     , _application()
   {
   }
 
-  void run_application() { _application.run(); }
-  void shutdown_application() { _application.shutdown(); }
+  void run_application() {
+    _application_thread = std::thread(
+      [&]{
+        _application.run();
+      }
+    );
+  }
+
+  void shutdown_application() {
+    _application.shutdown();
+    _application_thread.join();
+  }
 
   Stub::Interrupt & bell_interrupt() { return _bell_interrupt; }
   auto const & commands() { return _shell_commands.commands(); }
 
 private:
+  std::thread _application_thread;
+
   Stub::Interrupt _bell_interrupt;
   Stub::Command _shell_commands;
 
