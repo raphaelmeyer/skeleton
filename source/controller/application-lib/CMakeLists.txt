@@ -1,7 +1,11 @@
 
 add_library(application
   application.cc
+  doorbell.cc
+  shell.cc
   include/application/application.h
+  include/application/doorbell.h
+  include/application/shell.h
   include/application/icommand.h
   include/application/iinterrupt.h
   )
