@@ -11,7 +11,7 @@ using namespace ::testing;
 
 namespace Stub {
 
-class Interrupt : public Controller::IInterrupt
+class Interrupt : public Module::IInterrupt
 {
 public:
   Interrupt()
@@ -19,7 +19,7 @@ public:
   {
   }
 
-  virtual void subscribe(Controller::ISubscriber & subscriber) {
+  virtual void subscribe(Module::ISubscriber & subscriber) {
     _subscriber = &subscriber;
   }
 
@@ -30,14 +30,14 @@ public:
   }
 
 private:
-  Controller::ISubscriber * _subscriber;
+  Module::ISubscriber * _subscriber;
 };
 
 } // namespace Stub
 
 namespace Mock {
 
-class Command : public Controller::ICommand
+class Command : public Module::ICommand
 {
 public:
   MOCK_METHOD1(execute, void(std::string const &command));
@@ -52,7 +52,7 @@ TEST(The_application, shall_shutdown_within_10_milliseconds)
   Stub::Interrupt doorbell;
   Mock::Command shell;
 
-  Controller::Application application(doorbell, shell);
+  Module::Application application(doorbell, shell);
 
   std::mutex mutex;
   std::condition_variable condition;
@@ -82,7 +82,7 @@ TEST(The_application, takes_a_picture_when_the_doorbell_rings)
   Stub::Interrupt doorbell;
   Mock::Command shell;
 
-  Controller::Application application(doorbell, shell);
+  Module::Application application(doorbell, shell);
 
   std::thread application_thread([&]{
     application.run();

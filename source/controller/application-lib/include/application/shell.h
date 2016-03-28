@@ -3,7 +3,7 @@
 
 #include "application/icommand.h"
 
-namespace Controller {
+namespace Module {
 
 class Shell : public ICommand {
 public:

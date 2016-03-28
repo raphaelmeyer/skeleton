@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Controller {
+namespace Module {
 
 class ICommand {
 public:

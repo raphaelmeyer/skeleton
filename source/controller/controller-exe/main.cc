@@ -3,10 +3,10 @@
 #include <application/doorbell.h>
 
 int main() {
-  Controller::Doorbell doorbell;
-  Controller::Shell shell;
+  Module::Doorbell doorbell;
+  Module::Shell shell;
 
-  Controller::Application app(doorbell, shell);
+  Module::Application app(doorbell, shell);
 
   app.run();
 }

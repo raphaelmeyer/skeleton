@@ -1,6 +1,6 @@
 #include "application/doorbell.h"
 
-namespace Controller {
+namespace Module {
 
 void Doorbell::subscribe(ISubscriber & subscriber) {
 }

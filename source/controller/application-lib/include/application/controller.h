@@ -3,7 +3,7 @@
 
 #include "application/iinterrupt.h"
 
-namespace Controller
+namespace Module
 {
 
 class ICommand;

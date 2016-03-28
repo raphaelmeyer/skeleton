@@ -4,7 +4,7 @@
 #include <mutex>
 #include <condition_variable>
 
-namespace Controller {
+namespace Module {
 
 class ICommand;
 class IInterrupt;

@@ -1,7 +1,7 @@
 #ifndef SKELETON_IINTERRUPT_H
 #define SKELETON_IINTERRUPT_H
 
-namespace Controller {
+namespace Module {
 
 class ISubscriber
 {

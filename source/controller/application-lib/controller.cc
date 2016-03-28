@@ -2,7 +2,7 @@
 
 #include "application/icommand.h"
 
-namespace Controller {
+namespace Module {
 
 Controller::Controller(ICommand & shell)
   : _shell(shell)

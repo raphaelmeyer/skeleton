@@ -9,10 +9,10 @@
 
 namespace Stub
 {
-class Interrupt : public Controller::IInterrupt
+class Interrupt : public Module::IInterrupt
 {
 public:
-  virtual void subscribe(Controller::ISubscriber & subscriber)
+  virtual void subscribe(Module::ISubscriber & subscriber)
   {
   }
 
@@ -21,7 +21,7 @@ public:
   }
 };
 
-class Command : public Controller::ICommand
+class Command : public Module::ICommand
 {
 public:
   Command()
@@ -75,7 +75,7 @@ private:
   Stub::Interrupt _doorbell;
   Stub::Command _shell;
 
-  Controller::Application _application;
+  Module::Application _application;
 };
 
 #endif //SKELETON_CONTROLLER_CONTEXT_H_H

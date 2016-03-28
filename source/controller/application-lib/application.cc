@@ -3,7 +3,7 @@
 #include "application/icommand.h"
 #include "application/controller.h"
 
-namespace Controller {
+namespace Module {
 
 Application::Application(IInterrupt & doorbell, ICommand & shell)
   : _mutex()
