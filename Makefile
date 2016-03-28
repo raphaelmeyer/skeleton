@@ -13,16 +13,16 @@ ci: ci-controller ci-device ci-reports
 
 ########################################################################
 
-module-exe:            #/ build controller executable
-controller-tests:      #/ run controller tests
-controller-features:   #/ check controller features
-controller-wip:        #/ check controller work in progress
+module-exe:            #/ build internet module executable
+controller-tests:      #/ run module tests
+controller-features:   #/ check module features
+module-wip:            #/ check module work in progress
 
-device-exe:            #/ build device firmware
+device-exe:            #/ build doorbell device firmware
 device-tests:          #/ run device tests
 device-features:       #/ check device features
 device-wip:            #/ check device work in progress
-device-deploy:         #/ install firmware on device
+device-deploy:         #/ install doorbell firmware on device
 
 ########################################################################
 
@@ -30,10 +30,10 @@ module-exe: src-ybpi artifacts
 	./cmake-ybpi --build . --target $@
 	docker cp ybpi-workspace:/workspace/controller/module-exe/$@ artifacts/
 
-controller-features: controller-cucumber
+controller-features: module-cucumber
 	./controller-features.sh -f pretty --tag ~@wip
 
-controller-wip: controller-cucumber
+module-wip: module-cucumber
 	./controller-features.sh -f pretty --tag @wip --wip
 
 controller-tests: application-test
@@ -66,8 +66,8 @@ device-deploy: device-exe
 
 ########################################################################
 
-controller-cucumber: src-amd64
-	./cmake-amd64 --build . --target controller-cucumber
+module-cucumber: src-amd64
+	./cmake-amd64 --build . --target module-cucumber
 
 device-cucumber: src-amd64
 	./cmake-amd64 --build . --target device-cucumber
@@ -78,7 +78,7 @@ ci-controller: module-exe ci-controller-features ci-controller-tests
 
 ci-device: device-exe ci-device-features ci-device-tests
 
-ci-controller-features: controller-cucumber
+ci-controller-features: module-cucumber
 	./run-amd64 mkdir -p reports/features
 	./controller-features.sh -t ~@wip -f progress -f html -o /workspace/reports/features/controller.html -f json -o /workspace/reports/features/controller.json
 
