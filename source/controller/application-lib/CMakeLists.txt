@@ -1,6 +1,7 @@
 
 add_library(application
   application.cc
+  controller.cc
   doorbell.cc
   shell.cc
   include/application/application.h
@@ -8,6 +9,7 @@ add_library(application
   include/application/shell.h
   include/application/icommand.h
   include/application/iinterrupt.h
+  include/application/controller.h
   )
 add_library(controller::application ALIAS application)
 

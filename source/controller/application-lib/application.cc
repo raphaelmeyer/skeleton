@@ -1,6 +1,7 @@
 #include "application/application.h"
 
 #include "application/icommand.h"
+#include "application/controller.h"
 
 namespace Controller {
 
@@ -14,7 +15,8 @@ Application::Application(IInterrupt & doorbell, ICommand & shell)
 }
 
 void Application::run() {
-  _doorbell.subscribe(*this);
+  Controller controller(_shell);
+  _doorbell.subscribe(controller);
 
   std::unique_lock<std::mutex> lock(_mutex);
   _condition.wait(lock, [this]{ return _shutdown; });
@@ -26,10 +28,6 @@ void Application::shutdown() {
     _shutdown = true;
   }
   _condition.notify_all();
-}
-
-void Application::notify() {
-  _shell.execute("raspistill");
 }
 
 }
