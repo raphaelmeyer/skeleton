@@ -6,15 +6,15 @@ BASE = 1.0.1
 
 all: module device
 
-module: module-exe controller-features controller-tests
+module: module-exe controller-features module-tests
 device: device-exe device-features device-tests
 
-ci: ci-controller ci-device ci-reports
+ci: ci-module ci-device ci-reports
 
 ########################################################################
 
 module-exe:            #/ build internet module executable
-controller-tests:      #/ run module tests
+module-tests:          #/ run module tests
 controller-features:   #/ check module features
 module-wip:            #/ check module work in progress
 
@@ -36,7 +36,7 @@ controller-features: module-cucumber
 module-wip: module-cucumber
 	./controller-features.sh -f pretty --tag @wip --wip
 
-controller-tests: application-test
+module-tests: application-test
 	./run-amd64 controller/application-test/application-test
 
 application-test: src-amd64
@@ -74,15 +74,15 @@ device-cucumber: src-amd64
 
 ########################################################################
 
-ci-controller: module-exe ci-controller-features ci-controller-tests
+ci-module: module-exe ci-controller-features ci-module-tests
 
 ci-device: device-exe ci-device-features ci-device-tests
 
-ci-controller-features: module-cucumber
+ci-module-features: module-cucumber
 	./run-amd64 mkdir -p reports/features
 	./controller-features.sh -t ~@wip -f progress -f html -o /workspace/reports/features/controller.html -f json -o /workspace/reports/features/controller.json
 
-ci-controller-tests: application-test
+ci-module-tests: application-test
 	./run-amd64 mkdir -p reports/tests
 	./run-amd64 controller/application-test/application-test --gtest_output=xml:reports/tests/
 
