@@ -2,48 +2,12 @@
 
 #include <application/application.h>
 
-#include <application/icommand.h>
-#include <application/iinterrupt.h>
+#include "command_mock.h"
+#include "interrupt_stub.h"
 
 #include <thread>
 
-using namespace ::testing;
-
-namespace Stub {
-
-class Interrupt : public Module::IInterrupt
-{
-public:
-  Interrupt()
-    : _subscriber(nullptr)
-  {
-  }
-
-  virtual void subscribe(Module::ISubscriber & subscriber) {
-    _subscriber = &subscriber;
-  }
-
-  void pulse() {
-    if(_subscriber) {
-      _subscriber->notify();
-    }
-  }
-
-private:
-  Module::ISubscriber * _subscriber;
-};
-
-} // namespace Stub
-
-namespace Mock {
-
-class Command : public Module::ICommand
-{
-public:
-  MOCK_METHOD1(execute, void(std::string const &command));
-};
-
-} // namespace Mock
+using namespace testing;
 
 namespace {
 

@@ -2,6 +2,9 @@
 add_executable(application-test
   application.cc
   controller.cc
+  command_mock.h
+  interrupt_stub.h
+  scheduler_mock.h
   )
 add_executable(test::application-test ALIAS application-test)
 
