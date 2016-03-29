@@ -7,16 +7,18 @@ namespace Module
 {
 
 class ICommand;
+class IScheduler;
 
 class Controller : public ISubscriber
 {
 public:
-  Controller(ICommand & shell);
+  Controller(ICommand & shell, IScheduler & scheduler);
 
   virtual void notify() override final;
 
 private:
   ICommand & _shell;
+  IScheduler & _scheduler;
 };
 
 }

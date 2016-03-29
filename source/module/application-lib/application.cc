@@ -2,6 +2,7 @@
 
 #include "application/icommand.h"
 #include "application/controller.h"
+#include "application/scheduler.h"
 
 namespace Module {
 
@@ -15,7 +16,8 @@ Application::Application(IInterrupt & doorbell, ICommand & shell)
 }
 
 void Application::run() {
-  Controller controller(_shell);
+  Scheduler scheduler;
+  Controller controller(_shell, scheduler);
   _doorbell.subscribe(controller);
 
   wait_for_shutdown();
