@@ -6,22 +6,38 @@ using namespace testing;
 
 namespace {
 
-TEST(The_controller, DISABLED_is_a_subscriber_of_the_doorbell)
-{
-  //Controller testee;
-  //ISubscriber & subscriber = testee;
+class IRequest;
+class IResponse;
 
-  FAIL();
-}
-
-TEST(The_controller, DISABLED_)
+class IScheduler
 {
-  FAIL();
+public:
+  std::unique_ptr<IResponse> schedule(std::unique_ptr<IRequest> request) = 0;
+};
+
+TEST(The_controller, DISABLED_uses_a_scheduler_handle_a_notification)
+{
+  /*
+  CommandMock shell;
+  SchedulerMock scheduler;
+  Controller controller(shell, scheduler);
+
+  EXPECT_CALL(scheduler, schedule(_))
+    .WillOnce(Return());
+  */
 }
 
 TEST(The_controller, DISABLED_takes_a_picture_when_notified_by_the_doorbell)
 {
-  FAIL();
+  /*
+  CommandMock shell;
+  Scheduler scheduler;
+  Controller controller(shell, scheduler);
+
+  EXPECT_CALL(shell, execute(StartsWith("raspistill")));
+
+  controller.notify();
+  */
 }
 
 
