@@ -1,6 +1,7 @@
 
 add_executable(application-test
   application.cc
+  controller.cc
   )
 add_executable(test::application-test ALIAS application-test)
 
