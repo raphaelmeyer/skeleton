@@ -52,14 +52,14 @@ TEST(The_application, shall_shutdown_within_10_milliseconds)
   Stub::Interrupt doorbell;
   Mock::Command shell;
 
-  Module::Application application(doorbell, shell);
+  Module::Application testee(doorbell, shell);
 
   std::mutex mutex;
   std::condition_variable condition;
   bool stopped = false;
 
   std::thread application_thread([&]{
-    application.run();
+    testee.run();
     {
       std::lock_guard<std::mutex> lock(mutex);
       stopped = true;
@@ -67,7 +67,7 @@ TEST(The_application, shall_shutdown_within_10_milliseconds)
     condition.notify_all();
   });
 
-  application.shutdown();
+  testee.shutdown();
 
   using namespace std::chrono_literals;
 
@@ -89,22 +89,20 @@ TEST(The_application, DISABLED_stops_the_controller_on_shutdown)
 
 TEST(The_application, takes_a_picture_when_the_doorbell_rings)
 {
-  // TODO move to controller
-
   Stub::Interrupt doorbell;
   Mock::Command shell;
 
-  Module::Application application(doorbell, shell);
+  Module::Application testee(doorbell, shell);
 
   std::thread application_thread([&]{
-    application.run();
+    testee.run();
   });
 
   EXPECT_CALL(shell, execute(StartsWith("raspistill")));
 
   doorbell.pulse();
 
-  application.shutdown();
+  testee.shutdown();
   application_thread.join();
 }
 
