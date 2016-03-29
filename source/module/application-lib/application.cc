@@ -18,11 +18,21 @@ void Application::run() {
   Controller controller(_shell);
   _doorbell.subscribe(controller);
 
+  wait_for_shutdown();
+}
+
+void Application::shutdown() {
+  trigger_shutdown();
+}
+
+void Application::wait_for_shutdown()
+{
   std::unique_lock<std::mutex> lock(_mutex);
   _condition.wait(lock, [this]{ return _shutdown; });
 }
 
-void Application::shutdown() {
+void Application::trigger_shutdown()
+{
   {
     std::lock_guard<std::mutex> lock(_mutex);
     _shutdown = true;

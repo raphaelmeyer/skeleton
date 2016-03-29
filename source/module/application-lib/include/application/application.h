@@ -17,6 +17,9 @@ public:
   void shutdown();
 
 private:
+  void wait_for_shutdown();
+  void trigger_shutdown();
+
   std::mutex _mutex;
   std::condition_variable _condition;
   bool _shutdown;
