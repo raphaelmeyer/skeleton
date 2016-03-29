@@ -6,6 +6,7 @@ using namespace testing;
 
 namespace {
 
+/*
 class IRequest;
 class IResponse;
 
@@ -14,6 +15,7 @@ class IScheduler
 public:
   std::unique_ptr<IResponse> schedule(std::unique_ptr<IRequest> request) = 0;
 };
+*/
 
 TEST(The_controller, DISABLED_uses_a_scheduler_handle_a_notification)
 {
