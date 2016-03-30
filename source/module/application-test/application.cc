@@ -51,7 +51,7 @@ TEST(The_application, DISABLED_stops_the_controller_on_shutdown)
   FAIL();
 }
 
-TEST(The_application, takes_a_picture_when_the_doorbell_rings)
+TEST(The_application, DISABLED_takes_a_picture_when_the_doorbell_rings)
 {
   Stub::Interrupt doorbell;
   Mock::Command shell;
