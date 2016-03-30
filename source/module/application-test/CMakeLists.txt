@@ -2,6 +2,7 @@
 add_executable(application-test
   application.cc
   controller.cc
+  scheduler.cc
   command_mock.h
   interrupt_stub.h
   scheduler_mock.h
