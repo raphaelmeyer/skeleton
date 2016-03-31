@@ -1,6 +1,7 @@
 #include <gmock/gmock.h>
 
 #include <application/scheduler.h>
+#include <application/request.h>
 
 using namespace testing;
 
@@ -13,10 +14,27 @@ TEST(A_Scheduler, executes_a_request_when_started)
   testee.start();
 
   bool executed = false;
-  testee.schedule([&executed]{ executed = true; return 0; });
+  Module::Request<uint32_t> request{[&]{ executed = true; return 0; }};
+  testee.schedule(request);
 
   ASSERT_TRUE(executed);
 }
+
+TEST(A_Scheduler, DISABLED_executes_a_request_when_started)
+{
+  // Use this to replace test with same name
+
+  Module::Scheduler testee;
+
+  testee.start();
+
+  bool executed = false;
+  //Module::Request<void> request{[&]{ executed = true; }};
+  //testee.schedule(request);
+
+  ASSERT_TRUE(executed);
+}
+
 
 TEST(A_Scheduler, returns_a_future_for_the_result_of_the_request)
 {
