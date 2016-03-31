@@ -4,6 +4,7 @@
 #include <gmock/gmock.h>
 
 #include <application/ischeduler.h>
+#include <application/irequest.h>
 
 namespace Mock {
 
@@ -25,6 +26,8 @@ public:
     promise.set_value("");
     return promise.get_future();
   }
+
+  MOCK_METHOD1(schedule, void(Module::IRequest & request));
 
   MOCK_METHOD1(schedule_proxy, void(std::function<uint32_t()> request));
   MOCK_METHOD1(schedule_proxy, void(std::function<std::string()> request));

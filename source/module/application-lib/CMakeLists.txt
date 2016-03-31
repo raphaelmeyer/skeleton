@@ -8,10 +8,12 @@ add_library(application
   include/application/application.h
   include/application/controller.h
   include/application/doorbell.h
+  include/application/request.h
   include/application/scheduler.h
   include/application/shell.h
   include/application/icommand.h
   include/application/iinterrupt.h
+  include/application/irequest.h
   include/application/ischeduler.h
   )
 add_library(module::application ALIAS application)
