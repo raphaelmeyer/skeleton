@@ -10,6 +10,7 @@ class IScheduler
 {
 public:
   virtual std::future<uint32_t> schedule(std::function<uint32_t()> request) = 0;
+  virtual std::future<std::string> schedule(std::function<std::string()> request) = 0;
 };
 
 
