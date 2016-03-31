@@ -31,6 +31,27 @@ TEST(A_Scheduler, returns_a_future_for_the_result_of_the_request)
   ASSERT_THAT(result.get(), Eq(expected));
 }
 
+TEST(A_Scheduler, DISABLED_returns_a_future_of_the_requests_result_type)
+{
+  FAIL();
+
+  /*
+  Module::Scheduler testee;
+  testee.start();
+
+  float_t const floating_point = 3.14;
+  auto float_result = testee.schedule([]{ return floating_point; });
+
+  ASSERT_THAT(float_result.get(), FloatEq(floating_point));
+
+  std::string const string = "42";
+  auto string_result = testee.schedule([]{ return string; });
+
+  ASSERT_THAT(string_result.get(), StrEq(string));
+   */
+}
+
+
 TEST(A_Scheduler, DISABLED_forwards_arbitrary_parameters_to_the_request) {
   FAIL();
 }
