@@ -10,16 +10,15 @@ namespace Mock {
 class Scheduler : public Module::IScheduler
 {
 public:
-  virtual std::future<void> schedule(std::function<void()> request)
+  virtual std::future<uint32_t> schedule(std::function<uint32_t()> request)
   {
     schedule_proxy(request);
-    std::promise<void> promise;
-    promise.set_value();
+    std::promise<uint32_t> promise;
+    promise.set_value(0);
     return promise.get_future();
   }
 
-  MOCK_METHOD1(schedule_proxy, void(std::function<void()>
-  request));
+  MOCK_METHOD1(schedule_proxy, void(std::function<uint32_t()> request));
 };
 
 }

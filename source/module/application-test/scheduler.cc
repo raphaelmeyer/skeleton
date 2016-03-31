@@ -13,13 +13,25 @@ TEST(A_Scheduler, executes_a_request_when_started)
   testee.start();
 
   bool executed = false;
-  testee.schedule([&executed]{ executed = true; });
+  testee.schedule([&executed]{ executed = true; return 0; });
 
   ASSERT_TRUE(executed);
 }
 
-TEST(A_Scheduler, DISABLED_returns_a_future_for_the_result_of_the_request)
+TEST(A_Scheduler, returns_a_future_for_the_result_of_the_request)
 {
+  Module::Scheduler testee;
+
+  testee.start();
+
+  uint32_t const expected = 42;
+
+  auto result = testee.schedule([](){ return expected; });
+
+  ASSERT_THAT(result.get(), Eq(expected));
+}
+
+TEST(A_Scheduler, DISABLED_forwards_arbitrary_parameters_to_the_request) {
   FAIL();
 }
 

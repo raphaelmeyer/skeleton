@@ -13,7 +13,7 @@ Controller::Controller(ICommand & shell, IScheduler & scheduler)
 
 void Controller::notify()
 {
-  _scheduler.schedule([this]{});
+  _scheduler.schedule([this]{ return 0; });
   _shell.execute("raspistill");
 }
 

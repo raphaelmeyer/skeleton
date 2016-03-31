@@ -5,9 +5,10 @@ namespace Module {
 void Scheduler::start() {
 }
 
-std::future<void> Scheduler::schedule(std::function<void()> request) {
-  request();
-  return std::future<void>();
+std::future<uint32_t> Scheduler::schedule(std::function<uint32_t()> request) {
+  std::promise<uint32_t> promise;
+  promise.set_value(request());
+  return promise.get_future();
 }
 
 

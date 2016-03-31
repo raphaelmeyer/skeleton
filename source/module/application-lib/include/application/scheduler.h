@@ -10,7 +10,7 @@ public:
 
   void start();
 
-  virtual std::future<void> schedule(std::function<void()> request) override final;
+  virtual std::future<uint32_t> schedule(std::function<uint32_t()> request) override final;
 };
 
 }
