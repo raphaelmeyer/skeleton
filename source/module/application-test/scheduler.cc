@@ -43,10 +43,10 @@ TEST(A_Scheduler, returns_a_future_for_the_result_of_the_request)
   testee.start();
 
   uint32_t const expected = 42;
+  Module::Request<uint32_t> request{[]{ return expected; }};
+  testee.schedule(request);
 
-  auto result = testee.schedule([](){ return expected; });
-
-  ASSERT_THAT(result.get(), Eq(expected));
+  ASSERT_THAT(request.get_future().get(), Eq(expected));
 }
 
 TEST(A_Scheduler, returns_a_future_with_the_same_type_as_the_result_of_the_request)
@@ -54,15 +54,17 @@ TEST(A_Scheduler, returns_a_future_with_the_same_type_as_the_result_of_the_reque
   Module::Scheduler testee;
   testee.start();
 
-  //float_t const floating_point = 3.14;
-  //auto float_result = testee.schedule([=]{ return floating_point; });
+  float_t const float_result = 3.14;
+  Module::Request<float_t> float_request{[=]{ return float_result; }};
+  testee.schedule(float_request);
 
-  //ASSERT_THAT(float_result.get(), FloatEq(floating_point));
+  ASSERT_THAT(float_request.get_future().get(), FloatEq(float_result));
 
-  std::string const string = "42";
-  auto string_result = testee.schedule([=]{ return string; });
+  std::string const string_result = "42";
+  Module::Request<std::string> string_request{[=]{ return string_result; }};
+  testee.schedule(string_request);
 
-  ASSERT_THAT(string_result.get(), StrEq(string));
+  ASSERT_THAT(string_request.get_future().get(), StrEq(string_result));
 }
 
 
