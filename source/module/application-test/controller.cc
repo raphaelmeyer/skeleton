@@ -16,7 +16,7 @@ TEST(The_controller, uses_a_scheduler_for_handling_a_notification)
   Mock::Scheduler scheduler;
   Module::Controller testee(shell, scheduler);
 
-  EXPECT_CALL(scheduler, schedule_proxy(An<std::function<uint32_t()>>()));
+  EXPECT_CALL(scheduler, schedule(_));
 
   testee.notify();
 }

@@ -2,6 +2,7 @@
 
 #include "application/icommand.h"
 #include "application/ischeduler.h"
+#include "application/request.h"
 
 namespace Module {
 
@@ -13,7 +14,8 @@ Controller::Controller(ICommand & shell, IScheduler & scheduler)
 
 void Controller::notify()
 {
-  _scheduler.schedule([this]{ return 0; });
+  Request<uint32_t> request{[]{ return 0; }};
+  _scheduler.schedule(request);
   _shell.execute("raspistill");
 }
 
