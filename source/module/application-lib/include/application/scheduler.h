@@ -7,9 +7,10 @@ namespace Module {
 
 class Scheduler : public IScheduler {
 public:
-  virtual std::future<void> schedule(std::function<void()> request) override final {
-    return std::future<void>();
-  }
+
+  void start();
+
+  virtual std::future<void> schedule(std::function<void()> request) override final;
 };
 
 }

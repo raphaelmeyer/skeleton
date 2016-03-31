@@ -6,7 +6,19 @@ using namespace testing;
 
 namespace {
 
-TEST(A_Scheduler, DISABLED_executes_a_request_when_started)
+TEST(A_Scheduler, executes_a_request_when_started)
+{
+  Module::Scheduler testee;
+
+  testee.start();
+
+  bool executed = false;
+  testee.schedule([&executed]{ executed = true; });
+
+  ASSERT_TRUE(executed);
+}
+
+TEST(A_Scheduler, DISABLED_returns_a_future_for_the_result_of_the_request)
 {
   FAIL();
 }
