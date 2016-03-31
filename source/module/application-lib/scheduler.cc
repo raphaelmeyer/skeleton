@@ -22,6 +22,11 @@ public:
     _promise.set_value(_request());
   }
 
+  std::future<T> get_future() {
+    return _promise.get_future();
+  }
+
+private:
   std::function<T()> _request;
   std::promise<T> _promise;
 };
@@ -29,13 +34,13 @@ public:
 std::future<uint32_t> Scheduler::schedule(std::function<uint32_t()> request) {
   Request<uint32_t> r{request};
   r.dispatch();
-  return r._promise.get_future();
+  return r.get_future();
 }
 
 std::future<std::string> Scheduler::schedule(std::function<std::string()> request) {
   Request<std::string> r{request};
   r.dispatch();
-  return r._promise.get_future();
+  return r.get_future();
 }
 
 
