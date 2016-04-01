@@ -14,9 +14,8 @@ Controller::Controller(ICommand & shell, IScheduler & scheduler)
 
 void Controller::notify()
 {
-  Request<uint32_t> request{[this]{
+  Request<void> request{[this]{
     _shell.execute("raspistill");
-    return 0;
   }};
   _scheduler.schedule(request);
 }
