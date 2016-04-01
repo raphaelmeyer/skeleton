@@ -51,20 +51,46 @@ TEST(A_Scheduler, returns_a_future_with_the_same_type_as_the_result_of_the_reque
   ASSERT_THAT(string_request.get_future().get(), StrEq(string_result));
 }
 
-
-TEST(A_Scheduler, DISABLED_forwards_arbitrary_parameters_to_the_request) {
-  FAIL();
-}
-
 TEST(A_Scheduler, DISABLED_executes_requests_in_sequence)
 {
-  // uint32_t value = 0;
-  // uint32_t const a = 1000;
-  // uint32_t const b = 1000;
-  // std::thread([]{ testee.schedule([]{ for(uint32_t i = 0; i < a; ++i){ ++value; } }); });
-  // std::thread([]{ testee.schedule([]{ for(uint32_t i = 0; i < b; ++i){ ++value; } }); });
-  // ASSERT_THAT(value, Eq(a + b));
-  FAIL();
+  Module::Scheduler testee;
+  testee.start();
+
+  bool idle = true;
+
+  auto function = [&]{
+    if (!idle) {
+      return false;
+    }
+
+    idle = false;
+    std::this_thread::yield();
+    idle = true;
+
+    return true;
+  };
+
+  size_t number_of_threads = 20;
+
+  std::vector<Module::Request<bool>> requests;
+  for(size_t i = 0; i < number_of_threads; ++i) {
+    requests.emplace_back(Module::Request<bool>(function));
+  }
+
+  std::vector<std::thread> threads;
+  for(auto & request : requests) {
+    threads.emplace_back([&]{ testee.schedule(request); });
+  }
+
+  for(auto & thread : threads) {
+    thread.join();
+  }
+
+  for(auto & request : requests) {
+    bool const request_was_executed_in_sequence = request.get_future().get();
+    ASSERT_TRUE(request_was_executed_in_sequence);
+  }
+
 }
 
 TEST(A_Scheduler, DISABLED_ignores_a_request_when_not_started)

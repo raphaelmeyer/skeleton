@@ -11,5 +11,6 @@
 
 - interrupt stub in feature
 - split interrupt into thin sys call layer, and doorbell functionality
+- refactor notify implemention in controller to notify -> take picture
 
 
