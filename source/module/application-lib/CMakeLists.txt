@@ -3,6 +3,7 @@ add_library(application
   application.cc
   controller.cc
   doorbell.cc
+  request.cc
   scheduler.cc
   shell.cc
   include/application/application.h

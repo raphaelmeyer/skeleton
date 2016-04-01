@@ -3,6 +3,9 @@
 
 #include "application/irequest.h"
 
+#include <future>
+#include <functional>
+
 namespace Module {
 
 template<typename T>
@@ -10,7 +13,9 @@ class Request : public IRequest
 {
 public:
   Request(std::function<T()> request)
-    : _request(request) { }
+    : _request(request)
+  {
+  }
 
   virtual void dispatch() override final
   {
@@ -26,6 +31,9 @@ private:
   std::function<T()> _request;
   std::promise <T> _promise;
 };
+
+template<>
+void Request<void>::dispatch();
 
 }
 
