@@ -51,7 +51,7 @@ TEST(A_Scheduler, returns_a_future_with_the_same_type_as_the_result_of_the_reque
   ASSERT_THAT(string_request.get_future().get(), StrEq(string_result));
 }
 
-TEST(A_Scheduler, DISABLED_executes_requests_in_sequence)
+TEST(A_Scheduler, executes_requests_in_sequence)
 {
   Module::Scheduler testee;
   testee.start();
