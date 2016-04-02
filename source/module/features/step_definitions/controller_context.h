@@ -12,20 +12,17 @@ namespace Stub
 class Interrupt : public Module::IInterrupt
 {
 public:
-  virtual void subscribe(Module::ISubscriber & subscriber)
-  {
+  virtual void subscribe(Module::ISubscriber & subscriber) {
     _subscribers.push_back(subscriber);
   }
 
-  void pulse()
-  {
+  void pulse() {
     for(Module::ISubscriber & subscriber : _subscribers) {
       subscriber.notify();
     }
   }
 
 private:
-
   std::vector<std::reference_wrapper<Module::ISubscriber>> _subscribers;
 };
 
@@ -37,8 +34,7 @@ public:
   {
   }
 
-  virtual void execute(std::string const & command) override
-  {
+  virtual void execute(std::string const & command) override {
     _commands.push_back(command);
   }
 
@@ -62,11 +58,9 @@ public:
   }
 
   void run_application() {
-    _application_thread = std::thread(
-      [&]{
-        _application.run();
-      }
-    );
+    _application_thread = std::thread([&]{
+      _application.run();
+    });
   }
 
   void shutdown_application() {
