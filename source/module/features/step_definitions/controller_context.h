@@ -14,11 +14,19 @@ class Interrupt : public Module::IInterrupt
 public:
   virtual void subscribe(Module::ISubscriber & subscriber)
   {
+    _subscribers.push_back(subscriber);
   }
 
   void pulse()
   {
+    for(Module::ISubscriber & subscriber : _subscribers) {
+      subscriber.notify();
+    }
   }
+
+private:
+
+  std::vector<std::reference_wrapper<Module::ISubscriber>> _subscribers;
 };
 
 class Command : public Module::ICommand
