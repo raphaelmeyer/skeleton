@@ -9,8 +9,8 @@
 
 # module
 
-- interrupt stub in feature
 - split interrupt into thin sys call layer, and doorbell functionality
-- refactor notify implemention in controller to notify -> take picture
-
+- feature test boundary for interrupt
+- feature test boundary for shell command
+- drive interrupt implementation not to be blocked if a handler blocks -> event class?
 
