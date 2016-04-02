@@ -40,7 +40,7 @@ TEST(The_application, shall_shutdown_within_10_milliseconds)
   application_thread.join();
 }
 
-TEST(The_application, takes_a_picture_within_1_second_when_the_doorbell_rings)
+TEST(The_application, takes_a_picture_when_the_doorbell_rings)
 {
   Stub::Interrupt doorbell;
   StrictMock<Mock::Command> shell;
@@ -51,26 +51,9 @@ TEST(The_application, takes_a_picture_within_1_second_when_the_doorbell_rings)
     testee.run();
   });
 
-  std::mutex mutex;
-  std::condition_variable condition;
-  bool picture_taken = false;
-
-  EXPECT_CALL(shell, execute(StartsWith("raspistill")))
-    .WillOnce(InvokeWithoutArgs([&]{
-      {
-        std::lock_guard<std::mutex> lock(mutex);
-        picture_taken = true;
-      }
-      condition.notify_all();
-    }));
+  EXPECT_CALL(shell, execute(StartsWith("raspistill")));
 
   doorbell.pulse();
-
-  std::unique_lock<std::mutex> lock(mutex);
-  bool const no_timeout = condition.wait_for(lock, 1s, [&]{ return picture_taken; });
-
-  ASSERT_TRUE(picture_taken);
-  ASSERT_TRUE(no_timeout);
 
   testee.shutdown();
   application_thread.join();
