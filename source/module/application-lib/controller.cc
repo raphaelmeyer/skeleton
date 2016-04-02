@@ -14,6 +14,11 @@ Controller::Controller(ICommand & shell, IScheduler & scheduler)
 
 void Controller::notify()
 {
+  take_picture();
+}
+
+void Controller::take_picture()
+{
   Request<void> request{[this]{
     _shell.execute("raspistill");
   }};

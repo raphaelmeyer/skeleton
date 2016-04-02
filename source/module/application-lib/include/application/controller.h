@@ -17,6 +17,8 @@ public:
   virtual void notify() override final;
 
 private:
+  void take_picture();
+
   ICommand & _shell;
   IScheduler & _scheduler;
 };

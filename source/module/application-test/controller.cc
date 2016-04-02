@@ -32,5 +32,9 @@ TEST(The_controller, takes_a_picture_when_notified_by_the_doorbell)
   testee.notify();
 }
 
+TEST(The_controller, DISABLED_does_not_block_the_doorbell_notification_while_taking_a_picture)
+{
+  FAIL();
+}
 
 }
