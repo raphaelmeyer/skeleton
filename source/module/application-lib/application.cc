@@ -1,25 +1,25 @@
 #include "application/application.h"
 
 #include "application/icommand.h"
-#include "application/controller.h"
-#include "application/scheduler.h"
 
 namespace Module {
 
 Application::Application(IInterrupt & doorbell, ICommand & shell)
-  : _mutex()
+  : _doorbell(doorbell)
+  , _shell(shell)
+  , _mutex()
   , _condition()
   , _shutdown(false)
-  , _doorbell(doorbell)
-  , _shell(shell)
+  , _scheduler()
+  , _controller(_shell, _scheduler)
 {
 }
 
-void Application::run() {
-  Scheduler scheduler;
-  Controller controller(_shell, scheduler);
-  _doorbell.subscribe(controller);
+void Application::init() {
+  _doorbell.subscribe(_controller);
+}
 
+void Application::run() {
   wait_for_shutdown();
 }
 

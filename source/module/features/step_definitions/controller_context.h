@@ -58,6 +58,7 @@ public:
   }
 
   void run_application() {
+    _application.init();
     _application_thread = std::thread([&]{
       _application.run();
     });

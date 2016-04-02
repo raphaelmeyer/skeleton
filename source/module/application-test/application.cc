@@ -18,6 +18,7 @@ TEST(The_application, shall_shutdown_within_10_milliseconds)
   Mock::Command shell;
 
   Module::Application testee(doorbell, shell);
+  testee.init();
 
   std::mutex mutex;
   std::condition_variable condition;
@@ -46,6 +47,7 @@ TEST(The_application, takes_a_picture_when_the_doorbell_rings)
   StrictMock<Mock::Command> shell;
 
   Module::Application testee(doorbell, shell);
+  testee.init();
 
   std::thread application_thread([&]{
     testee.run();
