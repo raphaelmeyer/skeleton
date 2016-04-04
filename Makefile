@@ -39,8 +39,16 @@ module-wip: module-cucumber
 module-tests: application-test
 	./run-amd64 module/application-test/application-test
 
+module-tests-target: application-test-target
+	scp artifacts/application-test-target root@rpi2:
+	ssh root@rpi2 ./application-test-target
+
 application-test: src-amd64
 	./cmake-amd64 --build . --target $@
+
+application-test-target: src-ybpi artifacts
+	./cmake-ybpi --build . --target application-test
+	docker cp ybpi-workspace:/workspace/module/application-test/application-test artifacts/$@
 
 ########################################################################
 
