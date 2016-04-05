@@ -41,4 +41,10 @@ THEN("^the picture is (\\d+) pixels wide and (\\d+) pixels high$") {
   ASSERT_THAT(context->commands().back(), HasSubstr("-h " + height));
 }
 
+THEN("^the picture is not upside down$") {
+  ScenarioScope<ModuleContext> context;
+  ASSERT_THAT(context->commands().back(), HasSubstr("-hf"));
+  ASSERT_THAT(context->commands().back(), HasSubstr("-vf"));
+}
+
 } // namespace

@@ -32,9 +32,15 @@ TEST(The_controller, takes_a_picture_when_notified_by_the_doorbell)
   testee.notify();
 }
 
-TEST(The_controller, DISABLED_does_not_block_the_doorbell_notification_while_taking_a_picture)
+TEST(The_controller, saves_the_picture_as_jpeg)
 {
-  FAIL();
+  StrictMock<Mock::Command> shell;
+  Module::Scheduler scheduler;
+  Module::Controller testee(shell, scheduler);
+
+  EXPECT_CALL(shell, execute(HasSubstr("-o picture.jpg")));
+
+  testee.notify();
 }
 
 }
