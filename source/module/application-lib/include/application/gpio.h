@@ -18,8 +18,11 @@ public:
   std::string const & value() const;
 
 private:
-  uint32_t _number;
+  uint32_t const _number;
 
+  std::string const _direction;
+
+  static std::string const Base;
   static std::string const Enable;
 };
 
