@@ -17,12 +17,15 @@ module-exe:            #/ build internet module executable
 module-tests:          #/ run module tests
 module-features:       #/ check module features
 module-wip:            #/ check module work in progress
+module-deploy:         #/ install application on internet module
 
 device-exe:            #/ build doorbell device firmware
 device-tests:          #/ run device tests
 device-features:       #/ check device features
 device-wip:            #/ check device work in progress
 device-deploy:         #/ install doorbell firmware on device
+
+module-tests-target:   #/ run module tests on target hardware
 
 ########################################################################
 
@@ -39,12 +42,19 @@ module-wip: module-cucumber
 module-tests: application-test
 	./run-amd64 module/application-test/application-test
 
-module-tests-target: application-test-target
-	scp artifacts/application-test-target root@rpi2:
-	ssh root@rpi2 ./application-test-target
+module-deploy: module-exe
+	-ssh root@rpi2 killall -9 module-exe
+	scp artifacts/module-exe root@rpi2:
+	ssh root@rpi2 ./module-exe &
 
 application-test: src-amd64
 	./cmake-amd64 --build . --target $@
+
+########################################################################
+
+module-tests-target: application-test-target
+	scp artifacts/application-test-target root@rpi2:
+	ssh root@rpi2 ./application-test-target
 
 application-test-target: src-ybpi artifacts
 	./cmake-ybpi --build . --target application-test

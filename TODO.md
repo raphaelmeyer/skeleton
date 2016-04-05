@@ -13,4 +13,4 @@
 - feature test boundary for interrupt
 - feature test boundary for shell command
 - drive interrupt implementation not to be blocked if a handler blocks -> event class?
-
+- catch sigterm for shutdown
