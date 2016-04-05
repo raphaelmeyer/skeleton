@@ -6,3 +6,6 @@
 # clion projects
 .idea/
 
+# fritzing
+/*.fzz
+
