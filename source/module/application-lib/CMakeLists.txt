@@ -18,6 +18,7 @@ add_library(application
   include/application/shell.h
   include/application/icommand.h
   include/application/iinterrupt.h
+  include/application/ipoll.h
   include/application/irequest.h
   include/application/ischeduler.h
   )

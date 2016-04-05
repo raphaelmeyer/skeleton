@@ -8,6 +8,10 @@ int main() {
 
   Module::Application app(doorbell, shell);
 
+  doorbell.start();
+
   app.run();
+
+  doorbell.stop();
 }
 

@@ -1,5 +1,7 @@
 #include "application/poll.h"
 
+#include "application/gpio.h"
+
 #include <fstream>
 
 #include <fcntl.h>
