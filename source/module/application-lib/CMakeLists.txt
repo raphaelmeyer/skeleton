@@ -4,12 +4,15 @@ add_library(application
   controller.cc
   doorbell.cc
   gpio.cc
+  poll.cc
   request.cc
   scheduler.cc
   shell.cc
   include/application/application.h
   include/application/controller.h
   include/application/doorbell.h
+  include/application/gpio.h
+  include/application/poll.h
   include/application/request.h
   include/application/scheduler.h
   include/application/shell.h
@@ -17,7 +20,6 @@ add_library(application
   include/application/iinterrupt.h
   include/application/irequest.h
   include/application/ischeduler.h
-  include/application/gpio.h
   )
 add_library(module::application ALIAS application)
 
