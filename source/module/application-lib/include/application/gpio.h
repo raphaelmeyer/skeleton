@@ -20,7 +20,11 @@ public:
 private:
   uint32_t const _number;
 
+  std::string const _gpio;
+
   std::string const _direction;
+  std::string const _edge;
+  std::string const _value;
 
   static std::string const Base;
   static std::string const Enable;

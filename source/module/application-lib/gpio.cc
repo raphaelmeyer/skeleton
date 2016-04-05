@@ -6,12 +6,12 @@ namespace Gpio {
 std::string const Path::Base = "/sys/class/gpio";
 std::string const Path::Enable = Base + "/export";
 
-static std::string const Dummy = "";
-
-
 Path::Path(uint32_t number)
   : _number(number)
-  , _direction(Base + "/gpio" + std::to_string(number) + "/direction")
+  , _gpio(Base + "/gpio" + std::to_string(_number))
+  , _direction(_gpio + "/direction")
+  , _edge(_gpio + "/edge")
+  , _value(_gpio + "/value")
 {
 }
 
@@ -27,14 +27,12 @@ std::string const & Path::direction() const {
   return _direction;
 }
 
-std::string const & Path::edge() const
-{
-  return Dummy;
+std::string const & Path::edge() const {
+  return _edge;
 }
 
-std::string const & Path::value() const
-{
-  return Dummy;
+std::string const & Path::value() const {
+  return _value;
 }
 
 }

@@ -24,14 +24,14 @@ TEST(A_gpio_path, has_a_direction_file) {
   ASSERT_THAT(gpio.direction(), StrEq("/sys/class/gpio/gpio20/direction"));
 }
 
-TEST(A_gpio_path, DISABLED_has_an_edge_file) {
+TEST(A_gpio_path, has_an_edge_file) {
   uint32_t const gpio_number = 21;
   Module::Gpio::Path gpio(gpio_number);
 
   ASSERT_THAT(gpio.edge(), StrEq("/sys/class/gpio/gpio21/edge"));
 }
 
-TEST(A_gpio_path, DISABLED_has_a_value_file) {
+TEST(A_gpio_path, has_a_value_file) {
   uint32_t const gpio_number = 22;
   Module::Gpio::Path gpio(gpio_number);
 
