@@ -13,4 +13,8 @@ TEST(A_gpio_path, knows_its_number) {
   ASSERT_THAT(gpio.number(), Eq(gpio_number));
 }
 
+TEST(A_gpio_path, has_a_general_enable_location) {
+  ASSERT_THAT(Module::Gpio::Path::enable(), StrEq("/sys/class/gpio/export"));
+}
+
 }
