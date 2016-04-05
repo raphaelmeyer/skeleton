@@ -20,7 +20,7 @@ void Controller::notify()
 void Controller::take_picture()
 {
   Request<void> request{[this]{
-    _shell.execute("raspistill");
+    _shell.execute("raspistill -o picture.jpg -w 640 -h 480");
   }};
   _scheduler.schedule(request);
 }

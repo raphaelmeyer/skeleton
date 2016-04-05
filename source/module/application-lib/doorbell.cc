@@ -12,6 +12,7 @@ Doorbell::Doorbell()
 }
 
 void Doorbell::subscribe(ISubscriber & subscriber) {
+  _subscribers.emplace_back(subscriber);
 }
 
 void Doorbell::start() {

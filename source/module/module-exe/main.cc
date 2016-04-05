@@ -10,6 +10,7 @@ int main() {
 
   doorbell.start();
 
+  app.init();
   app.run();
 
   doorbell.stop();
