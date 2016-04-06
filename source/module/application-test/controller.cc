@@ -43,4 +43,15 @@ TEST(The_controller, saves_the_picture_as_jpeg)
   testee.notify();
 }
 
+TEST(The_controller, shall_not_wait_too_long_before_taking_a_picture)
+{
+  StrictMock<Mock::Command> shell;
+  Module::Scheduler scheduler;
+  Module::Controller testee(shell, scheduler);
+
+  EXPECT_CALL(shell, execute(HasSubstr("-t 1000")));
+
+  testee.notify();
+}
+
 }
