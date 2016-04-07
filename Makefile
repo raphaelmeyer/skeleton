@@ -52,13 +52,19 @@ application-test: src-amd64
 
 ########################################################################
 
-module-tests-target: application-test-target
+module-tests-target: application-test-target driver-test-target
 	scp artifacts/application-test-target root@rpi2:
+	scp artifacts/driver-test-target root@rpi2:
 	ssh root@rpi2 ./application-test-target
+	ssh root@rpi2 ./driver-test-target
 
 application-test-target: src-ybpi artifacts
 	./cmake-ybpi --build . --target application-test
 	docker cp ybpi-workspace:/workspace/module/application-test/application-test artifacts/$@
+
+driver-test-target: src-ybpi artifacts
+	./cmake-ybpi --build . --target driver-test
+	docker cp ybpi-workspace:/workspace/module/driver-test/driver-test artifacts/$@
 
 ########################################################################
 
