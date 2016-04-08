@@ -1,6 +1,7 @@
 ########################################################################
 
 BASE = 1.0.1
+RPI = rpi2
 
 ########################################################################
 
@@ -43,9 +44,9 @@ module-tests: application-test
 	./run-amd64 module/application-test/application-test
 
 module-deploy: module-exe
-	-ssh root@rpi2 killall -9 module-exe
-	scp artifacts/module-exe root@rpi2:
-	ssh root@rpi2 ./module-exe &
+	-ssh root@$(RPI) killall -9 module-exe
+	scp artifacts/module-exe root@$(RPI):
+	ssh root@$(RPI) ./module-exe &
 
 application-test: src-amd64
 	./cmake-amd64 --build . --target $@
@@ -53,10 +54,12 @@ application-test: src-amd64
 ########################################################################
 
 module-tests-target: application-test-target driver-test-target
-	scp artifacts/application-test-target root@rpi2:
-	scp artifacts/driver-test-target root@rpi2:
-	ssh root@rpi2 ./application-test-target
-	ssh root@rpi2 ./driver-test-target
+	-ssh root@$(RPI) killall -9 driver-test-target
+	-ssh root@$(RPI) killall -9 application-test-target
+	scp artifacts/application-test-target root@$(RPI):
+	scp artifacts/driver-test-target root@$(RPI):
+	ssh root@$(RPI) ./application-test-target
+	ssh root@$(RPI) ./driver-test-target
 
 application-test-target: src-ybpi artifacts
 	./cmake-ybpi --build . --target application-test
