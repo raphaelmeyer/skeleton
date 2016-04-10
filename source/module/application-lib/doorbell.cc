@@ -23,7 +23,9 @@ void Doorbell::subscribe(ISubscriber & subscriber) {
 void Doorbell::start() {
   _listener = std::thread([&]{
     if (_button.poll()) {
-      _subscribers.front().get().notify();
+      for(ISubscriber & subscriber : _subscribers) {
+        subscriber.notify();
+      }
     }
   });
 }

@@ -83,8 +83,39 @@ TEST(The_doorbell, does_not_notify_the_subscribers_on_a_spurious_wakeup)
   button.trigger(false);
 }
 
+TEST(The_doorbell, notifies_all_subscribers)
+{
+  PollStub button;
+  StrictMock<SubscriberMock> subscriber;
+  StrictMock<SubscriberMock> another_subscriber;
 
-TEST(The_doorbell, DISABLED_notifies_all_subscribers)
+  Module::Doorbell testee(button);
+
+  EXPECT_CALL(subscriber, notify())
+    .Times(1);
+
+  EXPECT_CALL(another_subscriber, notify())
+    .Times(1);
+
+  testee.start();
+  testee.subscribe(subscriber);
+  testee.subscribe(another_subscriber);
+
+  button.trigger(true);
+}
+
+TEST(The_doorbell, DISABLED_notifies_subscribers_that_registered_before_starting)
+{
+  FAIL();
+}
+
+TEST(The_doorbell, DISABLED_notifies_subscribers_that_registered_after_starting)
+{
+  FAIL();
+}
+
+
+TEST(The_doorbell, DISABLED_notifies_the_subscribers_on_each_interrupt)
 {
   FAIL();
 }
