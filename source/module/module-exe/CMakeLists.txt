@@ -10,3 +10,4 @@ target_link_libraries(module-exe
   )
 
 set_property(TARGET module-exe PROPERTY CXX_STANDARD 14)
+set_property(TARGET module-exe PROPERTY CXX_STANDARD_REQUIRED ON)

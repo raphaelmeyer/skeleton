@@ -14,6 +14,8 @@ public:
   virtual bool poll();
 
 private:
+  void clear();
+
   int _poll_fd;
 };
 
