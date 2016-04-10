@@ -2,6 +2,7 @@
 #define SKELETON_DOORBELL_H
 
 #include "application/iinterrupt.h"
+#include "application/gpio.h"
 
 #include <thread>
 #include <vector>
@@ -23,6 +24,8 @@ public:
 
 private:
   IPoll & _button;
+
+  Gpio::Path const _gpio;
 
   std::vector<std::reference_wrapper<ISubscriber>> _subscribers;
   std::thread _listener;

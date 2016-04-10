@@ -16,7 +16,7 @@ Poll::Poll()
 {
 }
 
-void Poll::setup(Gpio::Path & gpio)
+void Poll::setup(Gpio::Path const & gpio)
 {
   std::ofstream activate(gpio.enable());
   activate << gpio.number();

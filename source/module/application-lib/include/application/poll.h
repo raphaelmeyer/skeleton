@@ -10,7 +10,7 @@ class Poll : public IPoll
 public:
   Poll();
 
-  virtual void setup(Gpio::Path & gpio);
+  virtual void setup(Gpio::Path const & gpio);
   virtual bool poll();
 
 private:

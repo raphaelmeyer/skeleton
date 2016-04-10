@@ -7,7 +7,7 @@ namespace Gpio { class Path; }
 
 class IPoll {
 public:
-  virtual void setup(Gpio::Path & gpio) = 0;
+  virtual void setup(Gpio::Path const & gpio) = 0;
   virtual bool poll() = 0;
 };
 

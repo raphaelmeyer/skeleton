@@ -2,6 +2,7 @@
 
 #include <application/doorbell.h>
 #include <application/ipoll.h>
+#include <application/gpio.h>
 
 #include <condition_variable>
 
@@ -16,26 +17,35 @@ public:
     , _mutex()
     , _result(false)
     , _ready(false)
+    , _setup(false)
+    , _gpio(0)
   {
   }
 
-  void setup(Module::Gpio::Path & path) {
+  virtual void setup(Module::Gpio::Path const & gpio) override final {
+    _gpio = gpio.number();
+    _setup = true;
   }
 
-  bool poll() {
+  virtual bool poll() override final {
     std::unique_lock<std::mutex> wait_lock(_mutex);
     _condition.wait(wait_lock, [&]{ return _ready; });
-
     _ready = false;
     return _result;
   }
 
+  bool is_set_up() const {
+    return _setup;
+  }
+
+  uint32_t configured_gpio() const {
+    return _gpio;
+  }
+
   void trigger(bool result) {
-    {
-      std::lock_guard<std::mutex> lock(_mutex);
-      _result = result;
-      _ready = true;
-    }
+    std::lock_guard<std::mutex> lock(_mutex);
+    _result = result;
+    _ready = true;
     _condition.notify_all();
   }
 
@@ -44,11 +54,8 @@ private:
   std::mutex _mutex;
   bool _result;
   bool _ready;
-};
-
-class SubscriberMock : public Module::ISubscriber {
-public:
-  MOCK_METHOD0(notify, void());
+  bool _setup;
+  uint32_t _gpio;
 };
 
 class SubscriberStub : public Module::ISubscriber {
@@ -78,6 +85,39 @@ private:
   std::mutex _mutex;
   bool _notified;
 };
+
+TEST(The_doorbell, sets_up_the_gpio_for_polling_on_start)
+{
+  PollStub poll;
+  Module::Doorbell testee(poll);
+
+  testee.start();
+
+  ASSERT_TRUE(poll.is_set_up());
+
+  using namespace std::literals::chrono_literals;
+  std::this_thread::sleep_for(10ms);
+
+  testee.stop();
+  poll.trigger(false);
+}
+
+TEST(The_doorbell, configures_gpio_17_for_polling)
+{
+  PollStub poll;
+  Module::Doorbell testee(poll);
+
+  testee.start();
+
+  ASSERT_THAT(poll.configured_gpio(), Eq(17));
+
+  using namespace std::literals::chrono_literals;
+  std::this_thread::sleep_for(10ms);
+
+  testee.stop();
+  poll.trigger(false);
+}
+
 
 TEST(The_doorbell, notifies_the_subscribers_when_the_button_is_pushed)
 {

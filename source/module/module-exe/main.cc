@@ -1,9 +1,11 @@
 #include <application/application.h>
-#include <application/shell.h>
 #include <application/doorbell.h>
+#include <application/poll.h>
+#include <application/shell.h>
 
 int main() {
-  Module::Doorbell doorbell;
+  Module::Poll poll;
+  Module::Doorbell doorbell(poll);
   Module::Shell shell;
 
   Module::Application app(doorbell, shell);

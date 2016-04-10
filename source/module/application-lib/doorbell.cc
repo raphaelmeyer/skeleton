@@ -1,4 +1,3 @@
-#include <future>
 #include "application/doorbell.h"
 
 #include "application/ipoll.h"
@@ -7,6 +6,7 @@ namespace Module {
 
 Doorbell::Doorbell(IPoll & button)
   : _button(button)
+  , _gpio(17)
   , _subscribers()
   , _listener()
   , _running(false)
@@ -22,6 +22,7 @@ void Doorbell::subscribe(ISubscriber & subscriber) {
 }
 
 void Doorbell::start() {
+  _button.setup(_gpio);
   _listener = std::thread([&]{
     _running = true;
     while(_running) {
