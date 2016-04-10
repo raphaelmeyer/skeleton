@@ -3,32 +3,28 @@
 
 #include "application/iinterrupt.h"
 
-#include "application/poll.h"
-#include "application/gpio.h"
-
-#include <vector>
 #include <thread>
+#include <vector>
 
 namespace Module {
+
+class IPoll;
 
 class Doorbell : public IInterrupt
 {
 public:
-  Doorbell();
+  Doorbell(IPoll & button);
+  ~Doorbell();
 
   virtual void subscribe(ISubscriber & subscriber);
 
   void start();
-  void stop();
 
 private:
-  Gpio::Path _gpio;
-  Poll _poll;
-  std::thread _listener;
+  IPoll & _button;
 
   std::vector<std::reference_wrapper<ISubscriber>> _subscribers;
-
-  bool _running;
+  std::thread _listener;
 };
 
 }

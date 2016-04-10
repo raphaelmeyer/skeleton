@@ -1,14 +1,19 @@
+#include <future>
 #include "application/doorbell.h"
+
+#include "application/ipoll.h"
 
 namespace Module {
 
-Doorbell::Doorbell()
-  : _gpio(17)
-  , _poll()
-  , _listener()
+Doorbell::Doorbell(IPoll & button)
+  : _button(button)
   , _subscribers()
-  , _running(false)
+  , _listener()
 {
+}
+
+Doorbell::~Doorbell() {
+  _listener.join();
 }
 
 void Doorbell::subscribe(ISubscriber & subscriber) {
@@ -16,22 +21,11 @@ void Doorbell::subscribe(ISubscriber & subscriber) {
 }
 
 void Doorbell::start() {
-  _poll.setup(_gpio);
-  _running = true;
-  _listener = std::thread([this]{
-    while(_running) {
-      if (_poll.poll()) {
-        for(ISubscriber & subscriber : _subscribers) {
-          subscriber.notify();
-        }
-      }
+  _listener = std::thread([&]{
+    if (_button.poll()) {
+      _subscribers.front().get().notify();
     }
   });
-}
-
-void Doorbell::stop() {
-  _running = false;
-  _listener.join();
 }
 
 }
