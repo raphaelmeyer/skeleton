@@ -21,7 +21,7 @@ TEST(The_application, shall_shutdown_within_10_milliseconds)
   Module::Application testee(doorbell, shell);
   testee.init();
 
-  auto shutdown = std::async(std::launch::async, []{
+  auto shutdown = std::async(std::launch::async, [&testee]{
     testee.run();
   });
 
