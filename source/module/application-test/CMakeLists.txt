@@ -7,7 +7,9 @@ add_executable(application-test
   scheduler.cc
   command_mock.h
   interrupt_stub.h
+  poll_stub.h
   scheduler_mock.h
+  subscriber_stub.h
   wip.cc
   )
 add_executable(test::application-test ALIAS application-test)
