@@ -19,12 +19,15 @@ public:
   virtual void subscribe(ISubscriber & subscriber);
 
   void start();
+  void stop();
 
 private:
   IPoll & _button;
 
   std::vector<std::reference_wrapper<ISubscriber>> _subscribers;
   std::thread _listener;
+
+  bool _running;
 };
 
 }

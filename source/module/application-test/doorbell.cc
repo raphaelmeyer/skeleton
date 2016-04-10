@@ -51,13 +51,38 @@ public:
   MOCK_METHOD0(notify, void());
 };
 
+class SubscriberStub : public Module::ISubscriber {
+public:
+  SubscriberStub()
+    : _condition()
+    , _mutex()
+    , _notified(false)
+  {
+  }
+
+  virtual void notify() override final {
+    std::lock_guard<std::mutex> lock(_mutex);
+    _notified = true;
+    _condition.notify_all();
+  }
+
+  bool notified_in(std::chrono::milliseconds const & milliseconds) {
+    std::unique_lock<std::mutex> lock(_mutex);
+    bool const notified = _condition.wait_for(lock, milliseconds, [&]{ return _notified; });
+    _notified = false;
+    return notified;
+  }
+
+private:
+  std::condition_variable _condition;
+  std::mutex _mutex;
+  bool _notified;
+};
+
 TEST(The_doorbell, notifies_the_subscribers_when_the_button_is_pushed)
 {
   PollStub button;
-  StrictMock<SubscriberMock> subscriber;
-
-  EXPECT_CALL(subscriber, notify())
-    .Times(1);
+  SubscriberStub subscriber;
 
   Module::Doorbell testee(button);
 
@@ -65,60 +90,76 @@ TEST(The_doorbell, notifies_the_subscribers_when_the_button_is_pushed)
   testee.subscribe(subscriber);
 
   button.trigger(true);
+
+  using namespace std::literals::chrono_literals;
+  ASSERT_TRUE(subscriber.notified_in(10ms));
+
+  testee.stop();
+  button.trigger(false);
 }
 
 TEST(The_doorbell, does_not_notify_the_subscribers_on_a_spurious_wakeup)
 {
   PollStub button;
-  StrictMock<SubscriberMock> subscriber;
+  SubscriberStub subscriber;
 
   Module::Doorbell testee(button);
-
-  EXPECT_CALL(subscriber, notify())
-    .Times(0);
 
   testee.start();
   testee.subscribe(subscriber);
 
+  button.trigger(false);
+
+  using namespace std::literals::chrono_literals;
+  ASSERT_FALSE(subscriber.notified_in(10ms));
+
+  testee.stop();
   button.trigger(false);
 }
 
 TEST(The_doorbell, notifies_all_subscribers)
 {
   PollStub button;
-  StrictMock<SubscriberMock> subscriber;
-  StrictMock<SubscriberMock> another_subscriber;
+  SubscriberStub subscriber;
+  SubscriberStub another_subscriber;
 
   Module::Doorbell testee(button);
-
-  EXPECT_CALL(subscriber, notify())
-    .Times(1);
-
-  EXPECT_CALL(another_subscriber, notify())
-    .Times(1);
 
   testee.start();
   testee.subscribe(subscriber);
   testee.subscribe(another_subscriber);
 
   button.trigger(true);
+
+  using namespace std::literals::chrono_literals;
+  ASSERT_TRUE(subscriber.notified_in(10ms));
+  ASSERT_TRUE(another_subscriber.notified_in(10ms));
+
+  testee.stop();
+  button.trigger(false);
 }
 
-TEST(The_doorbell, DISABLED_notifies_subscribers_that_registered_before_starting)
+TEST(The_doorbell, notifies_the_subscribers_on_each_interrupt)
 {
-  FAIL();
+  PollStub button;
+  SubscriberStub subscriber;
+
+  Module::Doorbell testee(button);
+
+  testee.start();
+  testee.subscribe(subscriber);
+
+  button.trigger(true);
+
+  using namespace std::literals::chrono_literals;
+  ASSERT_TRUE(subscriber.notified_in(10ms));
+
+  button.trigger(true);
+
+  ASSERT_TRUE(subscriber.notified_in(10ms));
+
+  testee.stop();
+  button.trigger(false);
 }
-
-TEST(The_doorbell, DISABLED_notifies_subscribers_that_registered_after_starting)
-{
-  FAIL();
-}
-
-
-TEST(The_doorbell, DISABLED_notifies_the_subscribers_on_each_interrupt)
-{
-  FAIL();
-}
-
 
 }

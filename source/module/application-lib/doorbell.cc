@@ -9,6 +9,7 @@ Doorbell::Doorbell(IPoll & button)
   : _button(button)
   , _subscribers()
   , _listener()
+  , _running(false)
 {
 }
 
@@ -22,12 +23,19 @@ void Doorbell::subscribe(ISubscriber & subscriber) {
 
 void Doorbell::start() {
   _listener = std::thread([&]{
-    if (_button.poll()) {
-      for(ISubscriber & subscriber : _subscribers) {
-        subscriber.notify();
+    _running = true;
+    while(_running) {
+      if(_button.poll()) {
+        for(ISubscriber & subscriber : _subscribers) {
+          subscriber.notify();
+        }
       }
     }
   });
+}
+
+void Doorbell::stop() {
+  _running = false;
 }
 
 }
