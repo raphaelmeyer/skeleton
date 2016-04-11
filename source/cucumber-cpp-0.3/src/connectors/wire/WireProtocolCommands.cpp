@@ -3,13 +3,13 @@
 namespace cucumber {
 namespace internal {
 
-ScenarioCommand::ScenarioCommand(const CukeEngine::tags_type *tags) :
+ScenarioCommand::ScenarioCommand(std::shared_ptr<const CukeEngine::tags_type> tags) :
     tags(tags) {
 }
 
 
 BeginScenarioCommand::BeginScenarioCommand(const CukeEngine::tags_type *tags) :
-    ScenarioCommand(tags) {
+    ScenarioCommand(std::shared_ptr<CukeEngine::tags_type const>(tags)) {
 }
 
 WireResponse *BeginScenarioCommand::run(CukeEngine *engine) const {
@@ -19,7 +19,7 @@ WireResponse *BeginScenarioCommand::run(CukeEngine *engine) const {
 
 
 EndScenarioCommand::EndScenarioCommand(const CukeEngine::tags_type *tags) :
-    ScenarioCommand(tags) {
+    ScenarioCommand(std::shared_ptr<CukeEngine::tags_type const>(tags)) {
 }
 
 WireResponse *EndScenarioCommand::run(CukeEngine *engine) const {
