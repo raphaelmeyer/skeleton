@@ -61,6 +61,9 @@ module-tests-target: application-test-target driver-test-target
 	ssh root@$(RPI) ./application-test-target
 	ssh root@$(RPI) ./driver-test-target
 
+module-features-target: module-deploy
+	./module-features-target.sh -f pretty --tag ~@wip
+
 application-test-target: src-ybpi artifacts
 	./cmake-ybpi --build . --target application-test
 	docker cp ybpi-workspace:/workspace/module/application-test/application-test artifacts/$@
@@ -94,10 +97,10 @@ device-deploy: device-exe
 ########################################################################
 
 module-cucumber: src-amd64
-	./cmake-amd64 --build . --target module-cucumber
+	./cmake-amd64 --build . --target $@
 
 device-cucumber: src-amd64
-	./cmake-amd64 --build . --target device-cucumber
+	./cmake-amd64 --build . --target $@
 
 ########################################################################
 
