@@ -20,6 +20,7 @@ When (/^the doorbell rings$/) do
 end
 
 Then (/^the internet module takes a picture$/) do
+  sleep 2
   result = invoke('ls picture.jpg')
   assert_equal 'picture.jpg', result.strip
 end
