@@ -27,6 +27,7 @@ device-wip:            #/ check device work in progress
 device-deploy:         #/ install doorbell firmware on device
 
 module-tests-target:   #/ run module tests on target hardware
+module-configure:      #/ configure the target hardware
 
 ########################################################################
 
@@ -187,6 +188,13 @@ tools/.avr-workspace:
 	-docker rm -v avr-workspace
 	docker create --name avr-workspace raphaelmeyer/base:${BASE}
 	touch $@
+
+########################################################################
+
+module-configure: conf/index.html conf/lighttpd.conf
+	scp conf/lighttpd.conf root@$(RPI):/etc/lighttpd.conf
+	scp conf/index.html root@$(RPI):/home/root/index.html
+	ssh root@$(RPI) /sbin/reboot
 
 ########################################################################
 
