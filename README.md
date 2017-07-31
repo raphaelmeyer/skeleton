@@ -8,12 +8,9 @@
     bell    :   6   (PD6)
     button  :   7   (PD7)
 
-    signal  :   8   (PB0) --- A4    B4 ---  11 (17)
-
-    sda     :   A4  (PC4) --- A1    B1 ---  3 (SDA)
-    scl     :   A5  (PC5) --- A2    B2 ---  5 (SCL)
-
     vcc     :   5V        --- HV    LV ---  1 (3.3)
+    signal  :   8   (PB0) --- B1    A1 ---  11 (17)
+
     gnd     :   GND       --- GND  GND ---  9 (GND)
 
 
