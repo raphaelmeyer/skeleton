@@ -3,6 +3,9 @@
 [![Build Status](https://travis-ci.org/raphaelmeyer/skeleton.svg?branch=master)](https://travis-ci.org/raphaelmeyer/skeleton/)
 
 
+![schematic](doc/schematic.jpg?raw=true "schematic")
+
+
                 arduino       ada 757       rpi
                 ---------     --------      -------
     bell    :   6   (PD6)
