@@ -1,7 +1,8 @@
 require 'test/unit/assertions'
 
 def invoke(command)
-  `ssh -oStrictHostKeyChecking=no root@rpi2 #{command}`
+  rpi = ENV['RPI_HOST']
+  `ssh -oStrictHostKeyChecking=no root@#{rpi} #{command}`
 end
 
 Given (/^there is no picture yet$/) do

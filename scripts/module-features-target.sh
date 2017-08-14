@@ -10,5 +10,5 @@ cd ${PROJECT_ROOT}
 
 RPI_IP=`getent hosts ${RPI_HOST} | awk '{ print $1 }'`
 
-docker run --rm -t --add-host ${RPI_HOST}:${RPI_IP} -w ${SRC_GUEST}/module/acceptance-test-target ${VOLUMES} ${CONTAINER} cucumber $@
+docker run --rm -t --add-host ${RPI_HOST}:${RPI_IP} -e RPI_HOST=${RPI_HOST} -w ${SRC_GUEST}/module/acceptance-test-target ${VOLUMES} ${CONTAINER} cucumber $@
 
