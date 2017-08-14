@@ -1,8 +1,8 @@
 #!/bin/bash
 
-PROJECT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-source ${PROJECT_ROOT}/env-avr.sh
+source ${SCRIPT_DIR}/env-avr.sh
 
 Options=$@
 while [[ $# > 0 ]] ; do
