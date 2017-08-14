@@ -32,9 +32,19 @@ Install the [image](https://www.dropbox.com/s/tum9hzxbb5pnc2c/ybpi-rpi2-image-ra
     $ sudo resize2fs /dev/sdX2
 
 
+Adjust settings in [toolchain.conf](toolchain.conf)
+
+
 Configure and reboot the target hardware:
 
     make module-configure
+
+
+## Build and test
+
+Build and test:
+
+    make
 
 
 Get an overview of the most important make targets:
