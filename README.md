@@ -32,30 +32,38 @@ Install the [image](https://www.dropbox.com/s/tum9hzxbb5pnc2c/ybpi-rpi2-image-ra
     $ sudo resize2fs /dev/sdX2
 
 
-Adjust settings in [hardware.conf](hardware.conf).
+Get sources:
 
+    $ git clone https://github.com/raphaelmeyer/skeleton.git
+
+    $ cd skeleton
+    $ git submodule init
+    $ git submodule update
+
+
+Adjust settings in [hardware.conf](hardware.conf).
 
 Configure and reboot the target hardware:
 
-    make module-configure
+    $ make module-configure
 
 
 ## Build and test
 
 Build and test:
 
-    make
+    $ make
 
 
 Get an overview of the most important make targets:
 
-    make help
+    $ make help
 
 
 ## Install and run
 
-    make device-deploy
-    make module-deploy
+    $ make device-deploy
+    $ make module-deploy
 
 
 ## Run hardware tests
@@ -63,12 +71,12 @@ Get an overview of the most important make targets:
 In order to run the unit tests on the Raspberry Pi target hardware,
 connect a loopback cable from GPIO 5 (pin 29) to GPIO 26 (pin 37):
 
-    make module-tests-target
+    $ make module-tests-target
 
 
 To run the feature tests on the Raspberry Pi target hardware,
 connect a loopback cable from GPIO 17 (pin 11) to GPIO 24 (pin 18):
 
-    make module-features-target
+    $ make module-features-target
 
 
