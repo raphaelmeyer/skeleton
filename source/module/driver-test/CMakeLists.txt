@@ -5,7 +5,7 @@ add_executable(driver-test
 add_executable(test::driver-test ALIAS driver-test)
 
 target_link_libraries(driver-test
-  PRIVATE test::gmock-main
+  PRIVATE test::googlemock-main
   PRIVATE module::application
   )
 

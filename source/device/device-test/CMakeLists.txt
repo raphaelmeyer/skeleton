@@ -15,7 +15,7 @@ add_executable(device-test
 add_executable(test::device-test ALIAS device-test)
 
 target_link_libraries(device-test
-  PRIVATE test::gmock-main
+  PRIVATE test::googlemock-main
   PRIVATE device::device
   )
 

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include <cucumber-cpp/defs.hpp>
+#include <cucumber-cpp/autodetect.hpp>
 
 #include "controller_context.h"
 

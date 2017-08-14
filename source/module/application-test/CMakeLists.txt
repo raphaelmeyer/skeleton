@@ -15,7 +15,7 @@ add_executable(application-test
 add_executable(test::application-test ALIAS application-test)
 
 target_link_libraries(application-test
-  PRIVATE test::gmock-main
+  PRIVATE test::googlemock-main
   PRIVATE module::application
   )
 
