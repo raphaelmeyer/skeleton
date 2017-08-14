@@ -192,9 +192,9 @@ tools/.avr-workspace:
 
 ########################################################################
 
-module-configure: conf/index.html conf/lighttpd.conf
-	scp conf/lighttpd.conf root@$(RPI_HOST):/etc/lighttpd.conf
-	scp conf/index.html root@$(RPI_HOST):/home/root/index.html
+module-configure: source/module/conf/index.html source/module/conf/lighttpd.conf
+	scp source/module/conf/lighttpd.conf root@$(RPI_HOST):/etc/lighttpd.conf
+	scp source/module/conf/index.html root@$(RPI_HOST):/home/root/index.html
 	ssh root@$(RPI_HOST) /sbin/reboot
 
 ########################################################################
